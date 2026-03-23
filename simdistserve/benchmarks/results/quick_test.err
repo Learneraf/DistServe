@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/users/rh/DistServe/simdistserve/benchmarks/simulate_dist.py", line 435, in <module>
+    main(args)
+  File "/users/rh/DistServe/simdistserve/benchmarks/simulate_dist.py", line 167, in main
+    requests, arrival = load_workload(workload, N, rate, cv, seed, process)
+  File "/users/rh/DistServe/simdistserve/benchmarks/simulate_dist.py", line 111, in load_workload
+    check_dataset_existence(dataset_file)
+  File "/users/rh/DistServe/simdistserve/benchmarks/simulate_dist.py", line 96, in check_dataset_existence
+    raise FileNotFoundError(f"Dataset {x} does not exist.")
+FileNotFoundError: Dataset /users/rh/DistServe/simdistserve/dataset/sharegpt.ds does not exist.
