@@ -30,6 +30,15 @@ example_testing_params = [
 ]
 
 def get_profiling_params() -> list[TestParamGroup]:
+
+    def read_unique_params_from_csv(file_path: str = "/users/rh/DistServe/simdistserve/profilers/profile_result.csv") -> list[tuple[str, int, int]]:
+        import csv
+        with open(file_path, 'r', encoding='utf-8') as f:
+            reader = csv.DictReader(f)
+            params = set((row['model'], int(row['tp']), int(row['max_num_tokens'])) for row in reader)
+            params = list(params)
+            return params
+
     return [
         TestParamGroup(
             worker_param = WorkerParam(
@@ -47,21 +56,15 @@ def get_profiling_params() -> list[TestParamGroup]:
                 )
                 for (batch_size, input_len) in [
                     (batch_size, input_len)
-                    for batch_size in [1, 2, 4, 8, 16, 32, 64, 96, 128, 160, 192]
-                    for input_len in [4, 8, 16, 32, 48, 64, 96, 128, 192, 256, 284, 512, 768, 1024, 1536, 2020]
+                    for batch_size in [1, 2, 4, 8, 16, 32, 64, 96, 128]
+                    # for batch_size in [1, 2, 4, 8, 16, 32]
+                    for input_len in [4, 8, 16, 32, 48, 64, 96, 128, 192, 256, 284, 512]
+                    # for input_len in [4, 8, 16, 32, 48, 64, 96, 128]
                     if batch_size * ((input_len+15)//16*16) <= num_tokens_limit
                 ]
             ]
         )
-        for (model, tp_world_size, num_tokens_limit) in [
-            ("facebook/opt-13b", 1, 49152),
-            ("facebook/opt-13b", 2, 98304),
-            ("facebook/opt-13b", 4, 250000),
-            ("facebook/opt-66b", 2, 8192),
-            ("facebook/opt-66b", 3, 36864),
-            ("facebook/opt-66b", 4, 65000),
-            ("intlsy/opt-175b-hyperparam", 8, 40000)
-        ]
+        for (model, tp_world_size, num_tokens_limit) in read_unique_params_from_csv()
     ]
 def run_distserve(test_params: list[TestParamGroup], **kwargs):
     import ray
