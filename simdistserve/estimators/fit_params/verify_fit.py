@@ -7,7 +7,7 @@ import csv
 import json
 from pathlib import Path
 
-PARAMS_PATH = Path("/users/rh/DistServe/simdistserve/estimators/profile_data/profiler-a100-80g.distserve.fitted.json")
+PARAMS_PATH = Path("/users/rh/DistServe/simdistserve/estimators/profiled_data/profiler-a100-80g.distserve.fitted.json")
 CSV_PATH = Path("/users/rh/DistServe/evaluation/0-test-single-forward-performance/result/read_db.csv")
 
 def load_fitted_params():

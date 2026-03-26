@@ -60,7 +60,7 @@ def measure_stats(
     model="facebook/opt-13b", tp=1, pp=1,
     single_gpu_memory=single_gpu_memory_,
     block_size=16,
-    gpu_memory_utilization=0.95,
+    gpu_memory_utilization=0.85,
     num_nodes=1,
     num_gpus_per_node=8,
 ):
@@ -88,18 +88,30 @@ def measure_stats(
             tensor_parallel_size=tp,
             pipeline_parallel_size=pp
         )
-        model_in_bytes = model_config.get_model_size_in_bytes(
+        model_in_bytes_per_gpu = model_config.get_model_size_in_bytes(
             parallel_config=parallel_config
         )
-        model_size = model_in_bytes / GB
+        model_size_per_gpu = model_in_bytes_per_gpu / GB
         block_size_in_bytes = _get_block_size_in_bytes(
             block_size, model_config, parallel_config
         )
-        # 考虑多节点情况下的内存计算，每个GPU上的模型大小需要除以(tp*pp)
-        model_in_bytes_per_gpu = model_in_bytes / (tp * pp)
+
+        # 计算更准确的运行时内存峰值
+        # 1. 固定开销（操作系统、CUDA上下文等）
+        fixed_overhead = single_gpu_memory * 0.15
+        # 2. 模型本身的内存
+        model_memory = model_in_bytes_per_gpu
+        # 3. 中间激活值的内存（估计为模型大小的一定比例）
+        activation_memory = model_in_bytes_per_gpu * 0.5
+        # 4. 初始KV缓存的内存（考虑一个最小批处理大小）
+        min_batch_size = 1
+        initial_kv_memory = block_size_in_bytes * min_batch_size
+        
         single_gpu_peak_runtime_memory = (
-            single_gpu_memory * 0.01
-            + model_in_bytes_per_gpu
+            fixed_overhead
+            + model_memory
+            + activation_memory
+            + initial_kv_memory
         )
         num_gpu_blocks = int(
             (single_gpu_memory * gpu_memory_utilization - single_gpu_peak_runtime_memory)
@@ -114,7 +126,7 @@ def measure_stats(
         result.update(
             dict(
                 single_gpu_memory=single_gpu_memory,
-                model_size=model_size,
+                model_size_per_gpu=model_size_per_gpu,
                 single_gpu_peak_runtime_memory=single_gpu_peak_runtime_memory,
                 kv_size_in_byte=kv_size_in_byte,
                 num_gpu_blocks=num_gpu_blocks,
@@ -139,7 +151,7 @@ def get_all_possible_tp_pp(num_gpus_per_node=8):
 
 def get_all_configs(output_file="profile_result.csv", num_nodes=1, num_gpus_per_node=8,
                     single_gpu_memory=single_gpu_memory_, block_size=16,
-                    gpu_memory_utilization=0.95):
+                    gpu_memory_utilization=0.85):
     configs = []
     fieldnames = None
 
@@ -198,7 +210,7 @@ def parse_args():
     return parser.parse_args()
 
 
-if __name__ == '__main__':
+def main():
     args = parse_args()
     
     # 设置GPU内存
@@ -219,3 +231,10 @@ if __name__ == '__main__':
         block_size=args.block_size,
         gpu_memory_utilization=args.gpu_memory_utilization
     )
+
+
+if __name__ == '__main__':
+    main()
+
+    # usage: 
+    # python profile_memory.py

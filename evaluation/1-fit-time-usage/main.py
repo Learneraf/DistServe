@@ -125,14 +125,20 @@ def main(args: argparse.Namespace):
             for dp in data_points
             if dp.model == model and dp.tp_world_size == tp_world_size
         ]
-        prefill_abc = fit_one_abc(
-            cur_data_points,
-            lambda dp: dp.batch_size*dp.input_len,
-            lambda dp: dp.batch_size*dp.input_len**2,
-            lambda dp: dp.prefill_time,
-            lambda dp: 1
-        )
-        print(prefill_abc)
+
+        prefill_abc = None
+        if len(cur_data_points) != 0:
+            prefill_abc = fit_one_abc(
+                cur_data_points,
+                lambda dp: dp.batch_size*dp.input_len,
+                lambda dp: dp.batch_size*dp.input_len**2,
+                lambda dp: dp.prefill_time,
+                lambda dp: 1
+            )
+            print(prefill_abc)
+
+        else:
+            print("No data points for prefill stage.")
         
         print(f"Fitting model {model} with tp_world_size {tp_world_size} (Decoding stage, small batch size)")
         cur_data_points = [
@@ -141,14 +147,19 @@ def main(args: argparse.Namespace):
             if dp.model == model and dp.tp_world_size == tp_world_size
             if dp.batch_size <= DECODING_LARGE_SMALL_BS_THRESHOLD
         ]
-        decoding_smallbs_abc = fit_one_abc(
-            cur_data_points,
-            lambda dp: dp.batch_size*dp.input_len,
-            lambda dp: dp.batch_size,
-            lambda dp: dp.decoding_time,
-            lambda dp: 1
-        )
-        print(decoding_smallbs_abc)
+
+        decoding_smallbs_abc = None
+        if len(cur_data_points) != 0:
+            decoding_smallbs_abc = fit_one_abc(
+                cur_data_points,
+                lambda dp: dp.batch_size*dp.input_len,
+                lambda dp: dp.batch_size,
+                lambda dp: dp.decoding_time,
+                lambda dp: 1
+            )
+            print(decoding_smallbs_abc)
+        else:
+            print("No data points for decoding stage, small batch size.")
         
         print(f"Fitting model {model} with tp_world_size {tp_world_size} (Decoding stage, large batch size)")
         cur_data_points = [
@@ -156,23 +167,28 @@ def main(args: argparse.Namespace):
             for dp in data_points
             if dp.model == model and dp.tp_world_size == tp_world_size
             if dp.batch_size > DECODING_LARGE_SMALL_BS_THRESHOLD
-        ]
-        decoding_largebs_abc = fit_one_abc(
-            cur_data_points,
-            lambda dp: dp.batch_size*dp.input_len,
-            lambda dp: dp.batch_size,
-            lambda dp: dp.decoding_time,
-            lambda dp: 1
-        )
-        print(decoding_largebs_abc)
+        ]   
+        
+        decoding_largebs_abc = None
+        if len(cur_data_points) != 0:
+            decoding_largebs_abc = fit_one_abc(
+                cur_data_points,
+                lambda dp: dp.batch_size*dp.input_len,
+                lambda dp: dp.batch_size,
+                lambda dp: dp.decoding_time,
+                lambda dp: 1
+            )
+            print(decoding_largebs_abc)
+        else:
+            print("No data points for decoding stage, large batch size.")
         
         if model not in result:
             result[model] = {}
         result[model][tp_world_size] = {
             "decoding_large_small_bs_threshold": DECODING_LARGE_SMALL_BS_THRESHOLD,
-            "prefill": prefill_abc.tolist(),
-            "decoding_smallbs": decoding_smallbs_abc.tolist(),
-            "decoding_largebs": decoding_largebs_abc.tolist()
+            "prefill": prefill_abc.tolist() if prefill_abc is not None else [],
+            "decoding_smallbs": decoding_smallbs_abc.tolist() if decoding_smallbs_abc is not None else [],
+            "decoding_largebs": decoding_largebs_abc.tolist() if decoding_largebs_abc is not None else []
         }
     
     with open(output_path, "w") as f:
@@ -184,3 +200,6 @@ if __name__ == "__main__":
     parser.add_argument("-o", "--output", type=str, required=True, help="Path to the output json file")
     args = parser.parse_args()
     main(args)
+
+# Usage:
+# python main.py -i ../0-test-single-forward-performance/db-identical-req.sqlite -o ./fit_params.json

@@ -1,5 +1,7 @@
 """
 Benchmark DistServe on a batch of requests, which have identical input&output length
+
+Before running this script, please run the script profile_memory.py in the simdistserve/profilers directory first!!!
 """
 import sys, os, math
 import random
@@ -56,10 +58,10 @@ def get_profiling_params() -> list[TestParamGroup]:
                 )
                 for (batch_size, input_len) in [
                     (batch_size, input_len)
-                    for batch_size in [1, 2, 4, 8, 16, 32, 64, 96, 128]
-                    # for batch_size in [1, 2, 4, 8, 16, 32]
-                    for input_len in [4, 8, 16, 32, 48, 64, 96, 128, 192, 256, 284, 512]
-                    # for input_len in [4, 8, 16, 32, 48, 64, 96, 128]
+                    for batch_size in [1, 2, 4, 8, 16, 32, 64, 96, 128, 160, 192]
+                    # for batch_size in [1, 2, 4, 8, 16, 32, 64]
+                    for input_len in [4, 8, 16, 32, 48, 64, 96, 128, 192, 256, 284, 512, 768, 1024, 1536, 2020]
+                    # for input_len in [4, 8, 16, 32, 48, 64, 96, 128, 192]
                     if batch_size * ((input_len+15)//16*16) <= num_tokens_limit
                 ]
             ]
@@ -103,3 +105,4 @@ if __name__ == "__main__":
     print(f"Selected test group: {select_test_group}")
     test_group_candidates[select_test_group]()
     
+    # Usage: python main.py distserve-profiling

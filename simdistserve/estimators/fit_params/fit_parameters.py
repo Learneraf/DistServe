@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """
-根据测量时间反向推导出time_estimator.py中使用的a,b,c参数
+根据 CSV_PATH 中记录的测量时间，我们可以推导出 time_estimator.py 中使用的 a、b、c 参数
+我们使用最小二乘法拟合这些参数
+最后，我们将拟合结果保存到 OUTPUT_JSON_PATH，并将图表保存到 OUTPUT_PLOT_DIR
 
 According to the measured time in CSV_PATH, we can derive the a,b,c parameters used in time_estimator.py
 We use the least squares method to fit the parameters.
@@ -15,7 +17,7 @@ from pathlib import Path
 
 CSV_PATH = Path("/users/rh/DistServe/evaluation/0-test-single-forward-performance/result/read_db.csv")
 OUTPUT_PLOT_DIR = Path("/users/rh/DistServe/simdistserve/estimators/fit_params/plots")
-OUTPUT_JSON_PATH = Path("/users/rh/DistServe/simdistserve/estimators/profile_data/profiler-a100-80g.distserve.fitted.json")
+OUTPUT_JSON_PATH = Path("/users/rh/DistServe/simdistserve/estimators/profiled_data/profiler-a100-80g.distserve.fitted.json")
 
 OUTPUT_PLOT_DIR.mkdir(exist_ok=True)
 
@@ -24,7 +26,9 @@ OUTPUT_PLOT_DIR.mkdir(exist_ok=True)
 def fit_prefill_params(data):
     """
     拟合预填充阶段的a,b,c参数
-    公式：delay = a + b * num_total_tokens + c * sum_num_tokens_sqr
+    
+    Fit the parameters a, b, c in the formula:
+    (a + b * num_total_tokens + c * sum_num_tokens_sqr) / pp + pp_const
     """
     X = []
     y = []
@@ -33,11 +37,15 @@ def fit_prefill_params(data):
         batch_size = row['batch_size']
         input_len = row['input_len']
         prefill_time = row['avg_prefill_time_usage']
+        pp = row.get('pp_world_size', 1)  # 获取流水线并行数，默认为1
         
         num_total_tokens = batch_size * input_len
         sum_num_tokens_sqr = batch_size * (input_len ** 2)
         
-        X.append([1, num_total_tokens, sum_num_tokens_sqr])
+        # 公式: (a + b * num_total_tokens + c * sum_num_tokens_sqr) / pp + pp_const
+        # 其中 pp_const = pp
+        # 展开: a/pp + b*num_total_tokens/pp + c*sum_num_tokens_sqr/pp + pp
+        X.append([1/pp, num_total_tokens/pp, sum_num_tokens_sqr/pp])
         y.append(prefill_time)
     
     # 使用最小二乘法拟合
@@ -52,7 +60,9 @@ def fit_prefill_params(data):
 def fit_decode_params(data, threshold=95):
     """
     拟合解码阶段的a,b,c参数
-    公式：delay = a + b * num_total_tokens + c * batch_size
+    
+    Fit the parameters a, b, c in the formula:
+    (a + b * num_total_tokens + c * batch_size) / pp
     """
     # 分离小批量和大批量数据
     small_bs_data = [row for row in data if row['batch_size'] < threshold]
@@ -66,10 +76,12 @@ def fit_decode_params(data, threshold=95):
             batch_size = row['batch_size']
             output_len = row['output_len']
             decode_time = row['avg_decoding_time_usage']
+            pp = row.get('pp_world_size', 1)  # 获取流水线并行数，默认为1
             
             num_total_tokens = batch_size * (output_len - 1)  # 第一个token在prefill阶段生成
             
-            X.append([1, num_total_tokens, batch_size])
+            # 公式: (a + b * num_total_tokens + c * batch_size) / pp
+            X.append([1/pp, num_total_tokens/pp, batch_size/pp])
             y.append(decode_time)
         
         if not X:
@@ -87,7 +99,6 @@ def fit_decode_params(data, threshold=95):
     large_bs_params = fit_bs_params(large_bs_data)
     
     return small_bs_params, large_bs_params
-
 
 def calculate_prefill_time(params, batch_size, input_len):
     """

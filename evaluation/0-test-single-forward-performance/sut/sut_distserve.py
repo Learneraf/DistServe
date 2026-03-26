@@ -61,6 +61,7 @@ class Worker:
             self.model_config.get_head_size(),
         )
         print(f"Number of blocks: {num_gpu_blocks}")
+        print(f"kv_cache_shape: {kv_cache_shape}")
         print(f"Estimated kv cache size: {2*kv_cache_shape[0]*kv_cache_shape[1]*kv_cache_shape[2]*kv_cache_shape[3]*kv_cache_shape[4]*2/GB:.2f} GB")
         self.k_cache = torch.empty(
             kv_cache_shape, dtype=self.model_config.get_torch_dtype(), device="cuda"
