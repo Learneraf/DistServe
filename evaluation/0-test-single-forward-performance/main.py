@@ -37,7 +37,7 @@ def get_profiling_params() -> list[TestParamGroup]:
         import csv
         with open(file_path, 'r', encoding='utf-8') as f:
             reader = csv.DictReader(f)
-            params = set((row['model'], int(row['tp']), int(row['max_num_tokens'])) for row in reader)
+            params = set((row['model'], int(row['tp']), int(row['max_num_tokens_per_gpu'])) for row in reader)
             params = list(params)
             return params
 
@@ -58,10 +58,10 @@ def get_profiling_params() -> list[TestParamGroup]:
                 )
                 for (batch_size, input_len) in [
                     (batch_size, input_len)
-                    for batch_size in [1, 2, 4, 8, 16, 32, 64, 96, 128, 160, 192]
-                    # for batch_size in [1, 2, 4, 8, 16, 32, 64]
-                    for input_len in [4, 8, 16, 32, 48, 64, 96, 128, 192, 256, 284, 512, 768, 1024, 1536, 2020]
-                    # for input_len in [4, 8, 16, 32, 48, 64, 96, 128, 192]
+                    for batch_size in [1, 2, 4, 8, 16, 32, 64, 96, 128]
+                    # for batch_size in [16, 32, 64]
+                    for input_len in [4, 8, 16, 32, 48, 64, 96, 128, 192, 256, 284, 512]
+                    # for input_len in [192, 256]
                     if batch_size * ((input_len+15)//16*16) <= num_tokens_limit
                 ]
             ]
@@ -93,7 +93,8 @@ if __name__ == "__main__":
     
     test_group_candidates = {
         "distserve-example": lambda : run_distserve(example_testing_params, warmup_rounds=1, measure_rounds=1, skip_duplicated=False, store_into_db=False),
-        "distserve-profiling": lambda : run_distserve(get_profiling_params(), warmup_rounds=2, measure_rounds=3),
+        # "distserve-profiling": lambda : run_distserve(get_profiling_params(), warmup_rounds=2, measure_rounds=3),
+        "distserve-profiling": lambda : run_distserve(get_profiling_params(), warmup_rounds=2, measure_rounds=10, skip_duplicated=False),
         "vllm-example": lambda : run_vllm(example_testing_params, warmup_rounds=1, measure_rounds=1, skip_duplicated=False, store_into_db=False),
         "vllm-profiling": lambda : run_vllm(get_profiling_params(), warmup_rounds=2, measure_rounds=3),
     }

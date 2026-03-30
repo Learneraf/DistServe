@@ -1,0 +1,10 @@
+model,tp,batch_size,input_len,single_gpu_peak_memory_MiB
+facebook/opt-13b,1,16,192,31235
+facebook/opt-13b,1,16,256,31621
+facebook/opt-13b,1,32,192,31751
+facebook/opt-13b,2,16,192,20817
+facebook/opt-13b,2,16,256,21057
+facebook/opt-13b,2,32,192,21123
+facebook/opt-13b,2,32,256,21605
+facebook/opt-13b,2,64,192,21733
+facebook/opt-13b,2,64,256,22699

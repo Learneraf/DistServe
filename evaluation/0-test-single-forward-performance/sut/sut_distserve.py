@@ -7,6 +7,7 @@ from distserve.config import ModelConfig, CacheConfig, ParallelConfig
 from distserve.models import get_model_op
 from distserve.utils import get_gpu_memory, set_random_seed, GB, MB
 from distserve.downloader import download_and_convert_weights
+from typing import Optional
 
 import sys
 sys.path.append("..")	# Add the parent directory to the system path so that we can import structs.py
@@ -14,6 +15,12 @@ from structs import *
 from .abstract_sut import SystemUnderTest, get_input_ids
 
 BLOCK_SIZE = 16
+
+def print_gpu_memory(prefix=""):
+    for i in range(torch.cuda.device_count()):
+        allocated = torch.cuda.memory_allocated(i) / 1024**3
+        reserved = torch.cuda.memory_reserved(i) / 1024**3
+        print(f"{prefix} GPU {i}: Allocated {allocated:.2f} GB, Reserved {reserved:.2f} GB")
 
 @ray.remote(num_gpus=1)
 class Worker:
@@ -62,7 +69,7 @@ class Worker:
         )
         print(f"Number of blocks: {num_gpu_blocks}")
         print(f"kv_cache_shape: {kv_cache_shape}")
-        print(f"Estimated kv cache size: {2*kv_cache_shape[0]*kv_cache_shape[1]*kv_cache_shape[2]*kv_cache_shape[3]*kv_cache_shape[4]*2/GB:.2f} GB")
+        print(f"Estimated kv cache size: {2 * self.model_config.get_dtype_size() * kv_cache_shape[0] * kv_cache_shape[1] * kv_cache_shape[2] * kv_cache_shape[3] * kv_cache_shape[4] / GB:.2f} GB")
         self.k_cache = torch.empty(
             kv_cache_shape, dtype=self.model_config.get_torch_dtype(), device="cuda"
         )

@@ -1,2 +1,7 @@
-model,tp,pp,single_gpu_memory,block_size,gpu_memory_utilization,num_nodes,num_gpus_per_node,model_size_per_gpu,single_gpu_peak_runtime_memory,kv_size_in_byte,num_gpu_blocks,max_num_tokens,total_gpus,required_gpus
-facebook/opt-13b,2,1,42405855232,16,0.95,1,2,12.219619750976562,26048507084.8,0.390625,4344,69504,2,2
+model,tp,pp,single_gpu_memory,block_size,gpu_memory_utilization,num_nodes,num_gpus_per_node,activation_memory_factor,fixed_overhead_factor,model_size_per_gpu_gb,single_gpu_peak_runtime_gb,available_kv_memory_per_gpu_gb,kv_per_token_bytes,kv_per_token_mb,num_blocks_per_gpu,total_num_blocks,total_max_num_tokens,max_num_tokens_per_gpu,total_gpus,required_gpus
+facebook/opt-13b,1,1,42405855232,16,0.95,1,2,0.2,0.1,23.94145965576172,32.69131164550781,4.827542114257817,819200.0,0.78125,395,395,6320,6320,2,1
+facebook/opt-13b,2,1,42405855232,16,0.95,1,2,0.2,0.1,11.97072982788086,18.320332336425782,19.198521423339844,409600.0,0.390625,3145,6290,100640,50320,2,2
+huggyllama/llama-7b,1,1,42405855232,16,0.95,1,2,0.2,0.1,12.307136535644531,18.72572937011719,18.793124389648437,524288.0,0.5,2405,2405,38480,38480,2,1
+huggyllama/llama-7b,2,1,42405855232,16,0.95,1,2,0.2,0.1,6.153568267822266,11.33754119873047,26.181312561035156,262144.0,0.25,6702,13404,214464,107232,2,2
+anonymous4chan/llama-2-7b,1,1,42405855232,16,0.95,1,2,0.2,0.1,12.307136535644531,18.72572937011719,18.793124389648437,524288.0,0.5,2405,2405,38480,38480,2,1
+anonymous4chan/llama-2-7b,2,1,42405855232,16,0.95,1,2,0.2,0.1,6.153568267822266,11.33754119873047,26.181312561035156,262144.0,0.25,6702,13404,214464,107232,2,2

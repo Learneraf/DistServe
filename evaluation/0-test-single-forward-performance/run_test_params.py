@@ -1,8 +1,9 @@
 import numpy as np
-
+import torch
 from structs import *
 from db import RecordManager
 from sut.abstract_sut import SystemUnderTest
+from sut.sut_distserve import DistServeSUT
 
 def run_test_params(
     sut_class: type[SystemUnderTest],
@@ -82,3 +83,34 @@ def run_test_params(
             num_finished_params += 1
         del sut
         
+
+if __name__ == "__main__":
+
+    example_testing_params = [
+        TestParamGroup(
+            worker_param = WorkerParam(
+                model_dir = "facebook/opt-13b",
+                tp_world_size = 1,
+                max_req_num = 1024,
+                max_seq_len = 2048,
+                use_dummy_weights = True
+            ),
+            input_params = [
+                InputParam(
+                    batch_size = 1,
+                    input_len = 2000,
+                    output_len = 16,
+                )
+            ]
+        )
+    ]
+
+    run_test_params(
+        DistServeSUT,
+        "db-identical-req.sqlite",
+        example_testing_params,
+        warmup_rounds=2,
+        measure_rounds=3,
+        skip_duplicated=False,
+        store_into_db=False
+    )

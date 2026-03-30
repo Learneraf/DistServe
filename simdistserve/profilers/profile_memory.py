@@ -7,11 +7,14 @@ from config import ModelConfig, ParallelConfig
 MB = 1 << 20
 GB = 1 << 30
 
-MODEL_LISTS = ["facebook/opt-13b", "facebook/opt-66b"]
+MODEL_LISTS = [
+    "facebook/opt-13b", "facebook/opt-66b", 
+    "huggyllama/llama-7b", 
+    "anonymous4chan/llama-2-7b"
+]
 
 try:
     import torch
-
     single_gpu_memory_ = torch.cuda.get_device_properties(0).total_memory
 except:
     single_gpu_memory_ = 80 * GB
@@ -35,13 +38,17 @@ def _get_block_size_in_bytes(
 
 
 def get_model_possible_pp(model):
-    model_config = ModelConfig(model=model, tokenizer="facebook/opt-1.3b")
-    total_num_hidden_layers = model_config.hf_config.num_hidden_layers
-    possible_pp = []
-    for pp in range(1, 1 + total_num_hidden_layers):
-        if total_num_hidden_layers % pp == 0:
-            possible_pp.append(pp)
-    return possible_pp
+
+    # For now, we don't consider pipeline parallelism
+    return [1]
+
+    # model_config = ModelConfig(model=model, tokenizer="facebook/opt-1.3b")
+    # total_num_hidden_layers = model_config.hf_config.num_hidden_layers
+    # possible_pp = []
+    # for pp in range(1, 1 + total_num_hidden_layers):
+    #     if total_num_hidden_layers % pp == 0:
+    #         possible_pp.append(pp)
+    # return possible_pp
 
 
 def get_model_possible_tp(model, num_gpus_per_node):
@@ -57,89 +64,110 @@ def get_model_possible_tp(model, num_gpus_per_node):
 
 
 def measure_stats(
-    model="facebook/opt-13b", tp=1, pp=1,
-    single_gpu_memory=single_gpu_memory_,
+    model="facebook/opt-13b",
+    tp=1,
+    pp=1,
+    single_gpu_memory=80 * GB,  # 默认 80GB
     block_size=16,
-    gpu_memory_utilization=0.85,
+    gpu_memory_utilization=0.9,
     num_nodes=1,
     num_gpus_per_node=8,
+    activation_memory_factor=0.2,  # 激活内存占模型大小的比例（估算）
+    fixed_overhead_factor=0.1,     # 固定开销占 GPU 显存的比例
 ):
-    try:
-        result = dict(locals())
+    """
+    计算在给定并行配置下，KV Cache 最大能容纳的 token 数。
 
-        model_config = ModelConfig(model=model, tokenizer="facebook/opt-1.3b")
-        total_num_hidden_layers = model_config.hf_config.num_hidden_layers
-        total_num_attention_heads = model_config.hf_config.num_attention_heads
-        if total_num_hidden_layers % pp != 0:
-            return None
-        if total_num_attention_heads % tp != 0:
-            return None
+    返回字典，包含计算过程和结果。
+    """
+    result = dict(locals())
 
-        # 计算总GPU数量和验证配置可行性
-        total_gpus = num_nodes * num_gpus_per_node
-        required_gpus = tp * pp
-        if required_gpus > total_gpus:
-            return None
-        # 张量并行必须在单个节点内完成
-        if tp > num_gpus_per_node:
-            return None
+    model_config = ModelConfig(model=model, tokenizer="facebook/opt-1.3b")
+    total_layers = model_config.hf_config.num_hidden_layers
+    total_heads = model_config.hf_config.num_attention_heads
 
-        parallel_config = ParallelConfig(
-            tensor_parallel_size=tp,
-            pipeline_parallel_size=pp
+    # 检查并行配置的合法性
+    if total_layers % pp != 0:
+        return None
+    if total_heads % tp != 0:
+        return None
+
+    total_gpus = num_nodes * num_gpus_per_node
+    required_gpus = tp * pp
+    if required_gpus > total_gpus:
+        return None
+    if tp > num_gpus_per_node:
+        return None
+
+    parallel_config = ParallelConfig(
+        tensor_parallel_size=tp,
+        pipeline_parallel_size=pp
+    )
+
+    # 模型参数内存（每 GPU）
+    model_bytes_per_gpu = model_config.get_model_size_in_bytes(parallel_config)
+    model_size_per_gpu_gb = model_bytes_per_gpu / GB
+
+    # KV Cache 块大小（每 GPU）
+    block_bytes_per_gpu = _get_block_size_in_bytes(
+        block_size, model_config, parallel_config
+    )
+
+    # 运行时内存估算
+    # 1. 固定开销（CUDA 上下文、操作系统等）
+    fixed_overhead = single_gpu_memory * fixed_overhead_factor
+    # 2. 激活内存：通常与序列长度、批大小相关，这里简化为模型参数的一定比例
+    activation_memory = model_bytes_per_gpu * activation_memory_factor
+    # 3. 最小 KV Cache 内存（用于启动）
+    min_batch_size = 1
+    min_kv_memory = block_bytes_per_gpu * min_batch_size
+
+    # 单卡峰值运行时内存（不包括 KV Cache 预留部分）
+    single_gpu_peak_runtime = (
+        fixed_overhead
+        + model_bytes_per_gpu
+        + activation_memory
+        + min_kv_memory
+    )
+
+    # 可用于 KV Cache 的显存（单卡）
+    available_kv_memory_per_gpu = (
+        single_gpu_memory * gpu_memory_utilization - single_gpu_peak_runtime
+    )
+
+    if available_kv_memory_per_gpu <= 0:
+        return None
+
+    # 单卡可容纳的 block 数量
+    num_blocks_per_gpu = int(available_kv_memory_per_gpu // block_bytes_per_gpu)
+    # 总 block 数（所有 GPU 合计）
+    total_num_blocks = num_blocks_per_gpu * required_gpus
+
+    # 最大 token 数
+    total_max_num_tokens = total_num_blocks * block_size
+    max_num_tokens_per_gpu = total_max_num_tokens // required_gpus
+
+    # KV Cache 每 token 占用的字节数（单卡）
+    kv_per_token_bytes = block_bytes_per_gpu / block_size
+    kv_per_token_mb = kv_per_token_bytes / MB
+
+    result.update(
+        dict(
+            single_gpu_memory=single_gpu_memory,
+            model_size_per_gpu_gb=model_size_per_gpu_gb,
+            single_gpu_peak_runtime_gb=single_gpu_peak_runtime / GB,
+            available_kv_memory_per_gpu_gb=available_kv_memory_per_gpu / GB,
+            kv_per_token_bytes=kv_per_token_bytes,
+            kv_per_token_mb=kv_per_token_mb,
+            num_blocks_per_gpu=num_blocks_per_gpu,
+            total_num_blocks=total_num_blocks,
+            total_max_num_tokens=total_max_num_tokens,
+            max_num_tokens_per_gpu=max_num_tokens_per_gpu,
+            total_gpus=total_gpus,
+            required_gpus=required_gpus,
         )
-        model_in_bytes_per_gpu = model_config.get_model_size_in_bytes(
-            parallel_config=parallel_config
-        )
-        model_size_per_gpu = model_in_bytes_per_gpu / GB
-        block_size_in_bytes = _get_block_size_in_bytes(
-            block_size, model_config, parallel_config
-        )
-
-        # 计算更准确的运行时内存峰值
-        # 1. 固定开销（操作系统、CUDA上下文等）
-        fixed_overhead = single_gpu_memory * 0.15
-        # 2. 模型本身的内存
-        model_memory = model_in_bytes_per_gpu
-        # 3. 中间激活值的内存（估计为模型大小的一定比例）
-        activation_memory = model_in_bytes_per_gpu * 0.5
-        # 4. 初始KV缓存的内存（考虑一个最小批处理大小）
-        min_batch_size = 1
-        initial_kv_memory = block_size_in_bytes * min_batch_size
-        
-        single_gpu_peak_runtime_memory = (
-            fixed_overhead
-            + model_memory
-            + activation_memory
-            + initial_kv_memory
-        )
-        num_gpu_blocks = int(
-            (single_gpu_memory * gpu_memory_utilization - single_gpu_peak_runtime_memory)
-            // block_size_in_bytes
-        ) * total_gpus
-
-        if num_gpu_blocks < 0:
-            return None
-
-        max_num_tokens = num_gpu_blocks * block_size
-        kv_size_in_byte = (block_size_in_bytes / block_size / MB)
-        result.update(
-            dict(
-                single_gpu_memory=single_gpu_memory,
-                model_size_per_gpu=model_size_per_gpu,
-                single_gpu_peak_runtime_memory=single_gpu_peak_runtime_memory,
-                kv_size_in_byte=kv_size_in_byte,
-                num_gpu_blocks=num_gpu_blocks,
-                max_num_tokens=max_num_tokens,
-                total_gpus=total_gpus,
-                required_gpus=required_gpus,
-            )
-        )
-        return result
-    except Exception as e:
-        # print(f"Error {model} {tp} {pp}: {e}")
-        pass
-    return None
+    )
+    return result
 
 
 def get_all_possible_tp_pp(num_gpus_per_node=8):
@@ -147,7 +175,6 @@ def get_all_possible_tp_pp(num_gpus_per_node=8):
         tps = get_model_possible_tp(model, num_gpus_per_node)
         pps = get_model_possible_pp(model)
         print((model, tps, pps))
-
 
 def get_all_configs(output_file="profile_result.csv", num_nodes=1, num_gpus_per_node=8,
                     single_gpu_memory=single_gpu_memory_, block_size=16,
@@ -166,7 +193,7 @@ def get_all_configs(output_file="profile_result.csv", num_nodes=1, num_gpus_per_
                 a = measure_stats(model, tp, pp, single_gpu_memory, 
                                 block_size, gpu_memory_utilization,
                                 num_nodes, num_gpus_per_node)
-                print(model, tp, pp, f"nodes={num_nodes}, gpus_per_node={num_gpus_per_node}, required_gpus={required_gpus}")
+                print(model, tp, pp, f"nodes={num_nodes}, gpus_per_node={num_gpus_per_node}, required_gpus={required_gpus}, accepted={a is not None}")
                 if a is not None:
                     configs.append(a)
                     # 记录字段名
@@ -198,15 +225,13 @@ def parse_args():
     parser.add_argument("--num-gpus-per-node", type=int, default=2,
                         help="num gpus per node")
     parser.add_argument("--single-gpu-memory", type=int, default=None,
-                        help="single gpu memory (bytes)")
+                        help="single gpu memory (GB)")
     parser.add_argument("--block-size", type=int, default=16,
                         help="block size")
     parser.add_argument("--gpu-memory-utilization", type=float, default=0.95,
                         help="gpu memory utilization")
     parser.add_argument("--output-file", type=str, default="profile_result.csv",
                         help="output file path")
-    parser.add_argument("--model-list", type=str, nargs="+", default=None,
-                        help="model list to analyze")
     return parser.parse_args()
 
 
@@ -214,10 +239,7 @@ def main():
     args = parse_args()
     
     # 设置GPU内存
-    single_gpu_memory = args.single_gpu_memory if args.single_gpu_memory else single_gpu_memory_
-    
-    # 设置模型列表
-    model_lists = args.model_list if args.model_list else MODEL_LISTS
+    single_gpu_memory = args.single_gpu_memory * GB if args.single_gpu_memory else single_gpu_memory_
     
     print(f"Config: num_nodes={args.num_nodes}, num_gpus_per_node={args.num_gpus_per_node}, "
           f"total_gpus={args.num_nodes * args.num_gpus_per_node}")
@@ -238,3 +260,4 @@ if __name__ == '__main__':
 
     # usage: 
     # python profile_memory.py
+    # python profile_memory.py --single-gpu-memory 80 --num-gpus-per-node 4

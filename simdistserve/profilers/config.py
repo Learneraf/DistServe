@@ -1,7 +1,8 @@
 from typing import Optional
 import torch
 from typing import List
-from transformers import AutoConfig
+from transformers import AutoConfig, AutoModel
+from deprecated import deprecated
 
 class ParallelConfig:
     """Configuration for the distributed execution.
@@ -121,8 +122,17 @@ class ModelConfig:
         return self.hf_config.hidden_size // self.hf_config.num_attention_heads
 
     def get_ffn_inter_dim(self) -> int:
-        # For LLaMA-2:
-        return self.hf_config.intermediate_size
+        """获取 FFN 中间层维度（不同模型命名不同）。"""
+        model_type = self.hf_config.model_type
+        if model_type == "opt":
+            # OPT 使用 ffn_dim
+            return self.hf_config.ffn_dim
+        elif hasattr(self.hf_config, "intermediate_size"):
+            # LLaMA、Falcon 等
+            return self.hf_config.intermediate_size
+        else:
+            # 回退值（4倍隐藏层大小是常见设置）
+            return self.get_hidden_size() * 4
 
     def get_q_heads(self, parallel_config: ParallelConfig = ParallelConfig()) -> int:
         # For LLaMA-2:
@@ -194,20 +204,78 @@ class ModelConfig:
         )
         return total_num_hidden_layers // parallel_config.pipeline_parallel_size
 
+    @deprecated("Use auto_get_model_params instead")
+    def get_total_params(self) -> int:
+        """计算模型总参数量（不区分并行）。"""
+        h = self.get_hidden_size()
+        vocab_size = self.hf_config.vocab_size
+        ffn_dim = self.get_ffn_inter_dim()
+        num_layers = self.hf_config.num_hidden_layers
+        # 嵌入层参数（词嵌入 + 位置嵌入，若有）
+        embedding_params = vocab_size * h
+        # 位置嵌入：有的模型有可学习的位置编码，如 GPT-2；有的没有（如 LLaMA 使用 RoPE）
+        if hasattr(self.hf_config, "max_position_embeddings"):
+            embedding_params += self.get_max_model_len() * h
+        # 每个 Transformer 层的参数
+        # 注意力：QKV 投影 + 输出投影
+        attn_params = 4 * h * h  # QKV 和输出投影
+
+        if self.hf_config.model_type == "llama":
+            # 三个线性层
+            ffn_params = 3 * h * ffn_dim
+        else:
+            # 默认两个线性层
+            ffn_params = 2 * h * ffn_dim
+
+        # 层归一化等偏置（若模型使用）
+        layer_norm_params = 2 * h  # 两个 LayerNorm 的增益和偏置
+        per_layer_params = attn_params + ffn_params + layer_norm_params
+        # 总参数量
+        total_params = embedding_params + num_layers * per_layer_params
+        # 输出层（LM head），通常与词嵌入共享权重
+        # 这里保守估计不共享，实际需根据模型配置判断
+        if not getattr(self.hf_config, "tie_word_embeddings", False):
+            total_params += vocab_size * h
+        return total_params
+
+    def auto_get_model_params(self) -> int:
+        config = AutoConfig.from_pretrained(self.model, trust_remote_code=True)
+        with torch.device('meta'):
+            model = AutoModel.from_config(config)
+        total_params = sum(p.numel() for p in model.parameters())
+        return total_params
+
     def get_model_size_in_bytes(
         self, parallel_config: ParallelConfig = ParallelConfig()
     ) -> int:
-        total_params = (
-            self.hf_config.vocab_size * self.get_hidden_size()  # vocab embed
-            + self.get_max_model_len() * self.get_hidden_size()  # position embed
-            + 4
-            * self.get_num_layers(parallel_config)
-            * (self.get_hidden_size() ** 2)  # attention
-            / parallel_config.tensor_parallel_size # attention is divided by tp
-            + 8
-            * self.get_num_layers(parallel_config)
-            * (self.get_hidden_size() ** 2)  # FFN
-            / parallel_config.tensor_parallel_size # FFN is divided by tp
-            + 5 * self.get_num_layers(parallel_config) * self.get_hidden_size()  # bias
-        ) 
-        return total_params * self.get_dtype_size()
+        """返回每个 GPU 上的模型参数内存占用（字节）。"""
+        # total_params = self.get_total_params()
+
+        total_params = self.auto_get_model_params()
+        dtype_size = self.get_dtype_size()
+        # 参数在 TP 和 PP 下均匀分布
+        return (total_params * dtype_size) // (parallel_config.tensor_parallel_size * parallel_config.pipeline_parallel_size)
+
+
+def _get_block_size_in_bytes(
+    block_size: int,
+    model_config: ModelConfig,
+    parallel_config: ParallelConfig
+) -> int:
+    """
+    计算单个 KV Cache block 的大小（字节）。
+    block_size: 每个 block 存储的 token 数
+    """
+    # 每个 token 在每个 GPU 上的 KV Cache 大小
+    num_layers_per_gpu = model_config.get_num_layers_per_stage(parallel_config)
+    num_kv_heads_per_gpu = model_config.get_num_kv_heads(parallel_config)
+    head_dim = model_config.get_head_size()
+    dtype_size = model_config.get_dtype_size()
+    per_token_kv_bytes = (
+        num_layers_per_gpu
+        * num_kv_heads_per_gpu
+        * head_dim
+        * 2  # key and value
+        * dtype_size
+    )
+    return per_token_kv_bytes * block_size
