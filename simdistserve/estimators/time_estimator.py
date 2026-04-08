@@ -6,7 +6,7 @@ from simdistserve.constants import ModelTypes
 
 
 def load_distserve_profile_data():
-    profile_data_path = Path(__file__).parent / "profiled_data" / "vllm-ascend" / "fit_params_llama_1B_num_prompt_100_5_params_decode.json"
+    profile_data_path = Path(__file__).parent / "profiled_data" / "vllm-ascend" / "fit_params_llama_3B_num_prompt_100_6_params_decode.json"
     with open(profile_data_path) as f:
         profile_data = json.load(f)
         return profile_data
@@ -100,14 +100,14 @@ def get_decode_time(num_requests, pp=1, model_type=ModelTypes.opt_13b, TP=1,
         a, b, c = coeffs
         num_total_tokens = sum(token_generated_list) if token_generated_list else 0
         delay = a + b * num_total_tokens + c * batch_size
-    elif len(coeffs) == 5:
-        # 五系数模型（方案三）：A + B*input_len + C*output_len + D*input_len*output_len + E*output_len^2
+    elif len(coeffs) == 6:
+        # 六系数模型（方案三）：A + B*input_len + C*output_len + D*input_len*output_len + E*output_len^2 + F*input_len^2
         # 需要逐个请求计算，然后求和？还是计算总延迟？
         # 注意：原函数返回的是单个请求的延迟还是整个批次的延迟？从原公式看，a+b*总token+c*batch_size 返回的是批次总延迟。
-        # 五系数模型通常也是计算批次中所有请求的总解码时间。
-        A, B, C, D, E = coeffs
+        # 六系数模型通常也是计算批次中所有请求的总解码时间。
+        A, B, C, D, E, F = coeffs
         if input_lens is None or token_generated_list is None:
-            raise ValueError("For 5-coefficient model, both input_lens and token_generated_list must be provided.")
+            raise ValueError("For 56-coefficient model, both input_lens and token_generated_list must be provided.")
         total_delay = 0.0
         for in_len, total_len in zip(input_lens, token_generated_list):
             # 单个请求的解码时间
@@ -116,7 +116,8 @@ def get_decode_time(num_requests, pp=1, model_type=ModelTypes.opt_13b, TP=1,
                          B * in_len +
                          C * out_len +
                          D * in_len * out_len +
-                         E * out_len * out_len)
+                         E * out_len * out_len +
+                         F * in_len * in_len)
             total_delay += req_delay
         delay = total_delay
     else:
