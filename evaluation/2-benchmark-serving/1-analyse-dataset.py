@@ -4,7 +4,7 @@ import argparse
 import numpy as np
 import histoprint
 
-from distserve.simulator.utils import Dataset
+from structs import Dataset
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -63,3 +63,8 @@ if __name__ == "__main__":
     print(f"Prompt len mean: {np.mean(prompt_lens)}")
     print(f"Output len mean: {np.mean(output_lens)}")
     
+    '''
+    usage:
+    python ./1-analyse-dataset.py \
+        sharegpt.json
+    '''

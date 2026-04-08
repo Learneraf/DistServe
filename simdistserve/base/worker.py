@@ -339,9 +339,11 @@ class Worker:
             decode_len_list=[x.current_context_len for x in decode_reqs],
         )
         _token_generated_list = [x.current_context_len + 1 for x in decode_reqs]
+        input_lens = [req.prefill_lens for req in decode_reqs]
         delay = get_decode_time(batch_size, pp=self.cluster.PP_decode,
                                 model_type=self.model_type, TP=self.TP_Decode,
                                 token_generated_list=_token_generated_list,
+                                input_lens=input_lens,
                                 engine_type=self.engine_type, )
         num_tokens = sum(x.current_context_len for x in decode_reqs)
         if self.is_first_in_pipeline:

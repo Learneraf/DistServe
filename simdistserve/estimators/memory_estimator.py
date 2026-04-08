@@ -5,7 +5,7 @@ from simdistserve.constants import ModelTypes
 
 
 def load_profile_data():
-    profile_data_path = Path(__file__).parent / "profile_data" / "max_num_tokens.csv"
+    profile_data_path = Path(__file__).parent / "profiled_data" / "max_num_tokens.csv"
     with open(profile_data_path) as f:
         _profile_data = pd.read_csv(f)
 
@@ -40,11 +40,17 @@ def get_max_num_tokens(model: ModelTypes, tp: int, pp: int) -> int:
     return max_num_tokens
 
 
+# 为新添加的llama模型添加超参数配置，确保模型能够正常工作
 model_hyperparams = {
     # model: (layers, heads)
     "facebook/opt-13b": (40, 40),
     "facebook/opt-66b": (64, 72),
     "facebook/opt-175b": (96, 96),
+    "huggyllama/llama-7b": (32, 32),
+    "anonymous4chan/llama-2-7b": (32, 32),
+    "/users/rh/.cache/modelscope/hub/models/LLM-Research/Llama-3.2-1B/converted_bin_v2": (16, 16),
+    "/users/rh/.cache/modelscope/hub/models/LLM-Research/Llama-3.2-3B/converted_bin_v2": (28, 24),
+    "/users/rh/.cache/modelscope/hub/models/LLM-Research/Meta-Llama-3.1-8B/converted_bin_v2": (32, 32)
 }
 
 

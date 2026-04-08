@@ -1,6 +1,13 @@
 """
 Start a proxy and (potential a lot of, if data parallel is enabled) API servers.
 The proxy acts as a load balancer which uses round-robin to distribute the requests to the API servers.
+
+usage:
+
+python ./2-start-api-server.py \
+    --backend "distserve" \
+    --model "facebook/opt-1.3b"
+
 """
 import os, sys
 import subprocess
@@ -87,7 +94,7 @@ python -m mii.entrypoints.api_server \\
     elif args.backend == "distserve":
         context_tp, context_pp, decoding_tp, decoding_pp = MODEL_TO_PARALLEL_PARAMS[args.model]["distserve"]
         script = f"""
-conda activate distserve;
+
 python -m distserve.api_server.distserve_api_server \\
     --host 0.0.0.0 \\
     --port {port} \\

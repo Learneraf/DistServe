@@ -1,0 +1,609 @@
+Request 1:
+  First token latency: 0.6178s (SLO: 1.0s) ✓
+  Decoding latency: 0.1839s (SLO: 1.0s) ✓
+  Total latency: 0.8017s (SLO: 1.0s) ✓
+  Both prefill and decode SLO met: ✓
+
+Request 2:
+  First token latency: 0.4996s (SLO: 1.0s) ✓
+  Decoding latency: 0.2574s (SLO: 1.0s) ✓
+  Total latency: 0.7570s (SLO: 1.0s) ✓
+  Both prefill and decode SLO met: ✓
+
+Request 3:
+  First token latency: 0.1407s (SLO: 1.0s) ✓
+  Decoding latency: 4.8583s (SLO: 1.0s) ✗
+  Total latency: 4.9991s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 4:
+  First token latency: 0.5566s (SLO: 1.0s) ✓
+  Decoding latency: 3.0843s (SLO: 1.0s) ✗
+  Total latency: 3.6409s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 5:
+  First token latency: 1.4511s (SLO: 1.0s) ✗
+  Decoding latency: 0.6837s (SLO: 1.0s) ✓
+  Total latency: 2.1349s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 6:
+  First token latency: 1.2937s (SLO: 1.0s) ✗
+  Decoding latency: 0.1061s (SLO: 1.0s) ✓
+  Total latency: 1.3998s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 7:
+  First token latency: 1.5716s (SLO: 1.0s) ✗
+  Decoding latency: 0.3965s (SLO: 1.0s) ✓
+  Total latency: 1.9681s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 8:
+  First token latency: 1.4072s (SLO: 1.0s) ✗
+  Decoding latency: 15.8734s (SLO: 1.0s) ✗
+  Total latency: 17.2806s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 9:
+  First token latency: 0.7719s (SLO: 1.0s) ✓
+  Decoding latency: 0.1410s (SLO: 1.0s) ✓
+  Total latency: 0.9129s (SLO: 1.0s) ✓
+  Both prefill and decode SLO met: ✓
+
+Request 10:
+  First token latency: 0.0357s (SLO: 1.0s) ✓
+  Decoding latency: 0.3755s (SLO: 1.0s) ✓
+  Total latency: 0.4112s (SLO: 1.0s) ✓
+  Both prefill and decode SLO met: ✓
+
+Request 11:
+  First token latency: 0.0380s (SLO: 1.0s) ✓
+  Decoding latency: 0.3179s (SLO: 1.0s) ✓
+  Total latency: 0.3559s (SLO: 1.0s) ✓
+  Both prefill and decode SLO met: ✓
+
+Request 12:
+  First token latency: 0.1637s (SLO: 1.0s) ✓
+  Decoding latency: 50.3783s (SLO: 1.0s) ✗
+  Total latency: 50.5420s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 13:
+  First token latency: 0.0271s (SLO: 1.0s) ✓
+  Decoding latency: 0.3283s (SLO: 1.0s) ✓
+  Total latency: 0.3554s (SLO: 1.0s) ✓
+  Both prefill and decode SLO met: ✓
+
+Request 14:
+  First token latency: 0.0217s (SLO: 1.0s) ✓
+  Decoding latency: 54.0445s (SLO: 1.0s) ✗
+  Total latency: 54.0662s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 15:
+  First token latency: 0.1686s (SLO: 1.0s) ✓
+  Decoding latency: 15.3869s (SLO: 1.0s) ✗
+  Total latency: 15.5556s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 16:
+  First token latency: 0.2417s (SLO: 1.0s) ✓
+  Decoding latency: 2.6345s (SLO: 1.0s) ✗
+  Total latency: 2.8761s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 17:
+  First token latency: 0.2156s (SLO: 1.0s) ✓
+  Decoding latency: 0.5436s (SLO: 1.0s) ✓
+  Total latency: 0.7592s (SLO: 1.0s) ✓
+  Both prefill and decode SLO met: ✓
+
+Request 18:
+  First token latency: 0.2098s (SLO: 1.0s) ✓
+  Decoding latency: 0.4191s (SLO: 1.0s) ✓
+  Total latency: 0.6289s (SLO: 1.0s) ✓
+  Both prefill and decode SLO met: ✓
+
+Request 19:
+  First token latency: 0.1070s (SLO: 1.0s) ✓
+  Decoding latency: 18.0533s (SLO: 1.0s) ✗
+  Total latency: 18.1603s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 20:
+  First token latency: 0.0998s (SLO: 1.0s) ✓
+  Decoding latency: 2.7178s (SLO: 1.0s) ✗
+  Total latency: 2.8176s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 21:
+  First token latency: 0.0838s (SLO: 1.0s) ✓
+  Decoding latency: 8.2580s (SLO: 1.0s) ✗
+  Total latency: 8.3418s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 22:
+  First token latency: 0.1158s (SLO: 1.0s) ✓
+  Decoding latency: 0.9889s (SLO: 1.0s) ✓
+  Total latency: 1.1047s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✓
+
+Request 23:
+  First token latency: 0.0730s (SLO: 1.0s) ✓
+  Decoding latency: 46.7860s (SLO: 1.0s) ✗
+  Total latency: 46.8590s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 24:
+  First token latency: 0.0223s (SLO: 1.0s) ✓
+  Decoding latency: 0.4469s (SLO: 1.0s) ✓
+  Total latency: 0.4692s (SLO: 1.0s) ✓
+  Both prefill and decode SLO met: ✓
+
+Request 25:
+  First token latency: 0.5198s (SLO: 1.0s) ✓
+  Decoding latency: 0.0992s (SLO: 1.0s) ✓
+  Total latency: 0.6189s (SLO: 1.0s) ✓
+  Both prefill and decode SLO met: ✓
+
+Request 26:
+  First token latency: 0.7616s (SLO: 1.0s) ✓
+  Decoding latency: 0.0717s (SLO: 1.0s) ✓
+  Total latency: 0.8333s (SLO: 1.0s) ✓
+  Both prefill and decode SLO met: ✓
+
+Request 27:
+  First token latency: 0.4698s (SLO: 1.0s) ✓
+  Decoding latency: 3.2173s (SLO: 1.0s) ✗
+  Total latency: 3.6870s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 28:
+  First token latency: 0.4255s (SLO: 1.0s) ✓
+  Decoding latency: 23.0498s (SLO: 1.0s) ✗
+  Total latency: 23.4753s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 29:
+  First token latency: 0.0516s (SLO: 1.0s) ✓
+  Decoding latency: 0.4615s (SLO: 1.0s) ✓
+  Total latency: 0.5131s (SLO: 1.0s) ✓
+  Both prefill and decode SLO met: ✓
+
+Request 30:
+  First token latency: 0.0214s (SLO: 1.0s) ✓
+  Decoding latency: 22.8134s (SLO: 1.0s) ✗
+  Total latency: 22.8348s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 31:
+  First token latency: 0.4607s (SLO: 1.0s) ✓
+  Decoding latency: 19.2999s (SLO: 1.0s) ✗
+  Total latency: 19.7606s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 32:
+  First token latency: 0.4127s (SLO: 1.0s) ✓
+  Decoding latency: 1.5036s (SLO: 1.0s) ✗
+  Total latency: 1.9163s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 33:
+  First token latency: 0.6620s (SLO: 1.0s) ✓
+  Decoding latency: 0.9627s (SLO: 1.0s) ✓
+  Total latency: 1.6246s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✓
+
+Request 34:
+  First token latency: 0.5268s (SLO: 1.0s) ✓
+  Decoding latency: 0.9239s (SLO: 1.0s) ✓
+  Total latency: 1.4506s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✓
+
+Request 35:
+  First token latency: 0.2867s (SLO: 1.0s) ✓
+  Decoding latency: 23.4024s (SLO: 1.0s) ✗
+  Total latency: 23.6891s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 36:
+  First token latency: 0.2812s (SLO: 1.0s) ✓
+  Decoding latency: 4.2630s (SLO: 1.0s) ✗
+  Total latency: 4.5443s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 37:
+  First token latency: 0.1045s (SLO: 1.0s) ✓
+  Decoding latency: 24.8835s (SLO: 1.0s) ✗
+  Total latency: 24.9880s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 38:
+  First token latency: 0.0403s (SLO: 1.0s) ✓
+  Decoding latency: 2.8942s (SLO: 1.0s) ✗
+  Total latency: 2.9345s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 39:
+  First token latency: 0.0618s (SLO: 1.0s) ✓
+  Decoding latency: 49.8064s (SLO: 1.0s) ✗
+  Total latency: 49.8682s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 40:
+  First token latency: 0.0299s (SLO: 1.0s) ✓
+  Decoding latency: 1.6609s (SLO: 1.0s) ✗
+  Total latency: 1.6909s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 41:
+  First token latency: 0.0812s (SLO: 1.0s) ✓
+  Decoding latency: 0.7153s (SLO: 1.0s) ✓
+  Total latency: 0.7966s (SLO: 1.0s) ✓
+  Both prefill and decode SLO met: ✓
+
+Request 42:
+  First token latency: 0.2885s (SLO: 1.0s) ✓
+  Decoding latency: 0.2931s (SLO: 1.0s) ✓
+  Total latency: 0.5816s (SLO: 1.0s) ✓
+  Both prefill and decode SLO met: ✓
+
+Request 43:
+  First token latency: 0.2713s (SLO: 1.0s) ✓
+  Decoding latency: 35.3905s (SLO: 1.0s) ✗
+  Total latency: 35.6618s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 44:
+  First token latency: 0.1374s (SLO: 1.0s) ✓
+  Decoding latency: 18.8542s (SLO: 1.0s) ✗
+  Total latency: 18.9916s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 45:
+  First token latency: 0.2576s (SLO: 1.0s) ✓
+  Decoding latency: 17.7225s (SLO: 1.0s) ✗
+  Total latency: 17.9801s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 46:
+  First token latency: 0.0886s (SLO: 1.0s) ✓
+  Decoding latency: 47.0316s (SLO: 1.0s) ✗
+  Total latency: 47.1202s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 47:
+  First token latency: 0.0266s (SLO: 1.0s) ✓
+  Decoding latency: 1.0030s (SLO: 1.0s) ✗
+  Total latency: 1.0296s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 48:
+  First token latency: 0.1070s (SLO: 1.0s) ✓
+  Decoding latency: 18.4020s (SLO: 1.0s) ✗
+  Total latency: 18.5090s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 49:
+  First token latency: 0.1025s (SLO: 1.0s) ✓
+  Decoding latency: 1.0305s (SLO: 1.0s) ✗
+  Total latency: 1.1330s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 50:
+  First token latency: 0.0483s (SLO: 1.0s) ✓
+  Decoding latency: 0.7133s (SLO: 1.0s) ✓
+  Total latency: 0.7616s (SLO: 1.0s) ✓
+  Both prefill and decode SLO met: ✓
+
+Request 51:
+  First token latency: 0.3308s (SLO: 1.0s) ✓
+  Decoding latency: 0.7274s (SLO: 1.0s) ✓
+  Total latency: 1.0582s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✓
+
+Request 52:
+  First token latency: 0.1110s (SLO: 1.0s) ✓
+  Decoding latency: 10.5046s (SLO: 1.0s) ✗
+  Total latency: 10.6157s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 53:
+  First token latency: 0.1021s (SLO: 1.0s) ✓
+  Decoding latency: 0.1769s (SLO: 1.0s) ✓
+  Total latency: 0.2790s (SLO: 1.0s) ✓
+  Both prefill and decode SLO met: ✓
+
+Request 54:
+  First token latency: 0.0365s (SLO: 1.0s) ✓
+  Decoding latency: 16.8973s (SLO: 1.0s) ✗
+  Total latency: 16.9338s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 55:
+  First token latency: 0.1132s (SLO: 1.0s) ✓
+  Decoding latency: 1.8443s (SLO: 1.0s) ✗
+  Total latency: 1.9576s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 56:
+  First token latency: 0.2844s (SLO: 1.0s) ✓
+  Decoding latency: 1.0297s (SLO: 1.0s) ✗
+  Total latency: 1.3140s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 57:
+  First token latency: 0.5315s (SLO: 1.0s) ✓
+  Decoding latency: 0.5014s (SLO: 1.0s) ✓
+  Total latency: 1.0328s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✓
+
+Request 58:
+  First token latency: 0.9109s (SLO: 1.0s) ✓
+  Decoding latency: 39.4164s (SLO: 1.0s) ✗
+  Total latency: 40.3272s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 59:
+  First token latency: 0.8274s (SLO: 1.0s) ✓
+  Decoding latency: 4.5624s (SLO: 1.0s) ✗
+  Total latency: 5.3898s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 60:
+  First token latency: 1.1444s (SLO: 1.0s) ✗
+  Decoding latency: 25.8539s (SLO: 1.0s) ✗
+  Total latency: 26.9984s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 61:
+  First token latency: 1.0643s (SLO: 1.0s) ✗
+  Decoding latency: 2.0466s (SLO: 1.0s) ✗
+  Total latency: 3.1109s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 62:
+  First token latency: 1.0149s (SLO: 1.0s) ✗
+  Decoding latency: 0.1994s (SLO: 1.0s) ✓
+  Total latency: 1.2142s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 63:
+  First token latency: 0.9815s (SLO: 1.0s) ✓
+  Decoding latency: 0.7438s (SLO: 1.0s) ✓
+  Total latency: 1.7253s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✓
+
+Request 64:
+  First token latency: 0.6763s (SLO: 1.0s) ✓
+  Decoding latency: 11.5172s (SLO: 1.0s) ✗
+  Total latency: 12.1935s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 65:
+  First token latency: 0.6338s (SLO: 1.0s) ✓
+  Decoding latency: 5.9350s (SLO: 1.0s) ✗
+  Total latency: 6.5688s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 66:
+  First token latency: 0.5713s (SLO: 1.0s) ✓
+  Decoding latency: 28.5386s (SLO: 1.0s) ✗
+  Total latency: 29.1099s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 67:
+  First token latency: 0.5723s (SLO: 1.0s) ✓
+  Decoding latency: 21.5696s (SLO: 1.0s) ✗
+  Total latency: 22.1419s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 68:
+  First token latency: 0.1148s (SLO: 1.0s) ✓
+  Decoding latency: 0.6422s (SLO: 1.0s) ✓
+  Total latency: 0.7570s (SLO: 1.0s) ✓
+  Both prefill and decode SLO met: ✓
+
+Request 69:
+  First token latency: 0.0856s (SLO: 1.0s) ✓
+  Decoding latency: 15.2907s (SLO: 1.0s) ✗
+  Total latency: 15.3763s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 70:
+  First token latency: 0.0536s (SLO: 1.0s) ✓
+  Decoding latency: 35.3186s (SLO: 1.0s) ✗
+  Total latency: 35.3722s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 71:
+  First token latency: 0.2396s (SLO: 1.0s) ✓
+  Decoding latency: 0.8360s (SLO: 1.0s) ✓
+  Total latency: 1.0756s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✓
+
+Request 72:
+  First token latency: 0.1037s (SLO: 1.0s) ✓
+  Decoding latency: 27.4972s (SLO: 1.0s) ✗
+  Total latency: 27.6009s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 73:
+  First token latency: 0.0761s (SLO: 1.0s) ✓
+  Decoding latency: 1.2108s (SLO: 1.0s) ✗
+  Total latency: 1.2870s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 74:
+  First token latency: 0.3008s (SLO: 1.0s) ✓
+  Decoding latency: 16.9190s (SLO: 1.0s) ✗
+  Total latency: 17.2198s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 75:
+  First token latency: 0.1003s (SLO: 1.0s) ✓
+  Decoding latency: 2.2725s (SLO: 1.0s) ✗
+  Total latency: 2.3728s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 76:
+  First token latency: 0.0328s (SLO: 1.0s) ✓
+  Decoding latency: 29.0304s (SLO: 1.0s) ✗
+  Total latency: 29.0631s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 77:
+  First token latency: 0.0431s (SLO: 1.0s) ✓
+  Decoding latency: 0.5306s (SLO: 1.0s) ✓
+  Total latency: 0.5737s (SLO: 1.0s) ✓
+  Both prefill and decode SLO met: ✓
+
+Request 78:
+  First token latency: 0.0251s (SLO: 1.0s) ✓
+  Decoding latency: 37.5347s (SLO: 1.0s) ✗
+  Total latency: 37.5598s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 79:
+  First token latency: 0.4290s (SLO: 1.0s) ✓
+  Decoding latency: 4.2607s (SLO: 1.0s) ✗
+  Total latency: 4.6897s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 80:
+  First token latency: 1.1851s (SLO: 1.0s) ✗
+  Decoding latency: 0.9862s (SLO: 1.0s) ✓
+  Total latency: 2.1713s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 81:
+  First token latency: 1.1490s (SLO: 1.0s) ✗
+  Decoding latency: 21.8994s (SLO: 1.0s) ✗
+  Total latency: 23.0484s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 82:
+  First token latency: 1.0396s (SLO: 1.0s) ✗
+  Decoding latency: 0.7289s (SLO: 1.0s) ✓
+  Total latency: 1.7686s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 83:
+  First token latency: 0.8868s (SLO: 1.0s) ✓
+  Decoding latency: 1.1490s (SLO: 1.0s) ✗
+  Total latency: 2.0358s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 84:
+  First token latency: 0.8679s (SLO: 1.0s) ✓
+  Decoding latency: 24.8053s (SLO: 1.0s) ✗
+  Total latency: 25.6731s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 85:
+  First token latency: 1.1091s (SLO: 1.0s) ✗
+  Decoding latency: 36.2860s (SLO: 1.0s) ✗
+  Total latency: 37.3950s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 86:
+  First token latency: 0.8702s (SLO: 1.0s) ✓
+  Decoding latency: 29.9795s (SLO: 1.0s) ✗
+  Total latency: 30.8497s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 87:
+  First token latency: 0.7821s (SLO: 1.0s) ✓
+  Decoding latency: 26.5613s (SLO: 1.0s) ✗
+  Total latency: 27.3434s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 88:
+  First token latency: 0.7044s (SLO: 1.0s) ✓
+  Decoding latency: 3.3903s (SLO: 1.0s) ✗
+  Total latency: 4.0947s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 89:
+  First token latency: 0.6763s (SLO: 1.0s) ✓
+  Decoding latency: 36.3743s (SLO: 1.0s) ✗
+  Total latency: 37.0505s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 90:
+  First token latency: 0.4311s (SLO: 1.0s) ✓
+  Decoding latency: 0.8278s (SLO: 1.0s) ✓
+  Total latency: 1.2589s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✓
+
+Request 91:
+  First token latency: 0.1148s (SLO: 1.0s) ✓
+  Decoding latency: 23.7181s (SLO: 1.0s) ✗
+  Total latency: 23.8329s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 92:
+  First token latency: 0.0266s (SLO: 1.0s) ✓
+  Decoding latency: 17.6667s (SLO: 1.0s) ✗
+  Total latency: 17.6933s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 93:
+  First token latency: 0.0631s (SLO: 1.0s) ✓
+  Decoding latency: 3.0118s (SLO: 1.0s) ✗
+  Total latency: 3.0749s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 94:
+  First token latency: 0.4512s (SLO: 1.0s) ✓
+  Decoding latency: 15.6890s (SLO: 1.0s) ✗
+  Total latency: 16.1402s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 95:
+  First token latency: 0.3241s (SLO: 1.0s) ✓
+  Decoding latency: 1.8317s (SLO: 1.0s) ✗
+  Total latency: 2.1558s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 96:
+  First token latency: 0.2748s (SLO: 1.0s) ✓
+  Decoding latency: 25.8353s (SLO: 1.0s) ✗
+  Total latency: 26.1101s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 97:
+  First token latency: 0.2170s (SLO: 1.0s) ✓
+  Decoding latency: 0.7920s (SLO: 1.0s) ✓
+  Total latency: 1.0090s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✓
+
+Request 98:
+  First token latency: 0.2276s (SLO: 1.0s) ✓
+  Decoding latency: 1.0856s (SLO: 1.0s) ✗
+  Total latency: 1.3132s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 99:
+  First token latency: 0.2846s (SLO: 1.0s) ✓
+  Decoding latency: 0.2788s (SLO: 1.0s) ✓
+  Total latency: 0.5635s (SLO: 1.0s) ✓
+  Both prefill and decode SLO met: ✓
+
+Request 100:
+  First token latency: 0.0317s (SLO: 1.0s) ✓
+  Decoding latency: 1.2902s (SLO: 1.0s) ✗
+  Total latency: 1.3219s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+============================================================
+SLO Analysis Results
+============================================================
+Total requests: 100
+Prefill SLO met: 89/100 (89.00%)
+Decode SLO met: 34/100 (34.00%)
+Total SLO met: 19/100 (19.00%)
+Both prefill and decode SLO met: 28/100 (28.00%)
+============================================================

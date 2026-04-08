@@ -26,6 +26,33 @@ python -m distserve.api_server.distserve_api_server \\
     --decoding-max-tokens-per-batch 65536
 """
 
+'''
+example:
+
+python -m distserve.api_server.distserve_api_server \
+    --use-dummy-weights \
+    --host 127.0.0.1 \
+    --port 8400 \
+    --model huggyllama/llama-7b \
+    --tokenizer huggyllama/llama-7b \
+    --context-tensor-parallel-size 1 \
+    --context-pipeline-parallel-size 1 \
+    --decoding-tensor-parallel-size 1 \
+    --decoding-pipeline-parallel-size 1 \
+    --block-size 16 \
+    --max-num-blocks-per-req 128 \
+    --gpu-memory-utilization 0.95 \
+    --swap-space 16 \
+    --context-sched-policy fcfs \
+    --context-max-batch-size 128 \
+    --context-max-tokens-per-batch 8192 \
+    --decoding-sched-policy fcfs \
+    --decoding-max-batch-size 1024 \
+    --decoding-max-tokens-per-batch 65536
+
+
+'''
+
 import argparse
 import json
 from typing import AsyncGenerator, List, Tuple

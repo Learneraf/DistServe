@@ -1,6 +1,15 @@
+'''
+usage:
+
+python ./3-compare-time-usage.py \
+    --std "./result/distserve-100-100.exp" \
+    --sim "./result/sim-distserve-100-100.exp"
+'''
+
+
 import argparse
 
-from distserve.simulator.utils import ReqResult, Dataset, load_req_result_list
+from structs import RequestResult as ReqResult, Dataset, read_request_results as load_req_result_list
 
 def compare(
     std_reqs: list[ReqResult],
@@ -20,7 +29,7 @@ def compare(
             sim_reqs.sort(key=lambda x: (x.prompt_len, x.output_len))
             compare(std_reqs, sim_reqs)
             return
-        print(f"{std_req.prompt_len:4d} {std_req.output_len:4d} {std_req.ttft_ms:8.2f} {sim_req.ttft_ms:8.2f} ({(sim_req.ttft_ms-std_req.ttft_ms)/std_req.ttft_ms*100:5.1f}%) {std_req.tpot_ms:8.2f} {sim_req.tpot_ms:8.2f} {(sim_req.tpot_ms-std_req.tpot_ms)/std_req.tpot_ms*100:5.1f} %")
+        print(f"{std_req.prompt_len:4d} {std_req.output_len:4d} {std_req.ftl:8.2f} {sim_req.ftl:8.2f} ({(sim_req.ftl-std_req.ftl)/std_req.ftl*100:5.1f}%) {std_req.tpot:8.2f} {sim_req.tpot:8.2f} {(sim_req.tpot-std_req.tpot)/std_req.tpot*100:5.1f} %")
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()

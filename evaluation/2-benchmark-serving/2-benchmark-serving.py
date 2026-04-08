@@ -55,6 +55,9 @@ async def get_request(
             raise ValueError(
                 f"Unsupported prosess name: {process_name}, we currently support uniform, gamma and possion."
             )
+            
+    print(f"First {10} intervals: {intervals[:10]}")
+
     for idx, request in enumerate(input_requests):
         yield request
         if request_rate == float("inf") or request_rate == 0.0:
@@ -348,4 +351,26 @@ if __name__ == "__main__":
         args.output = os.path.join(output_dir, f"{args.exp_result_prefix}-{num_prompts}-{request_rate}.exp")
         main(args)
         time.sleep(1)
-        
+    
+
+    '''
+    usage:
+    python ./2-benchmark-serving.py \
+        --dataset sharegpt.json \
+        --host 127.0.0.1 \
+        --port 8400 \
+        --num-prompts-req-rates "[(100, 1), (100, 1.5), (100, 2), (100, 2.5), (100, 3), (100, 3.5), (100, 4)]" \
+        --exp-result-root "./result" \
+        --exp-result-dir "llama_7B"  \
+        --verbose
+
+    python ./2-benchmark-serving.py \
+        --dataset sharegpt.json \
+        --host 0.0.0.0 \
+        --port 8401 \
+        --num-prompts-req-rates "[(100, 100), (100, 200)]" \
+        --exp-result-root "./" \
+        --exp-result-dir "./result" \
+        --verbose \
+        --trust-remote-code
+    '''

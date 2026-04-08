@@ -2,6 +2,45 @@
 Simulate DistServe
 
 Output a JSON (list) where each item is the lifecycle for a request.
+
+usage:
+
+For simdistserve:
+
+RATE=4
+python simulate_dist.py \
+    --backend distserve \
+    --model /users/rh/.cache/modelscope/hub/models/LLM-Research/Llama-3.2-1B/converted_bin_v2 \
+    --seed 0 \
+    --rate $RATE \
+    --N 100 \
+    --arrival poisson \
+    --workload /users/rh/DistServe/evaluation/2-benchmark-serving/sharegpt.json \
+    --output ./results/llama_1B/rate_$RATE/sharegpt.json.sim.csv \
+    --name llama_1B/rate_$RATE \
+    --output-request-latency ./results/llama_1B/rate_$RATE/request_latency.csv \
+    --slo-scales "[1.0]" \
+    --output-request-event ./results/llama_1B/rate_$RATE/request_event.csv \
+    --output-request-info ./results/llama_1B/rate_$RATE/request_info.csv
+
+For VLLM-Ascend:
+
+RATE=4
+python simulate_dist.py \
+    --backend distserve \
+    --model /users/rh/.cache/modelscope/hub/models/LLM-Research/Llama-3.2-1B/converted_bin_v2 \
+    --seed 0 \
+    --rate $RATE \
+    --N 100 \
+    --arrival poisson \
+    --workload /users/rh/DistServe/evaluation/2-benchmark-serving/sharegpt.json \
+    --output ./vllm_ascend_results/llama_1B/rate_$RATE/sharegpt.json.sim.csv \
+    --name llama_1B/rate_$RATE \
+    --output-request-latency ./vllm_ascend_results/llama_1B/rate_$RATE/request_latency.csv \
+    --slo-scales "[1.0]" \
+    --output-request-event ./vllm_ascend_results/llama_1B/rate_$RATE/request_event.csv \
+    --output-request-info ./vllm_ascend_results/llama_1B/rate_$RATE/request_info.csv
+
 """
 import argparse
 import json
@@ -23,6 +62,7 @@ from simdistserve.base.workload import (
     get_fixed_interarrival,
     convert_absolutearrival_to_interarrival, convert_pd_pair_to_request, sample_requests
 )
+from simdistserve.base.request import Request
 from simdistserve.clusters.disagg import DisaggCluster
 from simdistserve.clusters.vllm import VLLMCluster
 from simdistserve.constants import ModelTypes
@@ -35,7 +75,9 @@ def parse_args(args_=None):
                         help='Backend to simulate (distserve, vllm)')
     parser.add_argument('--model', type=str, default='facebook/opt-13b',
                         help='Model type (opt_13b, opt_66b, opt_175b,'
-                             'or facebook/opt-13b, facebook/opt-66b, facebook/opt-175b)')
+                             'llama_7b, llama_2_7b,'
+                             'or facebook/opt-13b, facebook/opt-66b, facebook/opt-175b,'
+                             'huggyllama/llama-7b, anonymous4chan/llama-2-7b)')
     parser.add_argument('--seed', type=int, default=0)
     parser.add_argument('--rate', type=float, default=float("inf"),
                         help='Rate of requests per second')
@@ -100,33 +142,65 @@ def check_dataset_existence(x):
 def load_workload(workload, N, rate, cv, seed, process: Literal["fixed", "gamma"]):
     random.seed(seed)
     np.random.seed(seed)
-    if workload in ['sharegpt', 'longbench', 'humaneval']:
-        dataset_root = os.environ.get('DATASET', '/app/dataset')
-        dataset_root = Path(dataset_root)
-        assert dataset_root.exists(), (
-            f"Dataset root {dataset_root} does not exist. "
-            f"Please set the env var `DATASET` to the correct path."
+    # if workload in ['sharegpt', 'longbench', 'humaneval']:
+        # dataset_root = os.environ.get('DATASET', '/app/dataset')
+        # dataset_root = Path(dataset_root)
+        # assert dataset_root.exists(), (
+        #     f"Dataset root {dataset_root} does not exist. "
+        #     f"Please set the env var `DATASET` to the correct path."
+        # )
+        # dataset_file = dataset_root / f"{workload}.ds"
+        # check_dataset_existence(dataset_file)
+        # requests = sample_requests(dataset_file, N)
+        
+        
+
+    # else:
+    #     # Open the file to get the JSON data
+    #     # [ { "start_time": int, "prompt_len": int, "output_len":int,  } ]
+    #     with open(workload, 'r') as f:
+    #         data = json.load(f)
+    #     request_pairs = [(d['prompt_len'], d['output_len']) for d in data]
+    #     requests = convert_pd_pair_to_request(request_pairs)
+    #     absolute_arrival = [d['start_time'] for d in data]
+    #     arrival = convert_absolutearrival_to_interarrival(absolute_arrival)
+    #     pass
+
+    # Use Dataset.load to be consistent with 2-benchmark-serving.py
+    import sys
+    import os
+    # Add the project root to Python path
+    sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../..')))
+    # Import Dataset from the structs module using dynamic import
+    structs_path = os.path.join(os.path.dirname(__file__), '../..', 'evaluation', '2-benchmark-serving', 'structs.py')
+    sys.path.append(os.path.dirname(structs_path))
+    from structs import Dataset
+    dataset = Dataset.load(workload)
+    if N > len(dataset.reqs):
+        raise ValueError(
+            f"Number of prompts ({N}) is larger than the dataset size ({len(dataset.reqs)})."
         )
-        dataset_file = dataset_root / f"{workload}.ds"
-        check_dataset_existence(dataset_file)
-        requests = sample_requests(dataset_file, N)
+    sampled_test_requests = random.sample(dataset.reqs, N)
+    # Convert TestRequest to Request
+    requests = [
+        Request(
+            env=None,
+            req_id=i,
+            prefill_length=req.prompt_len,
+            output_lens=req.output_len,
+        )
+        for i, req in enumerate(sampled_test_requests)
+    ]
 
-        if process == 'fixed':
-            delay = 1 / rate * 1000  # ms
-            arrival = get_fixed_interarrival(N, delay)
-        else:
-            arrival = get_gamma_interarrival(N, rate, cv, seed=seed)
-
+    if process == 'fixed':
+        delay = 1 / rate * 1000  # ms
+        arrival = get_fixed_interarrival(N, delay)
     else:
-        # Open the file to get the JSON data
-        # [ { "start_time": int, "prompt_len": int, "output_len":int,  } ]
-        with open(workload, 'r') as f:
-            data = json.load(f)
-        request_pairs = [(d['prompt_len'], d['output_len']) for d in data]
-        requests = convert_pd_pair_to_request(request_pairs)
-        absolute_arrival = [d['start_time'] for d in data]
-        arrival = convert_absolutearrival_to_interarrival(absolute_arrival)
-        pass
+        arrival = get_gamma_interarrival(N, rate, cv, seed=seed)
+
+    print(f"First {10} requests: {requests[:10]}")
+    print(f"First {10} arrivals: {arrival[:10]}")
+
     return requests, arrival
 
 
@@ -217,12 +291,15 @@ def main(args, outputs=None):
     outputs['request_event_df'] = request_event_df
     outputs['per_request_latency_df'] = per_request_latency_df
     if args.output_request_info:
+        os.makedirs(os.path.dirname(args.output_request_info), exist_ok=True)
         with open(args.output_request_info, 'w') as f:
             request_df.to_csv(f, index=False)
     if args.output_request_event:
+        os.makedirs(os.path.dirname(args.output_request_event), exist_ok=True)
         with open(args.output_request_event, 'w') as f:
             request_event_df.to_csv(f, index=False)
     if args.output_request_latency:
+        os.makedirs(os.path.dirname(args.output_request_latency), exist_ok=True)
         with open(args.output_request_latency, 'w') as f:
             per_request_latency_df.to_csv(f, index=False)
 
@@ -277,6 +354,7 @@ def main(args, outputs=None):
     outputs['latency_df'] = df
 
     if args.output:
+        os.makedirs(os.path.dirname(args.output), exist_ok=True)
         with open(args.output, 'w') as f:
             df.to_csv(f, index=False)
 
@@ -287,6 +365,7 @@ def main(args, outputs=None):
     # Collect worker-level data
     #
     if args.output_worker:
+        os.makedirs(os.path.dirname(args.output_worker), exist_ok=True)
         worker_df = organize_worker_event_df(cluster)
         worker_df.to_csv(args.output_worker, index=False)
 

@@ -1,16 +1,26 @@
+'''
+usage: 
+
+python profile_memory.py
+python profile_memory.py --single-gpu-memory 80 --num-gpus-per-node 4
+'''
 import time
 import csv
 import os
 import argparse
 from config import ModelConfig, ParallelConfig
+import sys
+sys.path.append('../')
+from constants import ModelTypes
 
 MB = 1 << 20
 GB = 1 << 30
 
 MODEL_LISTS = [
-    "facebook/opt-13b", "facebook/opt-66b", 
-    "huggyllama/llama-7b", 
-    "anonymous4chan/llama-2-7b"
+    "LLAMA-7B", 
+    "LLAMA-3.2-1B",
+    "LLAMA-3.2-3B",
+    "LLAMA-3.1-8B"
 ]
 
 try:
@@ -52,7 +62,7 @@ def get_model_possible_pp(model):
 
 
 def get_model_possible_tp(model, num_gpus_per_node):
-    model_config = ModelConfig(model=model, tokenizer="facebook/opt-1.3b")
+    model_config = ModelConfig(model=model, tokenizer=model)
     total_num_attention_heads = model_config.hf_config.num_attention_heads
     possible_tp = []
     # 张量并行度不能超过每个节点下的GPU数量
@@ -82,7 +92,7 @@ def measure_stats(
     """
     result = dict(locals())
 
-    model_config = ModelConfig(model=model, tokenizer="facebook/opt-1.3b")
+    model_config = ModelConfig(model=model, tokenizer=model)
     total_layers = model_config.hf_config.num_hidden_layers
     total_heads = model_config.hf_config.num_attention_heads
 
@@ -183,6 +193,7 @@ def get_all_configs(output_file="profile_result.csv", num_nodes=1, num_gpus_per_
     fieldnames = None
 
     for model in MODEL_LISTS:
+        model = ModelTypes.formalize_model_name(model)
         for tp in get_model_possible_tp(model, num_gpus_per_node):
             for pp in get_model_possible_pp(model):
                 # 计算该tp/pp组合需要的GPU数量
@@ -257,7 +268,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
-    # usage: 
-    # python profile_memory.py
-    # python profile_memory.py --single-gpu-memory 80 --num-gpus-per-node 4
