@@ -4,9 +4,9 @@
 每个模型一张图，四个子图分别展示 Prefill、Decode、Total、Both SLO 指标。
 
 用法示例:
-    python visualize_slo.py --input_dir ./compared --output_dir ./plots
+    python visualize_slo.py --input_dir ./results/slo/distserve_cuda/compared --output_dir ./results/slo/distserve_cuda/plots
 
-    python visualize_slo.py --input_dir ./vllm_ascend/compared --output_dir ./vllm_ascend/plots
+    python visualize_slo.py --input_dir ./results/slo/vllm_ascend/compared --output_dir ./results/slo/vllm_ascend/plots
 """
 
 import os

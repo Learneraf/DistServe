@@ -3,44 +3,6 @@ Simulate DistServe
 
 Output a JSON (list) where each item is the lifecycle for a request.
 
-usage:
-
-For simdistserve:
-
-RATE=4
-python simulate_dist.py \
-    --backend distserve \
-    --model /users/rh/.cache/modelscope/hub/models/LLM-Research/Llama-3.2-1B/converted_bin_v2 \
-    --seed 0 \
-    --rate $RATE \
-    --N 100 \
-    --arrival poisson \
-    --workload /users/rh/DistServe/evaluation/2-benchmark-serving/sharegpt.json \
-    --output ./results/llama_1B/rate_$RATE/sharegpt.json.sim.csv \
-    --name llama_1B/rate_$RATE \
-    --output-request-latency ./results/llama_1B/rate_$RATE/request_latency.csv \
-    --slo-scales "[1.0]" \
-    --output-request-event ./results/llama_1B/rate_$RATE/request_event.csv \
-    --output-request-info ./results/llama_1B/rate_$RATE/request_info.csv
-
-For VLLM-Ascend:
-
-RATE=4
-python simulate_dist.py \
-    --backend distserve \
-    --model /users/rh/.cache/modelscope/hub/models/LLM-Research/Llama-3.2-1B/converted_bin_v2 \
-    --seed 0 \
-    --rate $RATE \
-    --N 100 \
-    --arrival poisson \
-    --workload /users/rh/DistServe/evaluation/2-benchmark-serving/sharegpt.json \
-    --output ./vllm_ascend_results/llama_1B/rate_$RATE/sharegpt.json.sim.csv \
-    --name llama_1B/rate_$RATE \
-    --output-request-latency ./vllm_ascend_results/llama_1B/rate_$RATE/request_latency.csv \
-    --slo-scales "[1.0]" \
-    --output-request-event ./vllm_ascend_results/llama_1B/rate_$RATE/request_event.csv \
-    --output-request-info ./vllm_ascend_results/llama_1B/rate_$RATE/request_info.csv
-
 """
 import argparse
 import json
@@ -52,6 +14,7 @@ from typing import Literal, Union
 import numpy as np
 import pandas as pd
 import simpy
+from transformers import AutoTokenizer
 
 from simdistserve.base.organize_data import organize_request_df, organize_request_event_df, \
     calculate_per_request_latency, organize_worker_event_df
@@ -139,59 +102,68 @@ def check_dataset_existence(x):
     return
 
 
-def load_workload(workload, N, rate, cv, seed, process: Literal["fixed", "gamma"]):
+def load_workload(workload, N, rate, cv, seed, process: Literal["fixed", "gamma"], model_path: str, do_sample=False):
     random.seed(seed)
     np.random.seed(seed)
-    # if workload in ['sharegpt', 'longbench', 'humaneval']:
-        # dataset_root = os.environ.get('DATASET', '/app/dataset')
-        # dataset_root = Path(dataset_root)
-        # assert dataset_root.exists(), (
-        #     f"Dataset root {dataset_root} does not exist. "
-        #     f"Please set the env var `DATASET` to the correct path."
-        # )
-        # dataset_file = dataset_root / f"{workload}.ds"
-        # check_dataset_existence(dataset_file)
-        # requests = sample_requests(dataset_file, N)
-        
-        
 
-    # else:
-    #     # Open the file to get the JSON data
-    #     # [ { "start_time": int, "prompt_len": int, "output_len":int,  } ]
-    #     with open(workload, 'r') as f:
-    #         data = json.load(f)
-    #     request_pairs = [(d['prompt_len'], d['output_len']) for d in data]
-    #     requests = convert_pd_pair_to_request(request_pairs)
-    #     absolute_arrival = [d['start_time'] for d in data]
-    #     arrival = convert_absolutearrival_to_interarrival(absolute_arrival)
-    #     pass
-
-    # Use Dataset.load to be consistent with 2-benchmark-serving.py
+    # 加载数据集
     import sys
     import os
-    # Add the project root to Python path
-    sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../..')))
-    # Import Dataset from the structs module using dynamic import
     structs_path = os.path.join(os.path.dirname(__file__), '../..', 'evaluation', '2-benchmark-serving', 'structs.py')
     sys.path.append(os.path.dirname(structs_path))
-    from structs import Dataset
-    dataset = Dataset.load(workload)
-    if N > len(dataset.reqs):
-        raise ValueError(
-            f"Number of prompts ({N}) is larger than the dataset size ({len(dataset.reqs)})."
-        )
-    sampled_test_requests = random.sample(dataset.reqs, N)
-    # Convert TestRequest to Request
-    requests = [
-        Request(
-            env=None,
-            req_id=i,
-            prefill_length=req.prompt_len,
-            output_lens=req.output_len,
-        )
-        for i, req in enumerate(sampled_test_requests)
-    ]
+    from structs import Dataset, TestRequest
+    
+    
+    if not do_sample:
+        dataset = []
+        with open(workload, "r", encoding="utf-8") as f:
+            for line in f:
+                # 去除空行/换行符，避免报错
+                line = line.strip()
+                if not line:
+                    continue
+                # 解析每行 JSON
+                json_data = json.loads(line)
+                dataset.append(json_data)
 
+        sampled_test_requests = dataset
+    else:
+        dataset = Dataset.load(workload)
+        if N > len(dataset.reqs):
+            raise ValueError(
+                f"Number of prompts ({N}) is larger than the dataset size ({len(dataset.reqs)})."
+            )
+        sampled_test_requests = random.sample(dataset.reqs, N)
+
+    model_name = model_path
+    tokenizer = AutoTokenizer.from_pretrained(model_name, trust_remote_code=True)
+
+    requests = []
+    for i, req in enumerate(sampled_test_requests):
+        if isinstance(req, dict) and req["prompt"] is not None:
+            token_ids = tokenizer.encode(req["prompt"])
+            prefill_len = len(token_ids)
+
+        # 获取 prompt 文本（假设 req 有 prompt 属性）
+        elif isinstance(req, TestRequest) and hasattr(req, 'prompt') and req.prompt is not None:
+            # 使用 tokenizer 计算实际 token 长度
+            token_ids = tokenizer.encode(req.prompt)
+            prefill_len = len(token_ids)
+        else:
+            # 回退：使用原有 prompt_len 字段（兼容旧数据集）
+            prefill_len = req.prompt_len
+            print(f"Warning: Request {i} missing 'prompt' attribute, falling back to prompt_len={prefill_len}")
+
+        requests.append(
+            Request(
+                env=None,
+                req_id=i,
+                prefill_length=prefill_len,
+                output_lens=req.output_len if isinstance(req, TestRequest) else req["output_tokens"],
+            )
+        )
+
+    # 生成到达间隔（与原逻辑相同）
     if process == 'fixed':
         delay = 1 / rate * 1000  # ms
         arrival = get_fixed_interarrival(N, delay)
@@ -238,7 +210,7 @@ def main(args, outputs=None):
         decode_max_tokens = get_max_num_tokens(model_type, TP_Decode, PP_decode)
 
     # Setting the seed to sample request / process
-    requests, arrival = load_workload(workload, N, rate, cv, seed, process)
+    requests, arrival = load_workload(workload, N, rate, cv, seed, process, args.model, False)
 
     # Run simulation
     env = simpy.Environment()

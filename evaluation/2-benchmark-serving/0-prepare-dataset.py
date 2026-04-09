@@ -226,11 +226,6 @@ if __name__ == "__main__":
     tokenizer = AutoTokenizer.from_pretrained(args.tokenizer, trust_remote_code=args.trust_remote_code)
     dataset = read_dataset(args.dataset_path, tokenizer, args.dataset, args)
     print(f"Loaded {len(dataset.reqs)} TestRequests from dataset {args.dataset_path}")
-    
-    pure_json_output_path = f"./{args.dataset}_pure.json"
-    with open(pure_json_output_path, "w") as f:
-        for req in dataset.reqs:
-            f.write(json.dumps(req.__dict__, ensure_ascii=False) + "\n")
 
     dataset.dump(args.output_path)
     print(f"Saved to {args.output_path}")
@@ -242,5 +237,5 @@ if __name__ == "__main__":
         --dataset sharegpt \
         --dataset-path "/users/rh/DistServe/simdistserve/dataset/raw/ShareGPT_V3_unfiltered_cleaned_split.json" \
         --tokenizer "huggyllama/llama-7b" \
-        --output-path "sharegpt.json"
+        --output-path "./data/sharegpt_7B.json"
     '''

@@ -61,9 +61,9 @@ def get_profiling_params() -> list[TestParamGroup]:
                     # for batch_size in [1, 2, 4, 8, 16, 32, 64, 96, 128]
                     for batch_size in [1, 2, 3, 4]
                     # for input_len in [4, 8, 16, 32, 48, 64, 96, 128, 192, 256, 284, 512]
-                    for input_len in range(1024, 4, -128)
+                    for input_len in range(1024, 4, -256)
                     # for output_len in [16, 32, 48, 64, 96, 128, 192, 256, 284, 512]
-                    for output_len in range(1024, 16, -128)
+                    for output_len in range(1024, 16, -256)
                     if batch_size * ((input_len+output_len)//16*16) <= num_tokens_limit
                 ]
             ]

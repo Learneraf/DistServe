@@ -1,8 +1,8 @@
 """
 # Introduction
 
-This program reads data (batch size, input len, prefill time usage, decoding
-time usage) from a sqlite database, and fits a model to predict the prefill/decoding
+This program reads data (batch size, input len, output len, prefill time usage,
+decoding time usage) from a sqlite database, and fits a model to predict the prefill/decoding
 time usage.
 
 # Methodology
@@ -15,16 +15,21 @@ Where #total_tokens = batch_size * input_len
 
 While for the decoding stage, we assume the time usage to be:
 
-A + B*#previous_tokens + C*batch_size
-
-Where #previous_tokens = batch_size * input_len
+A + B*input_len + C*output_len + D*input_len*output_len + E*output_len^2 + F*input_len^2
 
 We use the least squares method ("最小二乘法" in Chinese) to fit the model, with
 the goal of minimizing \sum relative_error^2.
+
+usage:
+python ./main.py \
+    -i "../0-test-single-forward-performance/db-identical-req.sqlite" \
+    -o "./params/fit_params.json" > "./main.log"
+
+
 """
 import math
 import dataclasses
-from typing import Callable
+from typing import Callable, Union
 import json
 
 import numpy as np
@@ -39,6 +44,7 @@ class DataPoint:
     
     batch_size: int
     input_len: int
+    output_len: int           # <-- 新增字段
     
     prefill_time: float
     decoding_time: float
@@ -46,60 +52,63 @@ class DataPoint:
 def read_all_data_points(db_path: str) -> list[DataPoint]:
     conn = sqlite3.connect(db_path)
     cur = conn.cursor()
-    cur.execute("SELECT tag, tp_world_size, batch_size, input_len, avg_prefill_time_usage, avg_decoding_time_usage FROM records")
+    # 新增 output_len 列读取
+    cur.execute("SELECT tag, tp_world_size, batch_size, input_len, output_len, avg_prefill_time_usage, avg_decoding_time_usage FROM records")
     return [
         DataPoint(
             model = row[0],
             tp_world_size = row[1],
             batch_size = row[2],
             input_len = row[3],
-            prefill_time = row[4],
-            decoding_time = row[5]
+            output_len = row[4],          # <-- 新增
+            prefill_time = row[5],
+            decoding_time = row[6]
         )
         for row in cur.fetchall()
     ]
 
-def fit_one_abc(
+def fit_linear_model(
     data_points: list[DataPoint],
-    b_coef_getter: Callable[[DataPoint], float],
-    c_coef_getter: Callable[[DataPoint], float],
-    t_coef_getter: Callable[[DataPoint], float],
+    design_matrix_func: Callable[[DataPoint], list[float]],
+    time_getter: Callable[[DataPoint], float],
     weight_getter: Callable[[DataPoint], float]
-) -> tuple[float, float, float]:
+) -> np.ndarray:
+    """
+    通用最小二乘拟合。
+    design_matrix_func 返回一个列表，对应每个数据点的设计矩阵行。
+    time_getter 返回观测时间。
+    weight_getter 返回该点的权重。
+    返回拟合系数数组。
+    """
     a_matrix = []
     b_vec = []
     for dp in data_points:
-        b = b_coef_getter(dp)
-        c = c_coef_getter(dp)
-        t = t_coef_getter(dp)
+        row = design_matrix_func(dp)
+        t = time_getter(dp)
         weight = weight_getter(dp)
-        a_matrix.append([
-            1/t*weight, b/t*weight, c/t*weight
-        ])
-        b_vec.append(
-            weight
-        )
+        a_matrix.append([val / t * weight for val in row])
+        b_vec.append(weight)
     a_matrix = np.array(a_matrix)
     b_vec = np.array(b_vec)
-    answer, _, _, _ = np.linalg.lstsq(a_matrix, b_vec, rcond=None)
+    coeffs, _, _, _ = np.linalg.lstsq(a_matrix, b_vec, rcond=None)
     
-    print(f"{'bs':>3s}  {'ilen':>6s}  {'actual':>9s}  {'pred':>9s}  {'rel_err':>6s}")
+    # 打印诊断信息
+    print(f"{'bs':>3s}  {'ilen':>6s}  {'olen':>6s}  {'actual':>9s}  {'pred':>9s}  {'rel_err':>6s}")
     rel_errs = []
     for dp in data_points:
-        b = b_coef_getter(dp)
-        c = c_coef_getter(dp)
-        t = t_coef_getter(dp)
-        pred_time_usage = answer[0] + answer[1]*b + answer[2]*c
-        cur_rel_err = (pred_time_usage - t)/t
+        row = design_matrix_func(dp)
+        t = time_getter(dp)
+        pred_time_usage = np.dot(coeffs, row)
+        cur_rel_err = (pred_time_usage - t) / t
         rel_errs.append(cur_rel_err)
-        print(f"{dp.batch_size:3d}  {dp.input_len:6d}  {t:9.2f}  {pred_time_usage:9.2f}  {cur_rel_err*100:6.2f}%")
+        print(f"{dp.batch_size:3d}  {dp.input_len:6d}  {dp.output_len:6d}  {t:9.2f}  {pred_time_usage:9.2f}  {cur_rel_err*100:6.2f}%")
     
     rel_errs = np.array(rel_errs)
     print(f"Max relative error: {np.max(np.abs(rel_errs))*100:.2f}%")
     print(f"Avg relative error: {np.mean(np.abs(rel_errs))*100:.2f}%")
     print(f"Avg sqrt(relerr^2): {np.sqrt(np.mean(rel_errs**2))*100:.2f}%")
     
-    return answer
+    return coeffs
 
 def main(args: argparse.Namespace):
     print(args)
@@ -115,7 +124,7 @@ def main(args: argparse.Namespace):
         if (dp.model, dp.tp_world_size) not in models_and_tp_sizes:
             models_and_tp_sizes.append((dp.model, dp.tp_world_size))
     
-    DECODING_LARGE_SMALL_BS_THRESHOLD = 96-1
+    DECODING_LARGE_SMALL_BS_THRESHOLD = 95   # 与需求代码保持一致
     
     result = {}
     for (model, tp_world_size) in models_and_tp_sizes:
@@ -126,59 +135,57 @@ def main(args: argparse.Namespace):
             if dp.model == model and dp.tp_world_size == tp_world_size
         ]
 
-        prefill_abc = None
+        prefill_coeffs = None
         if len(cur_data_points) != 0:
-            prefill_abc = fit_one_abc(
+            prefill_coeffs = fit_linear_model(
                 cur_data_points,
-                lambda dp: dp.batch_size*dp.input_len,
-                lambda dp: dp.batch_size*dp.input_len**2,
+                lambda dp: [1, dp.batch_size * dp.input_len, dp.batch_size * dp.input_len**2],
                 lambda dp: dp.prefill_time,
-                lambda dp: 1
+                lambda dp: 1.0
             )
-            print(prefill_abc)
-
+            print(prefill_coeffs)
         else:
             print("No data points for prefill stage.")
         
+        # Decoding small batch size (6 parameters)
         print(f"Fitting model {model} with tp_world_size {tp_world_size} (Decoding stage, small batch size)")
-        cur_data_points = [
+        cur_data_points_small = [
             dp
             for dp in data_points
             if dp.model == model and dp.tp_world_size == tp_world_size
             if dp.batch_size <= DECODING_LARGE_SMALL_BS_THRESHOLD
         ]
 
-        decoding_smallbs_abc = None
-        if len(cur_data_points) != 0:
-            decoding_smallbs_abc = fit_one_abc(
-                cur_data_points,
-                lambda dp: dp.batch_size*dp.input_len,
-                lambda dp: dp.batch_size,
+        decoding_smallbs_coeffs = None
+        if len(cur_data_points_small) != 0:
+            decoding_smallbs_coeffs = fit_linear_model(
+                cur_data_points_small,
+                lambda dp: [1, dp.input_len, dp.output_len, dp.input_len * dp.output_len, dp.output_len**2, dp.input_len**2],
                 lambda dp: dp.decoding_time,
-                lambda dp: 1
+                lambda dp: 1.0
             )
-            print(decoding_smallbs_abc)
+            print(decoding_smallbs_coeffs)
         else:
             print("No data points for decoding stage, small batch size.")
         
+        # Decoding large batch size (6 parameters)
         print(f"Fitting model {model} with tp_world_size {tp_world_size} (Decoding stage, large batch size)")
-        cur_data_points = [
+        cur_data_points_large = [
             dp
             for dp in data_points
             if dp.model == model and dp.tp_world_size == tp_world_size
             if dp.batch_size > DECODING_LARGE_SMALL_BS_THRESHOLD
         ]   
         
-        decoding_largebs_abc = None
-        if len(cur_data_points) != 0:
-            decoding_largebs_abc = fit_one_abc(
-                cur_data_points,
-                lambda dp: dp.batch_size*dp.input_len,
-                lambda dp: dp.batch_size,
+        decoding_largebs_coeffs = None
+        if len(cur_data_points_large) != 0:
+            decoding_largebs_coeffs = fit_linear_model(
+                cur_data_points_large,
+                lambda dp: [1, dp.input_len, dp.output_len, dp.input_len * dp.output_len, dp.output_len**2, dp.input_len**2],
                 lambda dp: dp.decoding_time,
-                lambda dp: 1
+                lambda dp: 1.0
             )
-            print(decoding_largebs_abc)
+            print(decoding_largebs_coeffs)
         else:
             print("No data points for decoding stage, large batch size.")
         
@@ -186,9 +193,9 @@ def main(args: argparse.Namespace):
             result[model] = {}
         result[model][tp_world_size] = {
             "decoding_large_small_bs_threshold": DECODING_LARGE_SMALL_BS_THRESHOLD,
-            "prefill": prefill_abc.tolist() if prefill_abc is not None else [],
-            "decoding_smallbs": decoding_smallbs_abc.tolist() if decoding_smallbs_abc is not None else [],
-            "decoding_largebs": decoding_largebs_abc.tolist() if decoding_largebs_abc is not None else []
+            "prefill": prefill_coeffs.tolist() if prefill_coeffs is not None else [],
+            "decoding_smallbs": decoding_smallbs_coeffs.tolist() if decoding_smallbs_coeffs is not None else [],
+            "decoding_largebs": decoding_largebs_coeffs.tolist() if decoding_largebs_coeffs is not None else []
         }
     
     with open(output_path, "w") as f:
@@ -200,6 +207,3 @@ if __name__ == "__main__":
     parser.add_argument("-o", "--output", type=str, required=True, help="Path to the output json file")
     args = parser.parse_args()
     main(args)
-
-# Usage:
-# python main.py -i ../0-test-single-forward-performance/db-identical-req.sqlite -o ./fit_params.json

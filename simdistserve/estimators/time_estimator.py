@@ -6,7 +6,8 @@ from simdistserve.constants import ModelTypes
 
 
 def load_distserve_profile_data():
-    profile_data_path = Path(__file__).parent / "profiled_data" / "vllm-ascend" / "fit_params_llama_3B_num_prompt_100_6_params_decode.json"
+    profile_data_path = Path(__file__).parent / "profiled_data" / "vllm-ascend" / "fit_params_llama_1B_num_prompt_100_5_params_decode.json"
+    # profile_data_path = Path(__file__).parent / "profiled_data" / "distserve-cuda" / "fit_params.json"
     with open(profile_data_path) as f:
         profile_data = json.load(f)
         return profile_data
