@@ -61,6 +61,7 @@ class Request:
         # set this value if a request belongs to a particular chunk
         # The last worker in the pipeline unset this value at a chunk's end.
         self.chunk_id = None
+        self.first_token_prefill = False
 
     @property
     def current_context_len(self):
@@ -95,7 +96,7 @@ class Request:
         self.current_prefill_lens = 0
         return
 
-    def finish_prefill(self, is_finished_one_round=False, wid=None, next_wid=None):
+    def finish_prefill(self, is_finished_one_round=False, wid=None, next_wid=None, generated_tokens: int = 0):
         if not is_finished_one_round:
             self.wait_prefill(wid=next_wid)
             return
@@ -108,9 +109,9 @@ class Request:
             return
 
         # All the prefills has been done.
-        # Reset counter to 0
-        # TODO: Should we do self.counter += 1?
-        self.counter = 0
+        self._log_event(E_FINISH_PREFILL, wid=wid)
+        self.first_token_prefill = generated_tokens > 0
+        self.counter = generated_tokens
         # Hack to ensure "wait_decode" appears at least once.
         self.wait_decode(wid=next_wid)
         if not self.should_finish():

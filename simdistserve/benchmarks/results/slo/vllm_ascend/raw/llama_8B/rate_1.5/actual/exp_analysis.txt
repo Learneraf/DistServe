@@ -1,0 +1,809 @@
+Request 1:
+  Prompt length: 1644
+  Output length: 7
+  Prefill time: 0.1569s (SLO: 1.0s) ✓
+  Decode time: 0.1578s (SLO: 1.0s) ✓
+  Total time: 0.3147s (SLO: 1.0s) ✓
+  Both prefill and decode SLO met: ✓
+
+Request 2:
+  Prompt length: 310
+  Output length: 11
+  Prefill time: 0.1351s (SLO: 1.0s) ✓
+  Decode time: 0.2536s (SLO: 1.0s) ✓
+  Total time: 0.3887s (SLO: 1.0s) ✓
+  Both prefill and decode SLO met: ✓
+
+Request 3:
+  Prompt length: 620
+  Output length: 186
+  Prefill time: 0.1404s (SLO: 1.0s) ✓
+  Decode time: 5.8976s (SLO: 1.0s) ✗
+  Total time: 6.0380s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 4:
+  Prompt length: 1455
+  Output length: 107
+  Prefill time: 0.1782s (SLO: 1.0s) ✓
+  Decode time: 3.3827s (SLO: 1.0s) ✗
+  Total time: 3.5609s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 5:
+  Prompt length: 1425
+  Output length: 19
+  Prefill time: 0.1551s (SLO: 1.0s) ✓
+  Decode time: 0.5865s (SLO: 1.0s) ✓
+  Total time: 0.7416s (SLO: 1.0s) ✓
+  Both prefill and decode SLO met: ✓
+
+Request 6:
+  Prompt length: 1539
+  Output length: 2
+  Prefill time: 0.1593s (SLO: 1.0s) ✓
+  Decode time: 0.0347s (SLO: 1.0s) ✓
+  Total time: 0.1940s (SLO: 1.0s) ✓
+  Both prefill and decode SLO met: ✓
+
+Request 7:
+  Prompt length: 2
+  Output length: 13
+  Prefill time: 0.1307s (SLO: 1.0s) ✓
+  Decode time: 0.3683s (SLO: 1.0s) ✓
+  Total time: 0.4990s (SLO: 1.0s) ✓
+  Both prefill and decode SLO met: ✓
+
+Request 8:
+  Prompt length: 456
+  Output length: 438
+  Prefill time: 0.1515s (SLO: 1.0s) ✓
+  Decode time: 14.0922s (SLO: 1.0s) ✗
+  Total time: 14.2437s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 9:
+  Prompt length: 1559
+  Output length: 3
+  Prefill time: 0.1553s (SLO: 1.0s) ✓
+  Decode time: 0.0623s (SLO: 1.0s) ✓
+  Total time: 0.2176s (SLO: 1.0s) ✓
+  Both prefill and decode SLO met: ✓
+
+Request 10:
+  Prompt length: 290
+  Output length: 14
+  Prefill time: 0.1645s (SLO: 1.0s) ✓
+  Decode time: 0.3892s (SLO: 1.0s) ✓
+  Total time: 0.5537s (SLO: 1.0s) ✓
+  Both prefill and decode SLO met: ✓
+
+Request 11:
+  Prompt length: 299
+  Output length: 11
+  Prefill time: 0.1631s (SLO: 1.0s) ✓
+  Decode time: 0.3073s (SLO: 1.0s) ✓
+  Total time: 0.4704s (SLO: 1.0s) ✓
+  Both prefill and decode SLO met: ✓
+
+Request 12:
+  Prompt length: 772
+  Output length: 895
+  Prefill time: 0.1345s (SLO: 1.0s) ✓
+  Decode time: 29.9635s (SLO: 1.0s) ✗
+  Total time: 30.0980s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 13:
+  Prompt length: 197
+  Output length: 11
+  Prefill time: 0.1488s (SLO: 1.0s) ✓
+  Decode time: 0.3145s (SLO: 1.0s) ✓
+  Total time: 0.4633s (SLO: 1.0s) ✓
+  Both prefill and decode SLO met: ✓
+
+Request 14:
+  Prompt length: 75
+  Output length: 978
+  Prefill time: 0.1587s (SLO: 1.0s) ✓
+  Decode time: 33.0569s (SLO: 1.0s) ✗
+  Total time: 33.2156s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 15:
+  Prompt length: 793
+  Output length: 381
+  Prefill time: 0.1818s (SLO: 1.0s) ✓
+  Decode time: 12.4730s (SLO: 1.0s) ✗
+  Total time: 12.6548s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 16:
+  Prompt length: 570
+  Output length: 93
+  Prefill time: 0.1948s (SLO: 1.0s) ✓
+  Decode time: 2.9639s (SLO: 1.0s) ✗
+  Total time: 3.1588s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 17:
+  Prompt length: 24
+  Output length: 22
+  Prefill time: 0.1793s (SLO: 1.0s) ✓
+  Decode time: 0.6823s (SLO: 1.0s) ✓
+  Total time: 0.8615s (SLO: 1.0s) ✓
+  Both prefill and decode SLO met: ✓
+
+Request 18:
+  Prompt length: 159
+  Output length: 17
+  Prefill time: 0.1733s (SLO: 1.0s) ✓
+  Decode time: 0.5062s (SLO: 1.0s) ✓
+  Total time: 0.6795s (SLO: 1.0s) ✓
+  Both prefill and decode SLO met: ✓
+
+Request 19:
+  Prompt length: 687
+  Output length: 406
+  Prefill time: 0.1551s (SLO: 1.0s) ✓
+  Decode time: 13.4793s (SLO: 1.0s) ✗
+  Total time: 13.6344s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 20:
+  Prompt length: 594
+  Output length: 89
+  Prefill time: 0.1626s (SLO: 1.0s) ✓
+  Decode time: 2.8812s (SLO: 1.0s) ✗
+  Total time: 3.0438s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 21:
+  Prompt length: 502
+  Output length: 229
+  Prefill time: 0.1594s (SLO: 1.0s) ✓
+  Decode time: 7.5205s (SLO: 1.0s) ✗
+  Total time: 7.6800s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 22:
+  Prompt length: 703
+  Output length: 31
+  Prefill time: 0.1720s (SLO: 1.0s) ✓
+  Decode time: 0.9867s (SLO: 1.0s) ✓
+  Total time: 1.1587s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✓
+
+Request 23:
+  Prompt length: 521
+  Output length: 754
+  Prefill time: 0.1512s (SLO: 1.0s) ✓
+  Decode time: 25.7265s (SLO: 1.0s) ✗
+  Total time: 25.8777s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 24:
+  Prompt length: 105
+  Output length: 14
+  Prefill time: 0.1703s (SLO: 1.0s) ✓
+  Decode time: 0.4411s (SLO: 1.0s) ✓
+  Total time: 0.6114s (SLO: 1.0s) ✓
+  Both prefill and decode SLO met: ✓
+
+Request 25:
+  Prompt length: 1485
+  Output length: 2
+  Prefill time: 0.1907s (SLO: 1.0s) ✓
+  Decode time: 0.0305s (SLO: 1.0s) ✓
+  Total time: 0.2211s (SLO: 1.0s) ✓
+  Both prefill and decode SLO met: ✓
+
+Request 26:
+  Prompt length: 686
+  Output length: 2
+  Prefill time: 0.1673s (SLO: 1.0s) ✓
+  Decode time: 0.0342s (SLO: 1.0s) ✓
+  Total time: 0.2015s (SLO: 1.0s) ✓
+  Both prefill and decode SLO met: ✓
+
+Request 27:
+  Prompt length: 327
+  Output length: 87
+  Prefill time: 0.1542s (SLO: 1.0s) ✓
+  Decode time: 2.8265s (SLO: 1.0s) ✗
+  Total time: 2.9807s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 28:
+  Prompt length: 835
+  Output length: 380
+  Prefill time: 0.1523s (SLO: 1.0s) ✓
+  Decode time: 12.9937s (SLO: 1.0s) ✗
+  Total time: 13.1460s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 29:
+  Prompt length: 399
+  Output length: 14
+  Prefill time: 0.1475s (SLO: 1.0s) ✓
+  Decode time: 0.4416s (SLO: 1.0s) ✓
+  Total time: 0.5891s (SLO: 1.0s) ✓
+  Both prefill and decode SLO met: ✓
+
+Request 30:
+  Prompt length: 18
+  Output length: 365
+  Prefill time: 0.1673s (SLO: 1.0s) ✓
+  Decode time: 12.5121s (SLO: 1.0s) ✗
+  Total time: 12.6794s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 31:
+  Prompt length: 1441
+  Output length: 312
+  Prefill time: 0.1501s (SLO: 1.0s) ✓
+  Decode time: 10.6581s (SLO: 1.0s) ✗
+  Total time: 10.8082s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 32:
+  Prompt length: 314
+  Output length: 37
+  Prefill time: 0.1703s (SLO: 1.0s) ✓
+  Decode time: 1.2729s (SLO: 1.0s) ✗
+  Total time: 1.4432s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 33:
+  Prompt length: 1885
+  Output length: 22
+  Prefill time: 0.1847s (SLO: 1.0s) ✓
+  Decode time: 0.7501s (SLO: 1.0s) ✓
+  Total time: 0.9348s (SLO: 1.0s) ✓
+  Both prefill and decode SLO met: ✓
+
+Request 34:
+  Prompt length: 95
+  Output length: 21
+  Prefill time: 0.2134s (SLO: 1.0s) ✓
+  Decode time: 0.6830s (SLO: 1.0s) ✓
+  Total time: 0.8964s (SLO: 1.0s) ✓
+  Both prefill and decode SLO met: ✓
+
+Request 35:
+  Prompt length: 323
+  Output length: 352
+  Prefill time: 0.2003s (SLO: 1.0s) ✓
+  Decode time: 12.1416s (SLO: 1.0s) ✗
+  Total time: 12.3419s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 36:
+  Prompt length: 37
+  Output length: 95
+  Prefill time: 0.1503s (SLO: 1.0s) ✓
+  Decode time: 3.1531s (SLO: 1.0s) ✗
+  Total time: 3.3034s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 37:
+  Prompt length: 556
+  Output length: 369
+  Prefill time: 0.1690s (SLO: 1.0s) ✓
+  Decode time: 12.7894s (SLO: 1.0s) ✗
+  Total time: 12.9583s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 38:
+  Prompt length: 312
+  Output length: 67
+  Prefill time: 0.1667s (SLO: 1.0s) ✓
+  Decode time: 2.1853s (SLO: 1.0s) ✗
+  Total time: 2.3520s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 39:
+  Prompt length: 443
+  Output length: 833
+  Prefill time: 0.1586s (SLO: 1.0s) ✓
+  Decode time: 28.6070s (SLO: 1.0s) ✗
+  Total time: 28.7655s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 40:
+  Prompt length: 220
+  Output length: 38
+  Prefill time: 0.1572s (SLO: 1.0s) ✓
+  Decode time: 1.2536s (SLO: 1.0s) ✗
+  Total time: 1.4107s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 41:
+  Prompt length: 517
+  Output length: 16
+  Prefill time: 0.1652s (SLO: 1.0s) ✓
+  Decode time: 0.5011s (SLO: 1.0s) ✓
+  Total time: 0.6662s (SLO: 1.0s) ✓
+  Both prefill and decode SLO met: ✓
+
+Request 42:
+  Prompt length: 977
+  Output length: 6
+  Prefill time: 0.1814s (SLO: 1.0s) ✓
+  Decode time: 0.1731s (SLO: 1.0s) ✓
+  Total time: 0.3544s (SLO: 1.0s) ✓
+  Both prefill and decode SLO met: ✓
+
+Request 43:
+  Prompt length: 837
+  Output length: 493
+  Prefill time: 0.1794s (SLO: 1.0s) ✓
+  Decode time: 16.9984s (SLO: 1.0s) ✗
+  Total time: 17.1778s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 44:
+  Prompt length: 776
+  Output length: 266
+  Prefill time: 0.1698s (SLO: 1.0s) ✓
+  Decode time: 9.3418s (SLO: 1.0s) ✗
+  Total time: 9.5116s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 45:
+  Prompt length: 768
+  Output length: 251
+  Prefill time: 0.1930s (SLO: 1.0s) ✓
+  Decode time: 8.7468s (SLO: 1.0s) ✗
+  Total time: 8.9398s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 46:
+  Prompt length: 553
+  Output length: 755
+  Prefill time: 0.1856s (SLO: 1.0s) ✓
+  Decode time: 25.8616s (SLO: 1.0s) ✗
+  Total time: 26.0472s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 47:
+  Prompt length: 183
+  Output length: 20
+  Prefill time: 0.1599s (SLO: 1.0s) ✓
+  Decode time: 0.6861s (SLO: 1.0s) ✓
+  Total time: 0.8461s (SLO: 1.0s) ✓
+  Both prefill and decode SLO met: ✓
+
+Request 48:
+  Prompt length: 689
+  Output length: 255
+  Prefill time: 0.1673s (SLO: 1.0s) ✓
+  Decode time: 8.8370s (SLO: 1.0s) ✗
+  Total time: 9.0043s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 49:
+  Prompt length: 295
+  Output length: 20
+  Prefill time: 0.1770s (SLO: 1.0s) ✓
+  Decode time: 0.6672s (SLO: 1.0s) ✓
+  Total time: 0.8442s (SLO: 1.0s) ✓
+  Both prefill and decode SLO met: ✓
+
+Request 50:
+  Prompt length: 395
+  Output length: 14
+  Prefill time: 0.1416s (SLO: 1.0s) ✓
+  Decode time: 0.4446s (SLO: 1.0s) ✓
+  Total time: 0.5862s (SLO: 1.0s) ✓
+  Both prefill and decode SLO met: ✓
+
+Request 51:
+  Prompt length: 1185
+  Output length: 13
+  Prefill time: 0.1773s (SLO: 1.0s) ✓
+  Decode time: 0.4215s (SLO: 1.0s) ✓
+  Total time: 0.5988s (SLO: 1.0s) ✓
+  Both prefill and decode SLO met: ✓
+
+Request 52:
+  Prompt length: 9
+  Output length: 159
+  Prefill time: 0.1476s (SLO: 1.0s) ✓
+  Decode time: 5.5583s (SLO: 1.0s) ✗
+  Total time: 5.7059s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 53:
+  Prompt length: 658
+  Output length: 3
+  Prefill time: 0.1753s (SLO: 1.0s) ✓
+  Decode time: 0.0720s (SLO: 1.0s) ✓
+  Total time: 0.2472s (SLO: 1.0s) ✓
+  Both prefill and decode SLO met: ✓
+
+Request 54:
+  Prompt length: 300
+  Output length: 223
+  Prefill time: 0.1691s (SLO: 1.0s) ✓
+  Decode time: 7.5206s (SLO: 1.0s) ✗
+  Total time: 7.6897s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 55:
+  Prompt length: 649
+  Output length: 31
+  Prefill time: 0.1628s (SLO: 1.0s) ✓
+  Decode time: 1.0231s (SLO: 1.0s) ✗
+  Total time: 1.1859s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 56:
+  Prompt length: 1031
+  Output length: 17
+  Prefill time: 0.1671s (SLO: 1.0s) ✓
+  Decode time: 0.5397s (SLO: 1.0s) ✓
+  Total time: 0.7067s (SLO: 1.0s) ✓
+  Both prefill and decode SLO met: ✓
+
+Request 57:
+  Prompt length: 1172
+  Output length: 8
+  Prefill time: 0.1488s (SLO: 1.0s) ✓
+  Decode time: 0.2377s (SLO: 1.0s) ✓
+  Total time: 0.3865s (SLO: 1.0s) ✓
+  Both prefill and decode SLO met: ✓
+
+Request 58:
+  Prompt length: 789
+  Output length: 572
+  Prefill time: 0.1413s (SLO: 1.0s) ✓
+  Decode time: 19.4098s (SLO: 1.0s) ✗
+  Total time: 19.5511s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 59:
+  Prompt length: 1440
+  Output length: 67
+  Prefill time: 0.1631s (SLO: 1.0s) ✓
+  Decode time: 2.2303s (SLO: 1.0s) ✗
+  Total time: 2.3934s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 60:
+  Prompt length: 715
+  Output length: 333
+  Prefill time: 0.1753s (SLO: 1.0s) ✓
+  Decode time: 11.1935s (SLO: 1.0s) ✗
+  Total time: 11.3688s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 61:
+  Prompt length: 545
+  Output length: 29
+  Prefill time: 0.1523s (SLO: 1.0s) ✓
+  Decode time: 0.9329s (SLO: 1.0s) ✓
+  Total time: 1.0851s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✓
+
+Request 62:
+  Prompt length: 385
+  Output length: 2
+  Prefill time: 0.1402s (SLO: 1.0s) ✓
+  Decode time: 0.0354s (SLO: 1.0s) ✓
+  Total time: 0.1756s (SLO: 1.0s) ✓
+  Both prefill and decode SLO met: ✓
+
+Request 63:
+  Prompt length: 850
+  Output length: 10
+  Prefill time: 0.1574s (SLO: 1.0s) ✓
+  Decode time: 0.3071s (SLO: 1.0s) ✓
+  Total time: 0.4645s (SLO: 1.0s) ✓
+  Both prefill and decode SLO met: ✓
+
+Request 64:
+  Prompt length: 422
+  Output length: 148
+  Prefill time: 0.1496s (SLO: 1.0s) ✓
+  Decode time: 4.9706s (SLO: 1.0s) ✗
+  Total time: 5.1202s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 65:
+  Prompt length: 459
+  Output length: 84
+  Prefill time: 0.1618s (SLO: 1.0s) ✓
+  Decode time: 2.8096s (SLO: 1.0s) ✗
+  Total time: 2.9714s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 66:
+  Prompt length: 419
+  Output length: 371
+  Prefill time: 0.1739s (SLO: 1.0s) ✓
+  Decode time: 12.4755s (SLO: 1.0s) ✗
+  Total time: 12.6493s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 67:
+  Prompt length: 745
+  Output length: 274
+  Prefill time: 0.1924s (SLO: 1.0s) ✓
+  Decode time: 9.2090s (SLO: 1.0s) ✗
+  Total time: 9.4014s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 68:
+  Prompt length: 258
+  Output length: 9
+  Prefill time: 0.1505s (SLO: 1.0s) ✓
+  Decode time: 0.2761s (SLO: 1.0s) ✓
+  Total time: 0.4266s (SLO: 1.0s) ✓
+  Both prefill and decode SLO met: ✓
+
+Request 69:
+  Prompt length: 52
+  Output length: 194
+  Prefill time: 0.1673s (SLO: 1.0s) ✓
+  Decode time: 6.5033s (SLO: 1.0s) ✗
+  Total time: 6.6706s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 70:
+  Prompt length: 431
+  Output length: 488
+  Prefill time: 0.1680s (SLO: 1.0s) ✓
+  Decode time: 16.5802s (SLO: 1.0s) ✗
+  Total time: 16.7482s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 71:
+  Prompt length: 927
+  Output length: 12
+  Prefill time: 0.1761s (SLO: 1.0s) ✓
+  Decode time: 0.3650s (SLO: 1.0s) ✓
+  Total time: 0.5411s (SLO: 1.0s) ✓
+  Both prefill and decode SLO met: ✓
+
+Request 72:
+  Prompt length: 660
+  Output length: 356
+  Prefill time: 0.1480s (SLO: 1.0s) ✓
+  Decode time: 12.1300s (SLO: 1.0s) ✗
+  Total time: 12.2780s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 73:
+  Prompt length: 544
+  Output length: 18
+  Prefill time: 0.1746s (SLO: 1.0s) ✓
+  Decode time: 0.5834s (SLO: 1.0s) ✓
+  Total time: 0.7580s (SLO: 1.0s) ✓
+  Both prefill and decode SLO met: ✓
+
+Request 74:
+  Prompt length: 1038
+  Output length: 208
+  Prefill time: 0.1547s (SLO: 1.0s) ✓
+  Decode time: 7.0960s (SLO: 1.0s) ✗
+  Total time: 7.2507s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 75:
+  Prompt length: 488
+  Output length: 31
+  Prefill time: 0.2027s (SLO: 1.0s) ✓
+  Decode time: 1.0171s (SLO: 1.0s) ✗
+  Total time: 1.2198s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 76:
+  Prompt length: 266
+  Output length: 384
+  Prefill time: 0.1738s (SLO: 1.0s) ✓
+  Decode time: 13.1945s (SLO: 1.0s) ✗
+  Total time: 13.3683s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 77:
+  Prompt length: 79
+  Output length: 7
+  Prefill time: 0.1698s (SLO: 1.0s) ✓
+  Decode time: 0.2044s (SLO: 1.0s) ✓
+  Total time: 0.3742s (SLO: 1.0s) ✓
+  Both prefill and decode SLO met: ✓
+
+Request 78:
+  Prompt length: 162
+  Output length: 570
+  Prefill time: 0.1449s (SLO: 1.0s) ✓
+  Decode time: 19.2316s (SLO: 1.0s) ✗
+  Total time: 19.3765s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 79:
+  Prompt length: 1291
+  Output length: 52
+  Prefill time: 0.1702s (SLO: 1.0s) ✓
+  Decode time: 1.7270s (SLO: 1.0s) ✗
+  Total time: 1.8973s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 80:
+  Prompt length: 1066
+  Output length: 11
+  Prefill time: 0.1422s (SLO: 1.0s) ✓
+  Decode time: 0.3373s (SLO: 1.0s) ✓
+  Total time: 0.4795s (SLO: 1.0s) ✓
+  Both prefill and decode SLO met: ✓
+
+Request 81:
+  Prompt length: 868
+  Output length: 274
+  Prefill time: 0.1672s (SLO: 1.0s) ✓
+  Decode time: 9.4157s (SLO: 1.0s) ✗
+  Total time: 9.5829s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 82:
+  Prompt length: 650
+  Output length: 8
+  Prefill time: 0.1508s (SLO: 1.0s) ✓
+  Decode time: 0.2394s (SLO: 1.0s) ✓
+  Total time: 0.3902s (SLO: 1.0s) ✓
+  Both prefill and decode SLO met: ✓
+
+Request 83:
+  Prompt length: 1030
+  Output length: 13
+  Prefill time: 0.1370s (SLO: 1.0s) ✓
+  Decode time: 0.4087s (SLO: 1.0s) ✓
+  Total time: 0.5457s (SLO: 1.0s) ✓
+  Both prefill and decode SLO met: ✓
+
+Request 84:
+  Prompt length: 428
+  Output length: 316
+  Prefill time: 0.1653s (SLO: 1.0s) ✓
+  Decode time: 10.8853s (SLO: 1.0s) ✗
+  Total time: 11.0506s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 85:
+  Prompt length: 925
+  Output length: 561
+  Prefill time: 0.1815s (SLO: 1.0s) ✓
+  Decode time: 18.7221s (SLO: 1.0s) ✗
+  Total time: 18.9035s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 86:
+  Prompt length: 433
+  Output length: 409
+  Prefill time: 0.1667s (SLO: 1.0s) ✓
+  Decode time: 13.8669s (SLO: 1.0s) ✗
+  Total time: 14.0337s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 87:
+  Prompt length: 1232
+  Output length: 347
+  Prefill time: 0.1856s (SLO: 1.0s) ✓
+  Decode time: 11.8253s (SLO: 1.0s) ✗
+  Total time: 12.0109s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 88:
+  Prompt length: 33
+  Output length: 39
+  Prefill time: 0.1509s (SLO: 1.0s) ✓
+  Decode time: 1.3443s (SLO: 1.0s) ✗
+  Total time: 1.4951s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 89:
+  Prompt length: 720
+  Output length: 567
+  Prefill time: 0.1705s (SLO: 1.0s) ✓
+  Decode time: 18.6537s (SLO: 1.0s) ✗
+  Total time: 18.8243s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 90:
+  Prompt length: 166
+  Output length: 10
+  Prefill time: 0.1507s (SLO: 1.0s) ✓
+  Decode time: 0.3108s (SLO: 1.0s) ✓
+  Total time: 0.4616s (SLO: 1.0s) ✓
+  Both prefill and decode SLO met: ✓
+
+Request 91:
+  Prompt length: 681
+  Output length: 303
+  Prefill time: 0.1477s (SLO: 1.0s) ✓
+  Decode time: 10.1887s (SLO: 1.0s) ✗
+  Total time: 10.3364s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 92:
+  Prompt length: 49
+  Output length: 218
+  Prefill time: 0.1455s (SLO: 1.0s) ✓
+  Decode time: 7.4016s (SLO: 1.0s) ✗
+  Total time: 7.5470s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 93:
+  Prompt length: 455
+  Output length: 34
+  Prefill time: 0.1512s (SLO: 1.0s) ✓
+  Decode time: 1.1161s (SLO: 1.0s) ✗
+  Total time: 1.2673s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 94:
+  Prompt length: 1310
+  Output length: 191
+  Prefill time: 0.1518s (SLO: 1.0s) ✓
+  Decode time: 6.4773s (SLO: 1.0s) ✗
+  Total time: 6.6290s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 95:
+  Prompt length: 1068
+  Output length: 20
+  Prefill time: 0.1748s (SLO: 1.0s) ✓
+  Decode time: 0.6428s (SLO: 1.0s) ✓
+  Total time: 0.8176s (SLO: 1.0s) ✓
+  Both prefill and decode SLO met: ✓
+
+Request 96:
+  Prompt length: 173
+  Output length: 344
+  Prefill time: 0.1706s (SLO: 1.0s) ✓
+  Decode time: 11.3843s (SLO: 1.0s) ✗
+  Total time: 11.5549s (SLO: 1.0s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 97:
+  Prompt length: 322
+  Output length: 8
+  Prefill time: 0.2211s (SLO: 1.0s) ✓
+  Decode time: 0.2404s (SLO: 1.0s) ✓
+  Total time: 0.4615s (SLO: 1.0s) ✓
+  Both prefill and decode SLO met: ✓
+
+Request 98:
+  Prompt length: 1001
+  Output length: 11
+  Prefill time: 0.2053s (SLO: 1.0s) ✓
+  Decode time: 0.3406s (SLO: 1.0s) ✓
+  Total time: 0.5459s (SLO: 1.0s) ✓
+  Both prefill and decode SLO met: ✓
+
+Request 99:
+  Prompt length: 476
+  Output length: 2
+  Prefill time: 0.2067s (SLO: 1.0s) ✓
+  Decode time: 0.0349s (SLO: 1.0s) ✓
+  Total time: 0.2416s (SLO: 1.0s) ✓
+  Both prefill and decode SLO met: ✓
+
+Request 100:
+  Prompt length: 267
+  Output length: 14
+  Prefill time: 0.1989s (SLO: 1.0s) ✓
+  Decode time: 0.4393s (SLO: 1.0s) ✓
+  Total time: 0.6382s (SLO: 1.0s) ✓
+  Both prefill and decode SLO met: ✓
+
+============================================================
+SLO Analysis Results
+============================================================
+Total requests: 100
+Prefill SLO met: 100/100 (100.00%)
+Decode SLO met: 43/100 (43.00%)
+Total SLO met: 41/100 (41.00%)
+Both prefill and decode SLO met: 43/100 (43.00%)
+============================================================

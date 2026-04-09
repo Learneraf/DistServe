@@ -47,6 +47,7 @@ def organize_request_df(requests) -> 'DataFrame[Request_t]':
             'req_id': r.req_id,
             'prefill_lens': r.prefill_lens,
             'output_lens': r.output_lens,
+            'first_token_prefill': getattr(r, 'first_token_prefill', False),
         }
         for r in requests
     ])
@@ -103,19 +104,33 @@ def organize_worker_event_df(cluster) -> 'DataFrame[WorkerLog_t]':
 
 def calculate_per_request_latency(
     df: 'DataFrame[RequestLog_t]',
-    output_lens: 'pd.Series' = None
+    output_lens: 'pd.Series' = None,
+    first_token_prefill: 'pd.Series' = None,
 ) -> 'DataFrame[LatencyDist_t]':
     assert isinstance(output_lens, pd.Series) or output_lens is None, \
         f'output_lens must be a pd.Series, got {type(output_lens)}'
-    # First token latency: time between first event and the first `wait_decode`
-    # Decoding latency: time between first event and the last event
+    assert isinstance(first_token_prefill, pd.Series) or first_token_prefill is None, \
+        f'first_token_prefill must be a pd.Series, got {type(first_token_prefill)}'
+    # First token latency: time between request init and the first decode round finishing.
+    # Decoding latency: time between the first and the last decode rounds finishing,
+    # matching the benchmark's TPOT convention.
     first_event = df[df.event_type == 'init'].groupby('req_id').start_time.min()
-    first_wait_decode = df[df.event_type == 'wait_decode'].groupby('req_id').start_time.min()
+    first_decode_end = df[df.event_type == 'do_decode'].groupby('req_id').end_time.min()
+    last_decode_end = df[df.event_type == 'do_decode'].groupby('req_id').end_time.max()
+    finish_prefill_time = df[df.event_type == 'finish_prefill'].groupby('req_id').start_time.max()
     last_event = df[df.event_type == 'exit_system'].groupby('req_id').end_time.max()
 
+    if first_token_prefill is not None:
+        first_token_prefill = first_token_prefill.astype(bool)
+        first_token_ready = first_decode_end.reindex(first_event.index)
+        prefill_first_ready = finish_prefill_time.reindex(first_event.index)
+        first_token_ready = first_token_ready.where(~first_token_prefill, prefill_first_ready)
+    else:
+        first_token_ready = first_decode_end
+
     # Then, calculate the first token latency and decoding latency for each req_id
-    first_token_latency = first_wait_decode - first_event
-    decoding_latency = last_event - first_wait_decode
+    first_token_latency = (first_token_ready - first_event).fillna(0)
+    decoding_latency = (last_decode_end - first_token_ready).fillna(0)
     total_latency = last_event - first_event
 
     dist_df = pd.DataFrame({
@@ -125,11 +140,13 @@ def calculate_per_request_latency(
     })
 
     if output_lens is not None:
-        # If we have the request information, then we can also calculate the average time per-output-token.
-        # Calculate the average time per output token in each request.
-        tpot = decoding_latency.div(output_lens).replace([np.inf, - np.inf], 0)
+        # Match the benchmark definition:
+        #   TPOT = (last_token_time - first_token_time) / (output_len - 1)
+        decode_output_tokens = (output_lens - 1).clip(lower=1)
+        tpot = decoding_latency.div(decode_output_tokens).replace([np.inf, - np.inf], 0)
+        tpot = tpot.where(output_lens > 1, 0)
         dist_df['tpot'] = tpot
-        dist_df['inv_tpot_ms'] = 1 / tpot
-        dist_df['inv_tpot_s'] = 1000 / tpot
+        dist_df['inv_tpot_ms'] = (1 / tpot).replace([np.inf, - np.inf], 0)
+        dist_df['inv_tpot_s'] = (1000 / tpot).replace([np.inf, - np.inf], 0)
 
     return dist_df

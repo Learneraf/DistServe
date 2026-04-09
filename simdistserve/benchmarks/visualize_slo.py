@@ -1,12 +1,15 @@
 #!/usr/bin/env python3
 """
-可视化 DistServe vs simdistserve SLO 满足率对比结果（2x2 子图版本）
-每个模型一张图，四个子图分别展示 Prefill、Decode、Total、Both SLO 指标。
+Visualize SLO satisfaction comparisons as polished 2x2 model dashboards.
 
-用法示例:
-    python visualize_slo.py --input_dir ./results/slo/distserve_cuda/compared --output_dir ./results/slo/distserve_cuda/plots
+Each model gets one figure with four panels:
+    Prefill / Decode / Total / Both
 
-    python visualize_slo.py --input_dir ./results/slo/vllm_ascend/compared --output_dir ./results/slo/vllm_ascend/plots
+Each panel shows:
+    - Actual benchmark line
+    - Simulator prediction line
+    - Shaded absolute-gap band
+    - Mean/max absolute gap summary
 """
 
 import os
@@ -97,6 +100,36 @@ def collect_all_data(root_dir):
     return all_data
 
 
+def style_axis(ax):
+    ax.set_facecolor("#fbfbf8")
+    ax.grid(True, axis="y", linestyle=":", alpha=0.35, color="#666666")
+    ax.grid(False, axis="x")
+    ax.spines["top"].set_visible(False)
+    ax.spines["right"].set_visible(False)
+    ax.spines["left"].set_color("#999999")
+    ax.spines["bottom"].set_color("#999999")
+
+
+def add_gap_annotation(ax, exp_vals, csv_vals):
+    diffs = np.abs(np.array(exp_vals) - np.array(csv_vals))
+    valid_diffs = diffs[~np.isnan(diffs)]
+    if len(valid_diffs) == 0:
+        return
+    mean_gap = float(np.mean(valid_diffs))
+    max_gap = float(np.max(valid_diffs))
+    ax.text(
+        0.03,
+        0.96,
+        f"mean |Δ| = {mean_gap:.1f}%\nmax |Δ| = {max_gap:.1f}%",
+        transform=ax.transAxes,
+        va="top",
+        ha="left",
+        fontsize=9,
+        color="#222222",
+        bbox=dict(boxstyle="round,pad=0.35", facecolor="white", edgecolor="#d7d7cf", alpha=0.92),
+    )
+
+
 def plot_model_subplots(model_name, data, output_path):
     """
     为单个模型绘制 2x2 子图对比图
@@ -116,8 +149,22 @@ def plot_model_subplots(model_name, data, output_path):
         'Both (Prefill+Decode) SLO met rate': ('Both SLO Met Rate', 'Both')
     }
     
-    fig, axes = plt.subplots(2, 2, figsize=(12, 10))
-    fig.suptitle(f'SLO Satisfaction Comparison - {model_name}', fontsize=16, y=0.98)
+    plt.rcParams.update({
+        "font.size": 10,
+        "axes.titlesize": 12,
+        "axes.labelsize": 10,
+    })
+    fig, axes = plt.subplots(2, 2, figsize=(13, 10.5), facecolor="#f3f0e8")
+    fig.suptitle(f'SLO Satisfaction Comparison: {model_name}', fontsize=17, y=0.98, weight='bold')
+    fig.text(
+        0.5,
+        0.945,
+        'Actual benchmark vs simulator prediction across request rates',
+        ha='center',
+        va='center',
+        fontsize=10,
+        color='#5f5a53',
+    )
     
     # 将 axes 展平为一维列表方便索引
     ax_list = axes.flatten()
@@ -137,18 +184,50 @@ def plot_model_subplots(model_name, data, output_path):
                 exp_vals.append(np.nan)
                 csv_vals.append(np.nan)
         
-        # 绘制 Exp（实线，蓝色）和 CSV（虚线，橙色）
-        ax.plot(sorted_rates, exp_vals, marker='o', linestyle='-', 
-                color='#1f77b4', linewidth=2, markersize=6, label='Actual (DistServe)')
-        ax.plot(sorted_rates, csv_vals, marker='s', linestyle='--', 
-                color='#ff7f0e', linewidth=2, markersize=6, label='Predicted (simdistserve)')
+        style_axis(ax)
+
+        exp_arr = np.array(exp_vals, dtype=float)
+        csv_arr = np.array(csv_vals, dtype=float)
+        valid_mask = ~(np.isnan(exp_arr) | np.isnan(csv_arr))
+
+        if np.any(valid_mask):
+            ax.fill_between(
+                np.array(sorted_rates)[valid_mask],
+                exp_arr[valid_mask],
+                csv_arr[valid_mask],
+                color="#e8b85c",
+                alpha=0.16,
+                linewidth=0,
+                label="Absolute Gap",
+            )
+
+        ax.plot(
+            sorted_rates,
+            exp_vals,
+            marker='o',
+            linestyle='-',
+            color='#1f4e79',
+            linewidth=2.4,
+            markersize=6,
+            label='Actual',
+        )
+        ax.plot(
+            sorted_rates,
+            csv_vals,
+            marker='s',
+            linestyle='--',
+            color='#c46a2c',
+            linewidth=2.2,
+            markersize=5.5,
+            label='Simulator',
+        )
         
         # 设置子图标题和标签
-        ax.set_title(display_name, fontsize=12)
+        ax.set_title(display_name, fontsize=12, pad=10, weight='bold')
         ax.set_xlabel('Request Rate', fontsize=10)
         ax.set_ylabel('SLO Met Rate (%)', fontsize=10)
-        ax.grid(True, linestyle=':', alpha=0.7)
-        ax.legend(loc='best', fontsize=9)
+        ax.legend(loc='lower left', fontsize=8.5, frameon=False)
+        add_gap_annotation(ax, exp_vals, csv_vals)
         
         # 设置 y 轴范围 0-100（留一点边距）
         ax.set_ylim(-2, 102)
@@ -159,7 +238,7 @@ def plot_model_subplots(model_name, data, output_path):
         ax_list[i].set_visible(False)
     
     plt.tight_layout()
-    plt.subplots_adjust(top=0.92)  # 为主标题留空间
+    plt.subplots_adjust(top=0.90, wspace=0.16, hspace=0.24)
     plt.savefig(output_path, dpi=300, bbox_inches='tight')
     plt.close()
     print(f"已保存: {output_path}")

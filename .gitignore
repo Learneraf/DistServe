@@ -193,3 +193,8 @@ evaluation/2-benchmark-serving/data/sharegpt_3B.json
 evaluation/2-benchmark-serving/data/sharegpt_8B.json
 evaluation/2-benchmark-serving/data/sharegpt_pure.json
 evaluation/2-benchmark-serving/data/sampled_sharegpt_pure.jsonl
+
+# Local large datasets / generated binaries kept outside normal Git pushes.
+simdistserve/dataset/*.ds
+simdistserve/dataset/raw/*
+*.tar.gz

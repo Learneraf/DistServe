@@ -1,14 +1,14 @@
 backend,model_type,pd,rate,target,attainment,tp_prefill,pp_prefill,tp_decode,pp_decode
-distserve,LLAMA-7B,prefill,1.5,200.0,100.0,1,1,1,1
-distserve,LLAMA-7B,decode,1.5,100.0,14.000000000000002,1,1,1,1
-distserve,LLAMA-7B,both,1.5,"(200.0, 100.0)",14.000000000000002,1,1,1,1
-distserve,LLAMA-7B,prefill,1.5,118.87443824829606,85.0,1,1,1,1
-distserve,LLAMA-7B,decode,1.5,600.9377969713867,85.0,1,1,1,1
-distserve,LLAMA-7B,prefill,1.5,134.06819049801598,90.0,1,1,1,1
-distserve,LLAMA-7B,decode,1.5,686.6264507016971,90.0,1,1,1,1
-distserve,LLAMA-7B,prefill,1.5,151.46194475582143,95.0,1,1,1,1
-distserve,LLAMA-7B,decode,1.5,740.1910696643067,95.0,1,1,1,1
-distserve,LLAMA-7B,prefill,1.5,167.19832887530276,98.0,1,1,1,1
-distserve,LLAMA-7B,decode,1.5,773.2646326972393,98.0,1,1,1,1
-distserve,LLAMA-7B,prefill,1.5,167.49310074099694,99.0,1,1,1,1
-distserve,LLAMA-7B,decode,1.5,778.7695394074925,99.0,1,1,1,1
+distserve,LLAMA-7B,prefill,1.5,200.0,81.0,1,1,1,1
+distserve,LLAMA-7B,decode,1.5,100.0,100.0,1,1,1,1
+distserve,LLAMA-7B,both,1.5,"(200.0, 100.0)",81.0,1,1,1,1
+distserve,LLAMA-7B,prefill,1.5,206.6650451201171,85.0,1,1,1,1
+distserve,LLAMA-7B,decode,1.5,59.23827032541719,85.0,1,1,1,1
+distserve,LLAMA-7B,prefill,1.5,217.0697555483632,90.0,1,1,1,1
+distserve,LLAMA-7B,decode,1.5,60.037277868233005,90.0,1,1,1,1
+distserve,LLAMA-7B,prefill,1.5,227.67205284088104,95.0,1,1,1,1
+distserve,LLAMA-7B,decode,1.5,60.67363644122775,95.0,1,1,1,1
+distserve,LLAMA-7B,prefill,1.5,235.39410291807448,98.0,1,1,1,1
+distserve,LLAMA-7B,decode,1.5,62.49098996440905,98.0,1,1,1,1
+distserve,LLAMA-7B,prefill,1.5,236.6045173933748,99.0,1,1,1,1
+distserve,LLAMA-7B,decode,1.5,62.66324498147632,99.0,1,1,1,1

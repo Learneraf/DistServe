@@ -69,7 +69,8 @@ def analyze_exp(file_path, prefill_slo, decode_slo, total_slo):
             elif event['event_type'] == 'decoding_end':
                 decoding_end = event['timestamp']
 
-        prefill_time = context_end - context_begin if context_begin and context_end else 0
+        # Compare against the same user-visible first-token latency that the simulator reports.
+        prefill_time = request.get('ftl', 0)
         decode_time = decoding_end - decoding_begin if decoding_begin and decoding_end else 0
         total_time = request['latency']
 
@@ -90,7 +91,7 @@ def analyze_exp(file_path, prefill_slo, decode_slo, total_slo):
         lines.append(f"Request {i+1}:")
         lines.append(f"  Prompt length: {request['prompt_len']}")
         lines.append(f"  Output length: {request['output_len']}")
-        lines.append(f"  Prefill time: {prefill_time:.4f}s (SLO: {prefill_slo}s) {'✓' if prefill_ok else '✗'}")
+        lines.append(f"  First token latency: {prefill_time:.4f}s (SLO: {prefill_slo}s) {'✓' if prefill_ok else '✗'}")
         lines.append(f"  Decode time: {decode_time:.4f}s (SLO: {decode_slo}s) {'✓' if decode_ok else '✗'}")
         lines.append(f"  Total time: {total_time:.4f}s (SLO: {total_slo}s) {'✓' if total_ok else '✗'}")
         lines.append(f"  Both prefill and decode SLO met: {'✓' if both_ok else '✗'}")

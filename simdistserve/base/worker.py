@@ -25,7 +25,8 @@ class WorkerConfig(TypedDict):
     prefill_max_tokens: int  # Max tokens in prefill iteration (default = 10**7)
     decode_max_tokens: int  # Max tokens in a iteration forward (default = 10**7)
     enable_chunked_prefill: Optional[bool]  # Enable memory pressure simulation (default = False)
-    engine_type: Literal["distserve", "vllm"]  # Engine type for prefill/decode time calculation (default = "distserve")
+    engine_type: Literal["distserve", "vllm", "vllm_ascend"]  # Engine type for prefill/decode time calculation (default = "distserve")
+    prefill_generates_first_token: bool  # Whether prefill completes the first token for this backend.
 
     # TODO: Deprecated
     TP: Optional[int]  # Tensor parallelism (default = 1)
@@ -50,7 +51,8 @@ class Worker:
         prefill_max_tokens=10 ** 7,
         decode_max_tokens=10 ** 7,
         decode_back_pressure: float = 0.9,
-        engine_type: Literal["distserve", "vllm"] = "distserve",
+        engine_type: Literal["distserve", "vllm", "vllm_ascend"] = "distserve",
+        prefill_generates_first_token: bool = False,
     ):
         self.env = env
         self.cluster = cluster  # Refer to the cluster of init.
@@ -91,6 +93,7 @@ class Worker:
         self.enable_chunked_prefill: bool = enable_chunked_prefill
         # Decode worker stop accepting incoming request when this is full.
         self.decode_back_pressure = decode_back_pressure
+        self.prefill_generates_first_token = prefill_generates_first_token
 
         self.prefill_queue: 'deque[Request]' = deque()
         self.decode_queue: 'deque[Request]' = deque()
@@ -264,7 +267,12 @@ class Worker:
     def _exit_prefill(self, prefill_items: List['Request']):
         for item in prefill_items:
             next_wid = self.next_worker.wid if self.next_worker else None
-            item.finish_prefill(is_finished_one_round=self.is_last_in_pipeline, wid=self.wid, next_wid=next_wid)
+            item.finish_prefill(
+                is_finished_one_round=self.is_last_in_pipeline,
+                wid=self.wid,
+                next_wid=next_wid,
+                generated_tokens=(1 if self.prefill_generates_first_token else 0),
+            )
             if not self.is_last_in_pipeline or (item.remain_prefill_lens > 0):
                 # Finish one chunk of prefill. Now forward to the next worker
                 # (or head of worker) to do the rest of the parts.
@@ -321,7 +329,7 @@ class Worker:
             # __decode_reqs=decode_reqs,
         )
         num_tokens = sum(x.current_context_len for x in (prefill_items + decode_reqs))
-        if self.is_first_in_pipeline:
+        if self.is_first_in_pipeline and self.engine_type != "vllm_ascend":
             delay += self.add_ray_overhead(num_tokens)
         # Set the number of prefills in progress such that the scheduler get proper information about the worker.
         self._prefill_ips = len(prefill_items)
@@ -340,13 +348,17 @@ class Worker:
         )
         _token_generated_list = [x.current_context_len + 1 for x in decode_reqs]
         input_lens = [req.prefill_lens for req in decode_reqs]
+        output_lens = [req.output_lens for req in decode_reqs]
+        current_context_lens = [req.current_context_len for req in decode_reqs]
         delay = get_decode_time(batch_size, pp=self.cluster.PP_decode,
                                 model_type=self.model_type, TP=self.TP_Decode,
                                 token_generated_list=_token_generated_list,
                                 input_lens=input_lens,
+                                output_lens=output_lens,
+                                current_context_lens=current_context_lens,
                                 engine_type=self.engine_type, )
         num_tokens = sum(x.current_context_len for x in decode_reqs)
-        if self.is_first_in_pipeline:
+        if self.is_first_in_pipeline and self.engine_type != "vllm_ascend":
             delay += self.add_ray_overhead(num_tokens)
         yield self.env.timeout(delay)
         self._exit_decode(decode_reqs)

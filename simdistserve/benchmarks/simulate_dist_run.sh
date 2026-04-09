@@ -4,7 +4,7 @@
 rates=(1 1.5 2 2.5 3 3.5 4)
 
 # 仅需修改这个变量来切换模型
-MODEL="llama_1B"   # 可选: llama_1B, llama_3B, llama_7B, llama_8B
+MODEL="llama_7B"   # 可选: llama_1B, llama_3B, llama_7B, llama_8B
 TYPE="vllm_ascend"
 # TYPE="distserve_cuda"
 
@@ -39,6 +39,11 @@ fi
 WORKLOAD_FILE="${WORKLOAD_MAP[$MODEL]}"
 MODEL_PATH="${MODEL_PATH_MAP[$MODEL]}"
 
+BACKEND="distserve"
+if [[ "$TYPE" == "vllm_ascend" ]]; then
+    BACKEND="vllm_ascend"
+fi
+
 for RATE in "${rates[@]}"; do
     echo "Running with model=$MODEL, rate=$RATE"
 
@@ -46,7 +51,7 @@ for RATE in "${rates[@]}"; do
     mkdir -p "$OUTPUT_DIR"
 
     python simulate_dist.py \
-        --backend distserve \
+        --backend "$BACKEND" \
         --model "$MODEL_PATH" \
         --seed 0 \
         --rate "$RATE" \

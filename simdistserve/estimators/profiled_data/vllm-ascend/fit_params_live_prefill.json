@@ -1,0 +1,78 @@
+{
+    "/users/rh/.cache/modelscope/hub/models/LLM-Research/Llama-3.2-1B/converted_bin_v2": {
+        "1": {
+            "decoding_large_small_bs_threshold": 95,
+            "prefill": [
+                95.93844197466503,
+                0.0041079708461324565,
+                -1.698832756549352e-08
+            ],
+            "decoding_smallbs": [
+                -0.023991020656865217,
+                1.1465348096899712e-07,
+                0.012395326805955306,
+                1.6804979230257982e-07,
+                5.952903585166086e-07,
+                -1.9164017593345277e-10
+            ],
+            "decoding_largebs": []
+        }
+    },
+    "/users/rh/.cache/modelscope/hub/models/LLM-Research/Llama-3.2-3B/converted_bin_v2": {
+        "1": {
+            "decoding_large_small_bs_threshold": 95,
+            "prefill": [
+                128.15436024759248,
+                0.017325824767665466,
+                -5.78847480635588e-06
+            ],
+            "decoding_smallbs": [
+                -0.04222709159381346,
+                -2.8639758445819922e-08,
+                0.021695183788597323,
+                4.343648877275496e-08,
+                8.936237153411576e-07,
+                -5.150145805396723e-11
+            ],
+            "decoding_largebs": []
+        }
+    },
+    "huggyllama/llama-7b": {
+        "1": {
+            "decoding_large_small_bs_threshold": 95,
+            "prefill": [
+                177.2890870901423,
+                0.07887946081443359,
+                1.214319678483463e-05
+            ],
+            "decoding_smallbs": [
+                -0.05301331493379941,
+                -1.49886715630254e-06,
+                0.02675059720858799,
+                1.0592082052342948e-06,
+                4.80278315614957e-07,
+                -2.339618702627061e-10
+            ],
+            "decoding_largebs": []
+        }
+    },
+    "/users/rh/.cache/modelscope/hub/models/LLM-Research/Meta-Llama-3.1-8B/converted_bin_v2": {
+        "1": {
+            "decoding_large_small_bs_threshold": 95,
+            "prefill": [
+                166.48395408567671,
+                0.0190340595144185,
+                -7.981748054152578e-06
+            ],
+            "decoding_smallbs": [
+                -0.054704051990057734,
+                -1.4376354682924798e-06,
+                0.028042973950457864,
+                1.6446725004515958e-07,
+                7.651190904478333e-07,
+                5.518573829054899e-10
+            ],
+            "decoding_largebs": []
+        }
+    }
+}

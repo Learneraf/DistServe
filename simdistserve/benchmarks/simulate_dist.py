@@ -35,7 +35,7 @@ from simdistserve.estimators.memory_estimator import get_max_num_tokens, is_mode
 def parse_args(args_=None):
     parser = argparse.ArgumentParser(description='Simulation: vLLM, DistServe')
     parser.add_argument('--backend', type=str, default='distserve',
-                        help='Backend to simulate (distserve, vllm)')
+                        help='Backend to simulate (distserve, vllm, vllm_ascend)')
     parser.add_argument('--model', type=str, default='facebook/opt-13b',
                         help='Model type (opt_13b, opt_66b, opt_175b,'
                              'llama_7b, llama_2_7b,'
@@ -87,7 +87,7 @@ def parse_args(args_=None):
 
     args = parser.parse_args(args=args_)
 
-    assert args.backend in ['distserve', 'vllm'], f'Unknown backend: {args.backend}'
+    assert args.backend in ['distserve', 'vllm', 'vllm_ascend'], f'Unknown backend: {args.backend}'
     assert args.arrival in ['poisson', 'gamma', 'fixed', 'custom'], f'Unknown arrival process: {args.arrival}'
     args.slo_scales = eval(args.slo_scales)
     args.slas = eval(args.slas)
@@ -136,17 +136,25 @@ def load_workload(workload, N, rate, cv, seed, process: Literal["fixed", "gamma"
         sampled_test_requests = random.sample(dataset.reqs, N)
 
     model_name = model_path
-    tokenizer = AutoTokenizer.from_pretrained(model_name, trust_remote_code=True)
+    tokenizer = None
 
     requests = []
     for i, req in enumerate(sampled_test_requests):
-        if isinstance(req, dict) and req["prompt"] is not None:
+        if isinstance(req, dict) and req.get("prompt_len") is not None:
+            prefill_len = req["prompt_len"]
+        elif isinstance(req, dict) and req.get("prompt") is not None:
+            if tokenizer is None:
+                tokenizer = AutoTokenizer.from_pretrained(model_name, trust_remote_code=True)
             token_ids = tokenizer.encode(req["prompt"])
             prefill_len = len(token_ids)
 
         # 获取 prompt 文本（假设 req 有 prompt 属性）
+        elif isinstance(req, TestRequest) and hasattr(req, 'prompt_len') and req.prompt_len is not None:
+            prefill_len = req.prompt_len
         elif isinstance(req, TestRequest) and hasattr(req, 'prompt') and req.prompt is not None:
-            # 使用 tokenizer 计算实际 token 长度
+            # 仅在数据集中缺少 prompt_len 时才重新分词，避免与真实基准的长度定义不一致。
+            if tokenizer is None:
+                tokenizer = AutoTokenizer.from_pretrained(model_name, trust_remote_code=True)
             token_ids = tokenizer.encode(req.prompt)
             prefill_len = len(token_ids)
         else:
@@ -202,10 +210,15 @@ def main(args, outputs=None):
         )
 
     prefill_max_tokens = get_max_num_tokens(model_type, TP_Prefill, PP_prefill)
-    if args.backend == 'vllm':
-        TP_Decode = PP_decode = 0
-        decode_max_tokens = prefill_max_tokens
-        pass
+    if args.backend == 'vllm_ascend':
+        # The Ascend path is served through a proxy that disaggregates
+        # prefill and decode onto different devices.
+        if not is_model_runnable(model_type, TP_Decode, PP_decode):
+            raise ValueError(
+                f"Model {model_type} is not runnable with decode TP={TP_Decode}, PP={PP_decode}. "
+                f"Skipping by throwing exception..."
+            )
+        decode_max_tokens = get_max_num_tokens(model_type, TP_Decode, PP_decode)
     else:
         decode_max_tokens = get_max_num_tokens(model_type, TP_Decode, PP_decode)
 
@@ -221,13 +234,30 @@ def main(args, outputs=None):
             prefill_max_batch_size=10 ** 7,  # inf
             decode_max_batch_size=10 ** 7,  # inf
             prefill_max_tokens=prefill_max_tokens,
-            decode_max_tokens=decode_max_tokens,
+            decode_max_tokens=prefill_max_tokens,
             enable_chunked_prefill=False,
             engine_type=args.backend,
         )
 
         cluster = VLLMCluster(
             env=env, PP=PP_prefill, worker_configs=worker_config,
+        )
+    elif args.backend == 'vllm_ascend':
+        worker_config = WorkerConfig(
+            model_type=model_type,
+            TP=TP_Prefill, TP_Prefill=TP_Prefill, TP_Decode=TP_Decode,
+            prefill_max_batch_size=10 ** 7,  # inf
+            decode_max_batch_size=10 ** 7,  # inf
+            prefill_max_tokens=prefill_max_tokens,
+            decode_max_tokens=decode_max_tokens,
+            enable_chunked_prefill=False,
+            engine_type=args.backend,
+            prefill_generates_first_token=True,
+        )
+
+        cluster = DisaggCluster(
+            env=env, PP_prefill=PP_prefill, PP_decode=PP_decode,
+            worker_configs=worker_config,
         )
     elif args.backend == 'distserve':
         worker_config = WorkerConfig(
@@ -257,7 +287,9 @@ def main(args, outputs=None):
     request_df = organize_request_df(requests)
     request_event_df = organize_request_event_df(requests)
     per_request_latency_df = calculate_per_request_latency(
-        request_event_df, request_df.output_lens
+        request_event_df,
+        request_df.output_lens,
+        request_df.first_token_prefill,
     )
     outputs['request_df'] = request_df
     outputs['request_event_df'] = request_event_df

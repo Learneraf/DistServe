@@ -1,0 +1,14 @@
+backend,model_type,pd,rate,target,attainment,tp_prefill,pp_prefill,tp_decode,pp_decode
+vllm_ascend,LLAMA-7B,prefill,2.0,200.0,9.0,1,1,1,1
+vllm_ascend,LLAMA-7B,decode,2.0,100.0,100.0,1,1,1,1
+vllm_ascend,LLAMA-7B,both,2.0,"(200.0, 100.0)",9.0,1,1,1,1
+vllm_ascend,LLAMA-7B,prefill,2.0,483.1042819894133,85.0,1,1,1,1
+vllm_ascend,LLAMA-7B,decode,2.0,39.78765347737361,85.0,1,1,1,1
+vllm_ascend,LLAMA-7B,prefill,2.0,510.48190852213827,90.0,1,1,1,1
+vllm_ascend,LLAMA-7B,decode,2.0,41.8996620815803,90.0,1,1,1,1
+vllm_ascend,LLAMA-7B,prefill,2.0,583.419115538428,95.0,1,1,1,1
+vllm_ascend,LLAMA-7B,decode,2.0,48.14308439677907,95.0,1,1,1,1
+vllm_ascend,LLAMA-7B,prefill,2.0,610.1765090030327,98.0,1,1,1,1
+vllm_ascend,LLAMA-7B,decode,2.0,56.60301888719573,98.0,1,1,1,1
+vllm_ascend,LLAMA-7B,prefill,2.0,721.7279149323015,99.0,1,1,1,1
+vllm_ascend,LLAMA-7B,decode,2.0,64.77850898787526,99.0,1,1,1,1
