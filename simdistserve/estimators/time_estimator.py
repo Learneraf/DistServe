@@ -166,26 +166,20 @@ def get_decode_time(num_requests, pp=1, model_type=ModelTypes.opt_13b, TP=1,
         a, b, c = coeffs
         num_total_tokens = sum(token_generated_list) if token_generated_list else 0
         delay = a + b * num_total_tokens + c * batch_size
-    elif len(coeffs) == 5:
+    elif len(coeffs) == 4:
         # Live decode-round fit: round time depends on current batch state.
-        a, b, c, d, e = coeffs
+        a, b, c, d = coeffs
         if input_lens is None or output_lens is None or current_context_lens is None:
             raise ValueError(
-                "For 5-coefficient model, input_lens, output_lens, and current_context_lens are required."
+                "For 4-coefficient model, input_lens, output_lens, and current_context_lens are required."
             )
         sum_context_len = sum(current_context_lens)
         max_context_len = max(current_context_lens) if current_context_lens else 0
-        remaining_output_tokens = [
-            out_len - (cur_len - in_len)
-            for in_len, out_len, cur_len in zip(input_lens, output_lens, current_context_lens)
-        ]
-        sum_remaining_output_tokens = sum(remaining_output_tokens)
         delay = (
             a
             + b * batch_size
             + c * sum_context_len
             + d * max_context_len
-            + e * sum_remaining_output_tokens
         )
     elif len(coeffs) == 6:
         A, B, C, D, E, F = coeffs

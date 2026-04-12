@@ -4,9 +4,9 @@
 rates=(1 1.5 2 2.5 3 3.5 4)
 
 # 仅需修改这个变量来切换模型
-MODEL="llama_7B"   # 可选: llama_1B, llama_3B, llama_7B, llama_8B
-TYPE="vllm_ascend"
-# TYPE="distserve_cuda"
+MODEL="llama_1B"   # 可选: llama_1B, llama_3B, llama_7B, llama_8B
+# TYPE="vllm_ascend"
+TYPE="distserve_cuda"
 
 # 使用关联数组映射模型 -> workload 和 model_path
 declare -A WORKLOAD_MAP

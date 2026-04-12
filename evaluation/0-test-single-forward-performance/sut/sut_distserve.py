@@ -110,7 +110,7 @@ class DistServeSUT(SystemUnderTest):
         self.cache_config = CacheConfig(
             block_size = BLOCK_SIZE,
             max_num_blocks_per_req = 2048 // BLOCK_SIZE + 2,
-            gpu_memory_utilization = 0.92
+            gpu_memory_utilization = worker_param.gpu_memory_utilization
         )
         self.tokenizer = AutoTokenizer.from_pretrained(self.model_config.tokenizer)
         
@@ -158,7 +158,7 @@ class DistServeSUT(SystemUnderTest):
     def inference(
         self,
         input_param: InputParam
-    ) -> tuple[torch.Tensor, torch.Tensor, list[str], float, list[float]]:
+    ) -> tuple[torch.Tensor, torch.Tensor, list[str], float, list[float], list[RequestResultRecord]]:
         input_ids = get_input_ids(self.worker_param.model_dir, input_param.input_len*input_param.batch_size)
         prompt_token_ids = input_ids.view(input_param.batch_size, input_param.input_len).tolist()
         
@@ -172,6 +172,8 @@ class DistServeSUT(SystemUnderTest):
             []
             for _ in range(input_param.batch_size)
         ]
+        request_start_perf = time.perf_counter()
+        request_start_wall = time.time()
         
         # Prefill phase
         prefill_start_time = time.perf_counter()
@@ -190,6 +192,7 @@ class DistServeSUT(SystemUnderTest):
         # )
         prefill_end_time = time.perf_counter()
         prefill_time_usage = (prefill_end_time - prefill_start_time)*1000
+        token_perf_timestamps = [prefill_end_time]
         for i in range(input_param.batch_size):
             predict_ids[i].append(last_turn_output_ids[i])
         
@@ -218,6 +221,7 @@ class DistServeSUT(SystemUnderTest):
             # )
             decoding_end_time = time.perf_counter()
             decoding_time_usages.append((decoding_end_time - decoding_start_time)*1000)
+            token_perf_timestamps.append(decoding_end_time)
             for i in range(input_param.batch_size):
                 predict_ids[i].append(last_turn_output_ids[i])
         
@@ -225,7 +229,36 @@ class DistServeSUT(SystemUnderTest):
             self.tokenizer.decode(predict_id, skip_special_tokens=True)
             for predict_id in predict_ids
         ]
-        
-        return input_ids, predict_ids, predict_texts, prefill_time_usage, decoding_time_usages
+        request_end_perf = token_perf_timestamps[-1]
+        wall_offset = request_start_wall - request_start_perf
+        token_wall_timestamps = [ts + wall_offset for ts in token_perf_timestamps]
+        prefill_end_wall = prefill_end_time + wall_offset
+        request_end_wall = request_end_perf + wall_offset
+
+        lifecycle_events = [
+            LifetimeEventRecord(timestamp=request_start_wall, event_type="issued"),
+            LifetimeEventRecord(timestamp=request_start_wall, event_type="context_begin"),
+            LifetimeEventRecord(timestamp=prefill_end_wall, event_type="context_end"),
+            LifetimeEventRecord(timestamp=prefill_end_wall, event_type="migration_begin"),
+            LifetimeEventRecord(timestamp=prefill_end_wall, event_type="migration_end"),
+            LifetimeEventRecord(timestamp=prefill_end_wall, event_type="decoding_begin"),
+            LifetimeEventRecord(timestamp=request_end_wall, event_type="decoding_end"),
+        ]
+        per_request_results = [
+            RequestResultRecord(
+                prompt_len=input_param.input_len,
+                output_len=input_param.output_len,
+                start_time=request_start_perf,
+                end_time=request_end_perf,
+                token_timestamps=token_perf_timestamps.copy(),
+                lifecycle_events=copy.deepcopy(lifecycle_events),
+                latency=request_end_perf - request_start_perf,
+                ftl=token_perf_timestamps[0] - request_start_perf,
+                tpot=0 if input_param.output_len == 1 else (token_perf_timestamps[-1] - token_perf_timestamps[0]) / (input_param.output_len - 1),
+            )
+            for _ in range(input_param.batch_size)
+        ]
+
+        return input_ids, predict_ids, predict_texts, prefill_time_usage, decoding_time_usages, per_request_results
     
     

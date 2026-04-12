@@ -1,3 +1,7 @@
+import dataclasses
+import json
+from pathlib import Path
+
 import numpy as np
 import torch
 from structs import *
@@ -12,12 +16,14 @@ def run_test_params(
     warmup_rounds: int = 1,
     measure_rounds: int = 3,
     skip_duplicated: bool = True,
-    store_into_db: bool = True
+    store_into_db: bool = True,
+    exp_output_dir: str | None = None,
 ):
     """
     Create a SUT, run it on a series of TestParamGroups, and store the results into a database
     """
     record_manager = RecordManager(db_path)
+    exp_root = Path(exp_output_dir) if exp_output_dir is not None else None
     total_num_params = sum([len(test_param_group.input_params) for test_param_group in testing_params])
     num_finished_params = 0
     print(f"Total number of params to run: {total_num_params}")
@@ -57,10 +63,12 @@ def run_test_params(
             print(f"Running")
             prefill_time_usages = []    # [measure_rounds]
             decoding_time_usages = []   # [measure_rounds*(output_len-1)]
+            last_per_request_results = None
             for _ in range(measure_rounds):
-                input_ids, predict_ids, predict_texts, prefill_time_usage, decoding_time_usage = sut.inference(input_param)
+                input_ids, predict_ids, predict_texts, prefill_time_usage, decoding_time_usage, per_request_results = sut.inference(input_param)
                 prefill_time_usages.append(prefill_time_usage)
                 decoding_time_usages.extend(decoding_time_usage)
+                last_per_request_results = per_request_results
             avg_prefill_time_usage = np.mean(prefill_time_usages)
             avg_decoding_time_usage = np.median(decoding_time_usages)
             prefill_time_stddev = np.std(prefill_time_usages)
@@ -80,6 +88,19 @@ def run_test_params(
                     prefill_time_stddev,
                     decoding_time_stddev
                 )
+            if exp_root is not None and last_per_request_results is not None:
+                model_dir_name = Path(worker_param.model_dir).parent.name
+                exp_dir = exp_root / model_dir_name
+                exp_dir.mkdir(parents=True, exist_ok=True)
+                exp_path = exp_dir / (
+                    f"tp{worker_param.tp_world_size}"
+                    f"-bs{input_param.batch_size}"
+                    f"-in{input_param.input_len}"
+                    f"-out{input_param.output_len}.exp"
+                )
+                with open(exp_path, "w", encoding="utf-8") as f:
+                    json.dump([dataclasses.asdict(item) for item in last_per_request_results], f, indent=2)
+                    f.write("\n")
             num_finished_params += 1
         del sut
         

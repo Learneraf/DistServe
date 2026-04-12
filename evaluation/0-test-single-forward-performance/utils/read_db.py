@@ -1,4 +1,11 @@
+'''
+usage:
+    python ./utils/read_db.py --db_path "db-identical-req.sqlite"
+'''
+
+
 import pandas as pd
+import argparse
 import sqlite3
 
 CSV_SAVE_PATH = "./result/read_db.csv"
@@ -32,5 +39,8 @@ def read_sqlite_with_pandas(db_path):
 
 # 使用示例
 if __name__ == "__main__":
-    df = read_sqlite_with_pandas("db-identical-req.sqlite")
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--db_path", type=str, default="db-identical-req-tp2-robust.sqlite")
+    args = parser.parse_args()
+    df = read_sqlite_with_pandas(args.db_path)
 

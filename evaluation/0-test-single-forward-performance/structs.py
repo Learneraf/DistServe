@@ -1,4 +1,5 @@
 import dataclasses
+from typing import List, Optional
 
 """
 We divide parameters into two types:
@@ -18,6 +19,7 @@ class WorkerParam:
     max_req_num: int
     max_seq_len: int
     use_dummy_weights: bool = False
+    gpu_memory_utilization: float = 0.92
 
 @dataclasses.dataclass
 class InputParam:
@@ -35,4 +37,23 @@ class TestParamGroup:
     """
     worker_param: WorkerParam
     input_params: list[InputParam]
+
+
+@dataclasses.dataclass
+class LifetimeEventRecord:
+    timestamp: float
+    event_type: str
+
+
+@dataclasses.dataclass
+class RequestResultRecord:
+    prompt_len: int
+    output_len: int
+    start_time: float
+    end_time: float
+    token_timestamps: List[float]
+    lifecycle_events: Optional[List[LifetimeEventRecord]]
+    latency: float
+    ftl: float
+    tpot: float
  

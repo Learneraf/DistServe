@@ -10,7 +10,6 @@ latency model using batch-state features:
              + B * batch_size
              + C * sum_current_context_len
              + D * max_current_context_len
-             + E * sum_remaining_output_tokens
 
 The output JSON preserves the existing prefill fit and any untouched model/TP
 entries, while replacing TP=1 decode coefficients for the models that have
@@ -168,7 +167,6 @@ def fit_relative_error_linear_model(samples: list[RoundSample]) -> tuple[list[fl
             float(sample.batch_size),
             float(sample.sum_context_len),
             float(sample.max_context_len),
-            float(sample.sum_remaining_output_tokens),
         ]
         duration = max(sample.duration_ms, 1e-6)
         design_matrix.append([value / duration for value in row])

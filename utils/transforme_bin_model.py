@@ -11,6 +11,7 @@ MODEL_NAMES = [
     "Llama-3___2-1B",
     "Llama-3___2-3B",
     "Meta-Llama-3___1-8B",
+    "llama-2-7b"
 ]
 DTYPE = torch.float16
 DEVICE_MAP = "auto"

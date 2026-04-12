@@ -39,7 +39,9 @@ class SystemUnderTest(ABC):
     def inference(
         self,
         input_param: InputParam
-    ) -> tuple[torch.Tensor, torch.Tensor, list[str], float, list[float]]:
-        # Return: input_ids, predict_ids, predict_texts, prefill_time_usage, decoding_time_usages
+    ) -> tuple[torch.Tensor, torch.Tensor, list[str], float, list[float], list[RequestResultRecord]]:
+        # Return:
+        # input_ids, predict_ids, predict_texts, prefill_time_usage,
+        # decoding_time_usages, per_request_results
         pass
     
