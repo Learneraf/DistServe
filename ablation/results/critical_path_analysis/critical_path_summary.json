@@ -1,0 +1,1310 @@
+{
+  "prefill": {
+    "all": {
+      "counts": {
+        "llama_1B": 684,
+        "llama_3B": 570,
+        "llama_7B": 667,
+        "llama_8B": 505
+      },
+      "variants": {
+        "pressure_only": {
+          "overall_grouped_cv_metrics": {
+            "count": 2426.0,
+            "mean_abs_rel_error_pct": 16.674407890444805,
+            "rmse_rel_error_pct": 24.492320565638128,
+            "max_abs_rel_error_pct": 93.44035102105491
+          },
+          "per_model": {
+            "llama_1B": {
+              "count": 684.0,
+              "mean_abs_rel_error_pct": 15.866958372574928,
+              "rmse_rel_error_pct": 20.806113930651293,
+              "max_abs_rel_error_pct": 86.62742985776623
+            },
+            "llama_3B": {
+              "count": 570.0,
+              "mean_abs_rel_error_pct": 10.44721194909544,
+              "rmse_rel_error_pct": 15.654055285640101,
+              "max_abs_rel_error_pct": 87.4322182567944
+            },
+            "llama_7B": {
+              "count": 667.0,
+              "mean_abs_rel_error_pct": 27.38523690950287,
+              "rmse_rel_error_pct": 36.87150786682261,
+              "max_abs_rel_error_pct": 93.44035102105491
+            },
+            "llama_8B": {
+              "count": 505.0,
+              "mean_abs_rel_error_pct": 10.650000367831753,
+              "rmse_rel_error_pct": 14.940404507340723,
+              "max_abs_rel_error_pct": 67.41106654104824
+            }
+          }
+        },
+        "pressure_plus_max": {
+          "overall_grouped_cv_metrics": {
+            "count": 2426.0,
+            "mean_abs_rel_error_pct": 15.293455726277491,
+            "rmse_rel_error_pct": 23.18427322380739,
+            "max_abs_rel_error_pct": 93.37397521040451
+          },
+          "per_model": {
+            "llama_1B": {
+              "count": 684.0,
+              "mean_abs_rel_error_pct": 15.923332354915798,
+              "rmse_rel_error_pct": 20.605185053877012,
+              "max_abs_rel_error_pct": 85.23406999141162
+            },
+            "llama_3B": {
+              "count": 570.0,
+              "mean_abs_rel_error_pct": 7.245577371276217,
+              "rmse_rel_error_pct": 9.641042468133854,
+              "max_abs_rel_error_pct": 80.6665543954261
+            },
+            "llama_7B": {
+              "count": 667.0,
+              "mean_abs_rel_error_pct": 27.309589262422207,
+              "rmse_rel_error_pct": 36.849190121564845,
+              "max_abs_rel_error_pct": 93.37397521040451
+            },
+            "llama_8B": {
+              "count": 505.0,
+              "mean_abs_rel_error_pct": 7.653245785195509,
+              "rmse_rel_error_pct": 10.4280971513029,
+              "max_abs_rel_error_pct": 44.66300970164785
+            }
+          }
+        },
+        "pressure_plus_mid": {
+          "overall_grouped_cv_metrics": {
+            "count": 2426.0,
+            "mean_abs_rel_error_pct": 15.704088041948902,
+            "rmse_rel_error_pct": 23.593886454926253,
+            "max_abs_rel_error_pct": 128.10301184504627
+          },
+          "per_model": {
+            "llama_1B": {
+              "count": 684.0,
+              "mean_abs_rel_error_pct": 16.10603187191184,
+              "rmse_rel_error_pct": 21.31857564554362,
+              "max_abs_rel_error_pct": 128.10301184504627
+            },
+            "llama_3B": {
+              "count": 570.0,
+              "mean_abs_rel_error_pct": 8.038545226450914,
+              "rmse_rel_error_pct": 10.869203146492158,
+              "max_abs_rel_error_pct": 85.33424158734904
+            },
+            "llama_7B": {
+              "count": 667.0,
+              "mean_abs_rel_error_pct": 27.213874916695563,
+              "rmse_rel_error_pct": 36.792831231004676,
+              "max_abs_rel_error_pct": 93.34663579802634
+            },
+            "llama_8B": {
+              "count": 505.0,
+              "mean_abs_rel_error_pct": 8.609834536371038,
+              "rmse_rel_error_pct": 11.718969594380354,
+              "max_abs_rel_error_pct": 46.73194882427668
+            }
+          }
+        },
+        "pressure_plus_min": {
+          "overall_grouped_cv_metrics": {
+            "count": 2426.0,
+            "mean_abs_rel_error_pct": 15.992727801698623,
+            "rmse_rel_error_pct": 23.994440146417894,
+            "max_abs_rel_error_pct": 178.640654638614
+          },
+          "per_model": {
+            "llama_1B": {
+              "count": 684.0,
+              "mean_abs_rel_error_pct": 16.150788870759648,
+              "rmse_rel_error_pct": 21.77556380511381,
+              "max_abs_rel_error_pct": 178.640654638614
+            },
+            "llama_3B": {
+              "count": 570.0,
+              "mean_abs_rel_error_pct": 8.704459446927107,
+              "rmse_rel_error_pct": 12.29429678192225,
+              "max_abs_rel_error_pct": 85.33584609967457
+            },
+            "llama_7B": {
+              "count": 667.0,
+              "mean_abs_rel_error_pct": 27.235979086458755,
+              "rmse_rel_error_pct": 36.81332382348897,
+              "max_abs_rel_error_pct": 93.34913616978588
+            },
+            "llama_8B": {
+              "count": 505.0,
+              "mean_abs_rel_error_pct": 9.15500618595014,
+              "rmse_rel_error_pct": 12.76638452559199,
+              "max_abs_rel_error_pct": 45.25124578939538
+            }
+          }
+        }
+      }
+    },
+    "multi_request": {
+      "counts": {
+        "llama_1B": 10,
+        "llama_3B": 76,
+        "llama_7B": 24,
+        "llama_8B": 98
+      },
+      "variants": {
+        "pressure_only": {
+          "overall_grouped_cv_metrics": {
+            "count": 208.0,
+            "mean_abs_rel_error_pct": 15.624107504173908,
+            "rmse_rel_error_pct": 22.481410090732638,
+            "max_abs_rel_error_pct": 146.10555899848893
+          },
+          "per_model": {
+            "llama_1B": {
+              "count": 10.0,
+              "mean_abs_rel_error_pct": 25.36363242974084,
+              "rmse_rel_error_pct": 50.35859058030417,
+              "max_abs_rel_error_pct": 146.10555899848893
+            },
+            "llama_3B": {
+              "count": 76.0,
+              "mean_abs_rel_error_pct": 14.879660736012001,
+              "rmse_rel_error_pct": 19.34022327974648,
+              "max_abs_rel_error_pct": 83.86782257336682
+            },
+            "llama_7B": {
+              "count": 24.0,
+              "mean_abs_rel_error_pct": 27.440785568100896,
+              "rmse_rel_error_pct": 32.94567639128489,
+              "max_abs_rel_error_pct": 70.16898109986684
+            },
+            "llama_8B": {
+              "count": 98.0,
+              "mean_abs_rel_error_pct": 12.313724153055418,
+              "rmse_rel_error_pct": 16.063906072703006,
+              "max_abs_rel_error_pct": 55.20956795634745
+            }
+          }
+        },
+        "pressure_plus_max": {
+          "overall_grouped_cv_metrics": {
+            "count": 208.0,
+            "mean_abs_rel_error_pct": 12.000714834494287,
+            "rmse_rel_error_pct": 26.92428304651109,
+            "max_abs_rel_error_pct": 309.1993761917208
+          },
+          "per_model": {
+            "llama_1B": {
+              "count": 10.0,
+              "mean_abs_rel_error_pct": 40.061782740345734,
+              "rmse_rel_error_pct": 98.99725507523532,
+              "max_abs_rel_error_pct": 309.1993761917208
+            },
+            "llama_3B": {
+              "count": 76.0,
+              "mean_abs_rel_error_pct": 8.800318250917744,
+              "rmse_rel_error_pct": 13.621409113066655,
+              "max_abs_rel_error_pct": 80.56774474033674
+            },
+            "llama_7B": {
+              "count": 24.0,
+              "mean_abs_rel_error_pct": 28.82333133478402,
+              "rmse_rel_error_pct": 34.198839116483335,
+              "max_abs_rel_error_pct": 71.81393241321796
+            },
+            "llama_8B": {
+              "count": 98.0,
+              "mean_abs_rel_error_pct": 7.499456317008053,
+              "rmse_rel_error_pct": 10.403820163209012,
+              "max_abs_rel_error_pct": 34.59201133250051
+            }
+          }
+        },
+        "pressure_plus_mid": {
+          "overall_grouped_cv_metrics": {
+            "count": 208.0,
+            "mean_abs_rel_error_pct": 14.853305190992211,
+            "rmse_rel_error_pct": 19.855705693651643,
+            "max_abs_rel_error_pct": 84.33846598092897
+          },
+          "per_model": {
+            "llama_1B": {
+              "count": 10.0,
+              "mean_abs_rel_error_pct": 9.118651665735811,
+              "rmse_rel_error_pct": 12.288415320947882,
+              "max_abs_rel_error_pct": 22.459387911243088
+            },
+            "llama_3B": {
+              "count": 76.0,
+              "mean_abs_rel_error_pct": 14.693781968285421,
+              "rmse_rel_error_pct": 19.306747825130145,
+              "max_abs_rel_error_pct": 84.33846598092897
+            },
+            "llama_7B": {
+              "count": 24.0,
+              "mean_abs_rel_error_pct": 28.747367959070523,
+              "rmse_rel_error_pct": 34.076846541290166,
+              "max_abs_rel_error_pct": 69.80494596827613
+            },
+            "llama_8B": {
+              "count": 98.0,
+              "mean_abs_rel_error_pct": 12.159558188384054,
+              "rmse_rel_error_pct": 15.745150348675937,
+              "max_abs_rel_error_pct": 51.37065062630407
+            }
+          }
+        },
+        "pressure_plus_min": {
+          "overall_grouped_cv_metrics": {
+            "count": 208.0,
+            "mean_abs_rel_error_pct": 14.78255584812968,
+            "rmse_rel_error_pct": 20.123240712717326,
+            "max_abs_rel_error_pct": 83.14389598742976
+          },
+          "per_model": {
+            "llama_1B": {
+              "count": 10.0,
+              "mean_abs_rel_error_pct": 12.623953591097397,
+              "rmse_rel_error_pct": 18.99662823931318,
+              "max_abs_rel_error_pct": 41.69202798782625
+            },
+            "llama_3B": {
+              "count": 76.0,
+              "mean_abs_rel_error_pct": 14.024086569163096,
+              "rmse_rel_error_pct": 18.541849859863664,
+              "max_abs_rel_error_pct": 83.14389598742976
+            },
+            "llama_7B": {
+              "count": 24.0,
+              "mean_abs_rel_error_pct": 28.799924447862317,
+              "rmse_rel_error_pct": 35.10631967581494,
+              "max_abs_rel_error_pct": 74.38414095402686
+            },
+            "llama_8B": {
+              "count": 98.0,
+              "mean_abs_rel_error_pct": 12.158197086682742,
+              "rmse_rel_error_pct": 15.943810706421083,
+              "max_abs_rel_error_pct": 56.898767517171265
+            }
+          }
+        }
+      }
+    },
+    "heterogeneous_multi": {
+      "counts": {
+        "llama_1B": 10,
+        "llama_3B": 76,
+        "llama_7B": 24,
+        "llama_8B": 98
+      },
+      "variants": {
+        "pressure_only": {
+          "overall_grouped_cv_metrics": {
+            "count": 208.0,
+            "mean_abs_rel_error_pct": 15.624107504173908,
+            "rmse_rel_error_pct": 22.481410090732638,
+            "max_abs_rel_error_pct": 146.10555899848893
+          },
+          "per_model": {
+            "llama_1B": {
+              "count": 10.0,
+              "mean_abs_rel_error_pct": 25.36363242974084,
+              "rmse_rel_error_pct": 50.35859058030417,
+              "max_abs_rel_error_pct": 146.10555899848893
+            },
+            "llama_3B": {
+              "count": 76.0,
+              "mean_abs_rel_error_pct": 14.879660736012001,
+              "rmse_rel_error_pct": 19.34022327974648,
+              "max_abs_rel_error_pct": 83.86782257336682
+            },
+            "llama_7B": {
+              "count": 24.0,
+              "mean_abs_rel_error_pct": 27.440785568100896,
+              "rmse_rel_error_pct": 32.94567639128489,
+              "max_abs_rel_error_pct": 70.16898109986684
+            },
+            "llama_8B": {
+              "count": 98.0,
+              "mean_abs_rel_error_pct": 12.313724153055418,
+              "rmse_rel_error_pct": 16.063906072703006,
+              "max_abs_rel_error_pct": 55.20956795634745
+            }
+          }
+        },
+        "pressure_plus_max": {
+          "overall_grouped_cv_metrics": {
+            "count": 208.0,
+            "mean_abs_rel_error_pct": 12.000714834494287,
+            "rmse_rel_error_pct": 26.92428304651109,
+            "max_abs_rel_error_pct": 309.1993761917208
+          },
+          "per_model": {
+            "llama_1B": {
+              "count": 10.0,
+              "mean_abs_rel_error_pct": 40.061782740345734,
+              "rmse_rel_error_pct": 98.99725507523532,
+              "max_abs_rel_error_pct": 309.1993761917208
+            },
+            "llama_3B": {
+              "count": 76.0,
+              "mean_abs_rel_error_pct": 8.800318250917744,
+              "rmse_rel_error_pct": 13.621409113066655,
+              "max_abs_rel_error_pct": 80.56774474033674
+            },
+            "llama_7B": {
+              "count": 24.0,
+              "mean_abs_rel_error_pct": 28.82333133478402,
+              "rmse_rel_error_pct": 34.198839116483335,
+              "max_abs_rel_error_pct": 71.81393241321796
+            },
+            "llama_8B": {
+              "count": 98.0,
+              "mean_abs_rel_error_pct": 7.499456317008053,
+              "rmse_rel_error_pct": 10.403820163209012,
+              "max_abs_rel_error_pct": 34.59201133250051
+            }
+          }
+        },
+        "pressure_plus_mid": {
+          "overall_grouped_cv_metrics": {
+            "count": 208.0,
+            "mean_abs_rel_error_pct": 14.853305190992211,
+            "rmse_rel_error_pct": 19.855705693651643,
+            "max_abs_rel_error_pct": 84.33846598092897
+          },
+          "per_model": {
+            "llama_1B": {
+              "count": 10.0,
+              "mean_abs_rel_error_pct": 9.118651665735811,
+              "rmse_rel_error_pct": 12.288415320947882,
+              "max_abs_rel_error_pct": 22.459387911243088
+            },
+            "llama_3B": {
+              "count": 76.0,
+              "mean_abs_rel_error_pct": 14.693781968285421,
+              "rmse_rel_error_pct": 19.306747825130145,
+              "max_abs_rel_error_pct": 84.33846598092897
+            },
+            "llama_7B": {
+              "count": 24.0,
+              "mean_abs_rel_error_pct": 28.747367959070523,
+              "rmse_rel_error_pct": 34.076846541290166,
+              "max_abs_rel_error_pct": 69.80494596827613
+            },
+            "llama_8B": {
+              "count": 98.0,
+              "mean_abs_rel_error_pct": 12.159558188384054,
+              "rmse_rel_error_pct": 15.745150348675937,
+              "max_abs_rel_error_pct": 51.37065062630407
+            }
+          }
+        },
+        "pressure_plus_min": {
+          "overall_grouped_cv_metrics": {
+            "count": 208.0,
+            "mean_abs_rel_error_pct": 14.78255584812968,
+            "rmse_rel_error_pct": 20.123240712717326,
+            "max_abs_rel_error_pct": 83.14389598742976
+          },
+          "per_model": {
+            "llama_1B": {
+              "count": 10.0,
+              "mean_abs_rel_error_pct": 12.623953591097397,
+              "rmse_rel_error_pct": 18.99662823931318,
+              "max_abs_rel_error_pct": 41.69202798782625
+            },
+            "llama_3B": {
+              "count": 76.0,
+              "mean_abs_rel_error_pct": 14.024086569163096,
+              "rmse_rel_error_pct": 18.541849859863664,
+              "max_abs_rel_error_pct": 83.14389598742976
+            },
+            "llama_7B": {
+              "count": 24.0,
+              "mean_abs_rel_error_pct": 28.799924447862317,
+              "rmse_rel_error_pct": 35.10631967581494,
+              "max_abs_rel_error_pct": 74.38414095402686
+            },
+            "llama_8B": {
+              "count": 98.0,
+              "mean_abs_rel_error_pct": 12.158197086682742,
+              "rmse_rel_error_pct": 15.943810706421083,
+              "max_abs_rel_error_pct": 56.898767517171265
+            }
+          }
+        }
+      }
+    },
+    "high_spread_multi": {
+      "counts": {
+        "llama_1B": 6,
+        "llama_3B": 37,
+        "llama_7B": 11,
+        "llama_8B": 52
+      },
+      "variants": {
+        "pressure_only": {
+          "overall_grouped_cv_metrics": {
+            "count": 106.0,
+            "mean_abs_rel_error_pct": 13.644777357039981,
+            "rmse_rel_error_pct": 19.3472196710366,
+            "max_abs_rel_error_pct": 79.97587439170282
+          },
+          "per_model": {
+            "llama_1B": {
+              "count": 6.0,
+              "mean_abs_rel_error_pct": 7.916351473350629,
+              "rmse_rel_error_pct": 10.289607050509336,
+              "max_abs_rel_error_pct": 22.45938791124849
+            },
+            "llama_3B": {
+              "count": 37.0,
+              "mean_abs_rel_error_pct": 13.917124210014942,
+              "rmse_rel_error_pct": 19.69529808638895,
+              "max_abs_rel_error_pct": 79.97587439170282
+            },
+            "llama_7B": {
+              "count": 11.0,
+              "mean_abs_rel_error_pct": 23.682624973898836,
+              "rmse_rel_error_pct": 32.722683172108944,
+              "max_abs_rel_error_pct": 70.13101594693568
+            },
+            "llama_8B": {
+              "count": 52.0,
+              "mean_abs_rel_error_pct": 11.988573471590273,
+              "rmse_rel_error_pct": 15.757253502062362,
+              "max_abs_rel_error_pct": 37.89032037214464
+            }
+          }
+        },
+        "pressure_plus_max": {
+          "overall_grouped_cv_metrics": {
+            "count": 106.0,
+            "mean_abs_rel_error_pct": 10.027774907727704,
+            "rmse_rel_error_pct": 16.285254474437902,
+            "max_abs_rel_error_pct": 81.8556542054991
+          },
+          "per_model": {
+            "llama_1B": {
+              "count": 6.0,
+              "mean_abs_rel_error_pct": 7.91635147335064,
+              "rmse_rel_error_pct": 10.289607050509348,
+              "max_abs_rel_error_pct": 22.459387911248516
+            },
+            "llama_3B": {
+              "count": 37.0,
+              "mean_abs_rel_error_pct": 9.051069079427554,
+              "rmse_rel_error_pct": 16.13370398287065,
+              "max_abs_rel_error_pct": 81.8556542054991
+            },
+            "llama_7B": {
+              "count": 11.0,
+              "mean_abs_rel_error_pct": 24.347521416880724,
+              "rmse_rel_error_pct": 33.1284322525312,
+              "max_abs_rel_error_pct": 71.23066193382257
+            },
+            "llama_8B": {
+              "count": 52.0,
+              "mean_abs_rel_error_pct": 7.937187304894716,
+              "rmse_rel_error_pct": 10.53707932430539,
+              "max_abs_rel_error_pct": 26.061707950538892
+            }
+          }
+        },
+        "pressure_plus_mid": {
+          "overall_grouped_cv_metrics": {
+            "count": 106.0,
+            "mean_abs_rel_error_pct": 13.809683618450372,
+            "rmse_rel_error_pct": 19.664529927281556,
+            "max_abs_rel_error_pct": 80.58598562411754
+          },
+          "per_model": {
+            "llama_1B": {
+              "count": 6.0,
+              "mean_abs_rel_error_pct": 7.916351473350634,
+              "rmse_rel_error_pct": 10.289607050509353,
+              "max_abs_rel_error_pct": 22.45938791124854
+            },
+            "llama_3B": {
+              "count": 37.0,
+              "mean_abs_rel_error_pct": 13.353490278589547,
+              "rmse_rel_error_pct": 19.449446584924583,
+              "max_abs_rel_error_pct": 80.58598562411754
+            },
+            "llama_7B": {
+              "count": 11.0,
+              "mean_abs_rel_error_pct": 29.118017585995304,
+              "rmse_rel_error_pct": 35.483514468502044,
+              "max_abs_rel_error_pct": 66.97137749227151
+            },
+            "llama_8B": {
+              "count": 52.0,
+              "mean_abs_rel_error_pct": 11.575981172343731,
+              "rmse_rel_error_pct": 15.509306325138708,
+              "max_abs_rel_error_pct": 39.515594128722284
+            }
+          }
+        },
+        "pressure_plus_min": {
+          "overall_grouped_cv_metrics": {
+            "count": 106.0,
+            "mean_abs_rel_error_pct": 14.142086550826658,
+            "rmse_rel_error_pct": 19.633485139344494,
+            "max_abs_rel_error_pct": 79.93682640307351
+          },
+          "per_model": {
+            "llama_1B": {
+              "count": 6.0,
+              "mean_abs_rel_error_pct": 7.916351473350643,
+              "rmse_rel_error_pct": 10.289607050509344,
+              "max_abs_rel_error_pct": 22.45938791124849
+            },
+            "llama_3B": {
+              "count": 37.0,
+              "mean_abs_rel_error_pct": 14.328933391696271,
+              "rmse_rel_error_pct": 20.04356640948001,
+              "max_abs_rel_error_pct": 79.93682640307351
+            },
+            "llama_7B": {
+              "count": 11.0,
+              "mean_abs_rel_error_pct": 27.025094645224556,
+              "rmse_rel_error_pct": 33.56840243518839,
+              "max_abs_rel_error_pct": 64.15536728309051
+            },
+            "llama_8B": {
+              "count": 52.0,
+              "mean_abs_rel_error_pct": 12.002240172255572,
+              "rmse_rel_error_pct": 15.790209752035148,
+              "max_abs_rel_error_pct": 37.92391917331777
+            }
+          }
+        }
+      }
+    }
+  },
+  "decode": {
+    "all_small": {
+      "counts": {
+        "llama_1B": 28415,
+        "llama_3B": 14659,
+        "llama_7B": 13404,
+        "llama_8B": 11662
+      },
+      "variants": {
+        "pressure_only": {
+          "overall_grouped_cv_metrics": {
+            "count": 68140.0,
+            "mean_abs_rel_error_pct": 11.942119750291404,
+            "rmse_rel_error_pct": 19.549722759687647,
+            "max_abs_rel_error_pct": 1480.9556219076508
+          },
+          "per_model": {
+            "llama_1B": {
+              "count": 28415.0,
+              "mean_abs_rel_error_pct": 9.983969390767124,
+              "rmse_rel_error_pct": 14.909518987711184,
+              "max_abs_rel_error_pct": 590.7256315978002
+            },
+            "llama_3B": {
+              "count": 14659.0,
+              "mean_abs_rel_error_pct": 10.625306237107283,
+              "rmse_rel_error_pct": 14.201730456764691,
+              "max_abs_rel_error_pct": 153.72110854018487
+            },
+            "llama_7B": {
+              "count": 13404.0,
+              "mean_abs_rel_error_pct": 19.322210247604733,
+              "rmse_rel_error_pct": 30.59610763262287,
+              "max_abs_rel_error_pct": 135.0006437822035
+            },
+            "llama_8B": {
+              "count": 11662.0,
+              "mean_abs_rel_error_pct": 9.885978327693271,
+              "rmse_rel_error_pct": 19.02647958516411,
+              "max_abs_rel_error_pct": 1480.9556219076508
+            }
+          }
+        },
+        "critical_only": {
+          "overall_grouped_cv_metrics": {
+            "count": 68140.0,
+            "mean_abs_rel_error_pct": 9.295990487433997,
+            "rmse_rel_error_pct": 17.912611658379532,
+            "max_abs_rel_error_pct": 1395.703776013592
+          },
+          "per_model": {
+            "llama_1B": {
+              "count": 28415.0,
+              "mean_abs_rel_error_pct": 6.88321060455761,
+              "rmse_rel_error_pct": 11.99246127975002,
+              "max_abs_rel_error_pct": 605.1596866346995
+            },
+            "llama_3B": {
+              "count": 14659.0,
+              "mean_abs_rel_error_pct": 5.991969647184354,
+              "rmse_rel_error_pct": 10.324276641817724,
+              "max_abs_rel_error_pct": 113.56232080329463
+            },
+            "llama_7B": {
+              "count": 13404.0,
+              "mean_abs_rel_error_pct": 19.312489387663355,
+              "rmse_rel_error_pct": 30.593905357763035,
+              "max_abs_rel_error_pct": 129.2957212036777
+            },
+            "llama_8B": {
+              "count": 11662.0,
+              "mean_abs_rel_error_pct": 7.815252244463474,
+              "rmse_rel_error_pct": 17.735865504963648,
+              "max_abs_rel_error_pct": 1395.703776013592
+            }
+          }
+        },
+        "pressure_plus_max": {
+          "overall_grouped_cv_metrics": {
+            "count": 68140.0,
+            "mean_abs_rel_error_pct": 9.2179963519645,
+            "rmse_rel_error_pct": 17.934189158733293,
+            "max_abs_rel_error_pct": 1445.8508394021478
+          },
+          "per_model": {
+            "llama_1B": {
+              "count": 28415.0,
+              "mean_abs_rel_error_pct": 6.8785730001670125,
+              "rmse_rel_error_pct": 12.001109517334216,
+              "max_abs_rel_error_pct": 611.5176673191833
+            },
+            "llama_3B": {
+              "count": 14659.0,
+              "mean_abs_rel_error_pct": 5.86495321255599,
+              "rmse_rel_error_pct": 10.2358740449786,
+              "max_abs_rel_error_pct": 115.91534055562353
+            },
+            "llama_7B": {
+              "count": 13404.0,
+              "mean_abs_rel_error_pct": 19.270599057639465,
+              "rmse_rel_error_pct": 30.566947927987247,
+              "max_abs_rel_error_pct": 131.02319942419433
+            },
+            "llama_8B": {
+              "count": 11662.0,
+              "mean_abs_rel_error_pct": 7.578645233378302,
+              "rmse_rel_error_pct": 17.965367208900158,
+              "max_abs_rel_error_pct": 1445.8508394021478
+            }
+          }
+        },
+        "pressure_plus_mid": {
+          "overall_grouped_cv_metrics": {
+            "count": 68140.0,
+            "mean_abs_rel_error_pct": 11.620802084120758,
+            "rmse_rel_error_pct": 19.297176088076395,
+            "max_abs_rel_error_pct": 1461.6816492006938
+          },
+          "per_model": {
+            "llama_1B": {
+              "count": 28415.0,
+              "mean_abs_rel_error_pct": 9.66699161290293,
+              "rmse_rel_error_pct": 14.576000831488379,
+              "max_abs_rel_error_pct": 644.5728631953551
+            },
+            "llama_3B": {
+              "count": 14659.0,
+              "mean_abs_rel_error_pct": 10.069806105419477,
+              "rmse_rel_error_pct": 13.552728041364261,
+              "max_abs_rel_error_pct": 145.27560732574872
+            },
+            "llama_7B": {
+              "count": 13404.0,
+              "mean_abs_rel_error_pct": 19.32621734175933,
+              "rmse_rel_error_pct": 30.597257272439073,
+              "max_abs_rel_error_pct": 134.93933702171174
+            },
+            "llama_8B": {
+              "count": 11662.0,
+              "mean_abs_rel_error_pct": 9.474531159583728,
+              "rmse_rel_error_pct": 18.7404899484636,
+              "max_abs_rel_error_pct": 1461.6816492006938
+            }
+          }
+        },
+        "pressure_plus_min": {
+          "overall_grouped_cv_metrics": {
+            "count": 68140.0,
+            "mean_abs_rel_error_pct": 11.898810662069948,
+            "rmse_rel_error_pct": 19.568056333312207,
+            "max_abs_rel_error_pct": 1473.0440716071903
+          },
+          "per_model": {
+            "llama_1B": {
+              "count": 28415.0,
+              "mean_abs_rel_error_pct": 9.911548170861701,
+              "rmse_rel_error_pct": 14.947183047564888,
+              "max_abs_rel_error_pct": 597.2257396455535
+            },
+            "llama_3B": {
+              "count": 14659.0,
+              "mean_abs_rel_error_pct": 10.80268851264574,
+              "rmse_rel_error_pct": 14.374746684801515,
+              "max_abs_rel_error_pct": 154.60243181159458
+            },
+            "llama_7B": {
+              "count": 13404.0,
+              "mean_abs_rel_error_pct": 19.35631047809952,
+              "rmse_rel_error_pct": 30.605792653413456,
+              "max_abs_rel_error_pct": 137.8593251623396
+            },
+            "llama_8B": {
+              "count": 11662.0,
+              "mean_abs_rel_error_pct": 9.547223519386987,
+              "rmse_rel_error_pct": 18.882829320994755,
+              "max_abs_rel_error_pct": 1473.0440716071903
+            }
+          }
+        }
+      }
+    },
+    "multi_request_small": {
+      "counts": {
+        "llama_1B": 22357,
+        "llama_3B": 13434,
+        "llama_7B": 12678,
+        "llama_8B": 10913
+      },
+      "variants": {
+        "pressure_only": {
+          "overall_grouped_cv_metrics": {
+            "count": 59382.0,
+            "mean_abs_rel_error_pct": 11.376276285939033,
+            "rmse_rel_error_pct": 19.184884608074302,
+            "max_abs_rel_error_pct": 1475.728622787447
+          },
+          "per_model": {
+            "llama_1B": {
+              "count": 22357.0,
+              "mean_abs_rel_error_pct": 9.037324160947492,
+              "rmse_rel_error_pct": 13.43674022658711,
+              "max_abs_rel_error_pct": 583.4280607161224
+            },
+            "llama_3B": {
+              "count": 13434.0,
+              "mean_abs_rel_error_pct": 9.52419909259796,
+              "rmse_rel_error_pct": 12.625154774238162,
+              "max_abs_rel_error_pct": 87.51484422799282
+            },
+            "llama_7B": {
+              "count": 12678.0,
+              "mean_abs_rel_error_pct": 19.139138615688413,
+              "rmse_rel_error_pct": 30.493690976880544,
+              "max_abs_rel_error_pct": 133.04451168802802
+            },
+            "llama_8B": {
+              "count": 10913.0,
+              "mean_abs_rel_error_pct": 9.429532865909454,
+              "rmse_rel_error_pct": 18.878874790394402,
+              "max_abs_rel_error_pct": 1475.728622787447
+            }
+          }
+        },
+        "critical_only": {
+          "overall_grouped_cv_metrics": {
+            "count": 59382.0,
+            "mean_abs_rel_error_pct": 9.26321559689895,
+            "rmse_rel_error_pct": 18.050070843012,
+            "max_abs_rel_error_pct": 1410.2415495418838
+          },
+          "per_model": {
+            "llama_1B": {
+              "count": 22357.0,
+              "mean_abs_rel_error_pct": 6.701659662747014,
+              "rmse_rel_error_pct": 11.45603559099728,
+              "max_abs_rel_error_pct": 604.3517556339143
+            },
+            "llama_3B": {
+              "count": 13434.0,
+              "mean_abs_rel_error_pct": 5.8103270013813875,
+              "rmse_rel_error_pct": 9.675009921291586,
+              "max_abs_rel_error_pct": 88.30935906848794
+            },
+            "llama_7B": {
+              "count": 12678.0,
+              "mean_abs_rel_error_pct": 19.111870564818183,
+              "rmse_rel_error_pct": 30.46628025511149,
+              "max_abs_rel_error_pct": 123.60461409108878
+            },
+            "llama_8B": {
+              "count": 10913.0,
+              "mean_abs_rel_error_pct": 7.319988595042244,
+              "rmse_rel_error_pct": 17.61885952537954,
+              "max_abs_rel_error_pct": 1410.2415495418838
+            }
+          }
+        },
+        "pressure_plus_max": {
+          "overall_grouped_cv_metrics": {
+            "count": 59382.0,
+            "mean_abs_rel_error_pct": 9.190124039826664,
+            "rmse_rel_error_pct": 18.07991036618948,
+            "max_abs_rel_error_pct": 1453.2119741508666
+          },
+          "per_model": {
+            "llama_1B": {
+              "count": 22357.0,
+              "mean_abs_rel_error_pct": 6.698508686734639,
+              "rmse_rel_error_pct": 11.464711852959732,
+              "max_abs_rel_error_pct": 608.7768216634431
+            },
+            "llama_3B": {
+              "count": 13434.0,
+              "mean_abs_rel_error_pct": 5.66450828326962,
+              "rmse_rel_error_pct": 9.59785843805677,
+              "max_abs_rel_error_pct": 88.37325220951494
+            },
+            "llama_7B": {
+              "count": 12678.0,
+              "mean_abs_rel_error_pct": 19.080283721510124,
+              "rmse_rel_error_pct": 30.445847145336018,
+              "max_abs_rel_error_pct": 125.65919926042926
+            },
+            "llama_8B": {
+              "count": 10913.0,
+              "mean_abs_rel_error_pct": 7.14492309400817,
+              "rmse_rel_error_pct": 17.865036506847577,
+              "max_abs_rel_error_pct": 1453.2119741508666
+            }
+          }
+        },
+        "pressure_plus_mid": {
+          "overall_grouped_cv_metrics": {
+            "count": 59382.0,
+            "mean_abs_rel_error_pct": 11.38180162915923,
+            "rmse_rel_error_pct": 19.20690114523279,
+            "max_abs_rel_error_pct": 1467.3419643777413
+          },
+          "per_model": {
+            "llama_1B": {
+              "count": 22357.0,
+              "mean_abs_rel_error_pct": 9.101087028092914,
+              "rmse_rel_error_pct": 13.56032695945486,
+              "max_abs_rel_error_pct": 596.4721126184189
+            },
+            "llama_3B": {
+              "count": 13434.0,
+              "mean_abs_rel_error_pct": 9.494526612978191,
+              "rmse_rel_error_pct": 12.627996655434398,
+              "max_abs_rel_error_pct": 87.5746568800576
+            },
+            "llama_7B": {
+              "count": 12678.0,
+              "mean_abs_rel_error_pct": 19.14144605242674,
+              "rmse_rel_error_pct": 30.494311043720845,
+              "max_abs_rel_error_pct": 132.99494178185742
+            },
+            "llama_8B": {
+              "count": 10913.0,
+              "mean_abs_rel_error_pct": 9.362816648423435,
+              "rmse_rel_error_pct": 18.816048946196247,
+              "max_abs_rel_error_pct": 1467.3419643777413
+            }
+          }
+        },
+        "pressure_plus_min": {
+          "overall_grouped_cv_metrics": {
+            "count": 59382.0,
+            "mean_abs_rel_error_pct": 11.264409097501156,
+            "rmse_rel_error_pct": 19.125251151225495,
+            "max_abs_rel_error_pct": 1463.557787758403
+          },
+          "per_model": {
+            "llama_1B": {
+              "count": 22357.0,
+              "mean_abs_rel_error_pct": 8.810046115075988,
+              "rmse_rel_error_pct": 13.286804427907835,
+              "max_abs_rel_error_pct": 593.0269745973795
+            },
+            "llama_3B": {
+              "count": 13434.0,
+              "mean_abs_rel_error_pct": 9.48160461731989,
+              "rmse_rel_error_pct": 12.63435916936987,
+              "max_abs_rel_error_pct": 87.68952174352074
+            },
+            "llama_7B": {
+              "count": 12678.0,
+              "mean_abs_rel_error_pct": 19.18305872168567,
+              "rmse_rel_error_pct": 30.504992386982373,
+              "max_abs_rel_error_pct": 134.5261951758739
+            },
+            "llama_8B": {
+              "count": 10913.0,
+              "mean_abs_rel_error_pct": 9.28784432607473,
+              "rmse_rel_error_pct": 18.737721231331918,
+              "max_abs_rel_error_pct": 1463.557787758403
+            }
+          }
+        }
+      }
+    },
+    "heterogeneous_small": {
+      "counts": {
+        "llama_1B": 22357,
+        "llama_3B": 13434,
+        "llama_7B": 12678,
+        "llama_8B": 10913
+      },
+      "variants": {
+        "pressure_only": {
+          "overall_grouped_cv_metrics": {
+            "count": 59382.0,
+            "mean_abs_rel_error_pct": 11.376276285939033,
+            "rmse_rel_error_pct": 19.184884608074302,
+            "max_abs_rel_error_pct": 1475.728622787447
+          },
+          "per_model": {
+            "llama_1B": {
+              "count": 22357.0,
+              "mean_abs_rel_error_pct": 9.037324160947492,
+              "rmse_rel_error_pct": 13.43674022658711,
+              "max_abs_rel_error_pct": 583.4280607161224
+            },
+            "llama_3B": {
+              "count": 13434.0,
+              "mean_abs_rel_error_pct": 9.52419909259796,
+              "rmse_rel_error_pct": 12.625154774238162,
+              "max_abs_rel_error_pct": 87.51484422799282
+            },
+            "llama_7B": {
+              "count": 12678.0,
+              "mean_abs_rel_error_pct": 19.139138615688413,
+              "rmse_rel_error_pct": 30.493690976880544,
+              "max_abs_rel_error_pct": 133.04451168802802
+            },
+            "llama_8B": {
+              "count": 10913.0,
+              "mean_abs_rel_error_pct": 9.429532865909454,
+              "rmse_rel_error_pct": 18.878874790394402,
+              "max_abs_rel_error_pct": 1475.728622787447
+            }
+          }
+        },
+        "critical_only": {
+          "overall_grouped_cv_metrics": {
+            "count": 59382.0,
+            "mean_abs_rel_error_pct": 9.26321559689895,
+            "rmse_rel_error_pct": 18.050070843012,
+            "max_abs_rel_error_pct": 1410.2415495418838
+          },
+          "per_model": {
+            "llama_1B": {
+              "count": 22357.0,
+              "mean_abs_rel_error_pct": 6.701659662747014,
+              "rmse_rel_error_pct": 11.45603559099728,
+              "max_abs_rel_error_pct": 604.3517556339143
+            },
+            "llama_3B": {
+              "count": 13434.0,
+              "mean_abs_rel_error_pct": 5.8103270013813875,
+              "rmse_rel_error_pct": 9.675009921291586,
+              "max_abs_rel_error_pct": 88.30935906848794
+            },
+            "llama_7B": {
+              "count": 12678.0,
+              "mean_abs_rel_error_pct": 19.111870564818183,
+              "rmse_rel_error_pct": 30.46628025511149,
+              "max_abs_rel_error_pct": 123.60461409108878
+            },
+            "llama_8B": {
+              "count": 10913.0,
+              "mean_abs_rel_error_pct": 7.319988595042244,
+              "rmse_rel_error_pct": 17.61885952537954,
+              "max_abs_rel_error_pct": 1410.2415495418838
+            }
+          }
+        },
+        "pressure_plus_max": {
+          "overall_grouped_cv_metrics": {
+            "count": 59382.0,
+            "mean_abs_rel_error_pct": 9.190124039826664,
+            "rmse_rel_error_pct": 18.07991036618948,
+            "max_abs_rel_error_pct": 1453.2119741508666
+          },
+          "per_model": {
+            "llama_1B": {
+              "count": 22357.0,
+              "mean_abs_rel_error_pct": 6.698508686734639,
+              "rmse_rel_error_pct": 11.464711852959732,
+              "max_abs_rel_error_pct": 608.7768216634431
+            },
+            "llama_3B": {
+              "count": 13434.0,
+              "mean_abs_rel_error_pct": 5.66450828326962,
+              "rmse_rel_error_pct": 9.59785843805677,
+              "max_abs_rel_error_pct": 88.37325220951494
+            },
+            "llama_7B": {
+              "count": 12678.0,
+              "mean_abs_rel_error_pct": 19.080283721510124,
+              "rmse_rel_error_pct": 30.445847145336018,
+              "max_abs_rel_error_pct": 125.65919926042926
+            },
+            "llama_8B": {
+              "count": 10913.0,
+              "mean_abs_rel_error_pct": 7.14492309400817,
+              "rmse_rel_error_pct": 17.865036506847577,
+              "max_abs_rel_error_pct": 1453.2119741508666
+            }
+          }
+        },
+        "pressure_plus_mid": {
+          "overall_grouped_cv_metrics": {
+            "count": 59382.0,
+            "mean_abs_rel_error_pct": 11.38180162915923,
+            "rmse_rel_error_pct": 19.20690114523279,
+            "max_abs_rel_error_pct": 1467.3419643777413
+          },
+          "per_model": {
+            "llama_1B": {
+              "count": 22357.0,
+              "mean_abs_rel_error_pct": 9.101087028092914,
+              "rmse_rel_error_pct": 13.56032695945486,
+              "max_abs_rel_error_pct": 596.4721126184189
+            },
+            "llama_3B": {
+              "count": 13434.0,
+              "mean_abs_rel_error_pct": 9.494526612978191,
+              "rmse_rel_error_pct": 12.627996655434398,
+              "max_abs_rel_error_pct": 87.5746568800576
+            },
+            "llama_7B": {
+              "count": 12678.0,
+              "mean_abs_rel_error_pct": 19.14144605242674,
+              "rmse_rel_error_pct": 30.494311043720845,
+              "max_abs_rel_error_pct": 132.99494178185742
+            },
+            "llama_8B": {
+              "count": 10913.0,
+              "mean_abs_rel_error_pct": 9.362816648423435,
+              "rmse_rel_error_pct": 18.816048946196247,
+              "max_abs_rel_error_pct": 1467.3419643777413
+            }
+          }
+        },
+        "pressure_plus_min": {
+          "overall_grouped_cv_metrics": {
+            "count": 59382.0,
+            "mean_abs_rel_error_pct": 11.264409097501156,
+            "rmse_rel_error_pct": 19.125251151225495,
+            "max_abs_rel_error_pct": 1463.557787758403
+          },
+          "per_model": {
+            "llama_1B": {
+              "count": 22357.0,
+              "mean_abs_rel_error_pct": 8.810046115075988,
+              "rmse_rel_error_pct": 13.286804427907835,
+              "max_abs_rel_error_pct": 593.0269745973795
+            },
+            "llama_3B": {
+              "count": 13434.0,
+              "mean_abs_rel_error_pct": 9.48160461731989,
+              "rmse_rel_error_pct": 12.63435916936987,
+              "max_abs_rel_error_pct": 87.68952174352074
+            },
+            "llama_7B": {
+              "count": 12678.0,
+              "mean_abs_rel_error_pct": 19.18305872168567,
+              "rmse_rel_error_pct": 30.504992386982373,
+              "max_abs_rel_error_pct": 134.5261951758739
+            },
+            "llama_8B": {
+              "count": 10913.0,
+              "mean_abs_rel_error_pct": 9.28784432607473,
+              "rmse_rel_error_pct": 18.737721231331918,
+              "max_abs_rel_error_pct": 1463.557787758403
+            }
+          }
+        }
+      }
+    },
+    "high_spread_small": {
+      "counts": {
+        "llama_1B": 8483,
+        "llama_3B": 7565,
+        "llama_7B": 7032,
+        "llama_8B": 6636
+      },
+      "variants": {
+        "pressure_only": {
+          "overall_grouped_cv_metrics": {
+            "count": 29716.0,
+            "mean_abs_rel_error_pct": 11.523101372145565,
+            "rmse_rel_error_pct": 20.71952104335563,
+            "max_abs_rel_error_pct": 1455.371745451995
+          },
+          "per_model": {
+            "llama_1B": {
+              "count": 8483.0,
+              "mean_abs_rel_error_pct": 8.34488738268154,
+              "rmse_rel_error_pct": 11.946470823240906,
+              "max_abs_rel_error_pct": 253.56828149040328
+            },
+            "llama_3B": {
+              "count": 7565.0,
+              "mean_abs_rel_error_pct": 8.421206478751373,
+              "rmse_rel_error_pct": 11.615946849715906,
+              "max_abs_rel_error_pct": 83.71353258304573
+            },
+            "llama_7B": {
+              "count": 7032.0,
+              "mean_abs_rel_error_pct": 20.73739891826524,
+              "rmse_rel_error_pct": 32.37639887808651,
+              "max_abs_rel_error_pct": 94.82151364073852
+            },
+            "llama_8B": {
+              "count": 6636.0,
+              "mean_abs_rel_error_pct": 9.35789398770266,
+              "rmse_rel_error_pct": 21.802612753108455,
+              "max_abs_rel_error_pct": 1455.371745451995
+            }
+          }
+        },
+        "critical_only": {
+          "overall_grouped_cv_metrics": {
+            "count": 29716.0,
+            "mean_abs_rel_error_pct": 10.233006001153742,
+            "rmse_rel_error_pct": 20.07913539167484,
+            "max_abs_rel_error_pct": 1423.8804328784465
+          },
+          "per_model": {
+            "llama_1B": {
+              "count": 8483.0,
+              "mean_abs_rel_error_pct": 6.924205787573411,
+              "rmse_rel_error_pct": 10.769922594663129,
+              "max_abs_rel_error_pct": 257.4577195778859
+            },
+            "llama_3B": {
+              "count": 7565.0,
+              "mean_abs_rel_error_pct": 5.998340812892232,
+              "rmse_rel_error_pct": 9.637214133281056,
+              "max_abs_rel_error_pct": 84.07211772909882
+            },
+            "llama_7B": {
+              "count": 7032.0,
+              "mean_abs_rel_error_pct": 20.74548029304614,
+              "rmse_rel_error_pct": 32.38092351088411,
+              "max_abs_rel_error_pct": 94.87101662604833
+            },
+            "llama_8B": {
+              "count": 6636.0,
+              "mean_abs_rel_error_pct": 8.150437456912169,
+              "rmse_rel_error_pct": 20.979867703792507,
+              "max_abs_rel_error_pct": 1423.8804328784465
+            }
+          }
+        },
+        "pressure_plus_max": {
+          "overall_grouped_cv_metrics": {
+            "count": 29716.0,
+            "mean_abs_rel_error_pct": 10.24839347463383,
+            "rmse_rel_error_pct": 20.178056605520908,
+            "max_abs_rel_error_pct": 1465.5636129405275
+          },
+          "per_model": {
+            "llama_1B": {
+              "count": 8483.0,
+              "mean_abs_rel_error_pct": 6.928971542279666,
+              "rmse_rel_error_pct": 10.773188247092353,
+              "max_abs_rel_error_pct": 257.3698950016905
+            },
+            "llama_3B": {
+              "count": 7565.0,
+              "mean_abs_rel_error_pct": 6.016326190663542,
+              "rmse_rel_error_pct": 9.631260662832876,
+              "max_abs_rel_error_pct": 83.80707132056587
+            },
+            "llama_7B": {
+              "count": 7032.0,
+              "mean_abs_rel_error_pct": 20.687382463681615,
+              "rmse_rel_error_pct": 32.34348848813868,
+              "max_abs_rel_error_pct": 95.00653840892119
+            },
+            "llama_8B": {
+              "count": 6636.0,
+              "mean_abs_rel_error_pct": 8.25431190206173,
+              "rmse_rel_error_pct": 21.461498756937143,
+              "max_abs_rel_error_pct": 1465.5636129405275
+            }
+          }
+        },
+        "pressure_plus_mid": {
+          "overall_grouped_cv_metrics": {
+            "count": 29716.0,
+            "mean_abs_rel_error_pct": 11.440488959018994,
+            "rmse_rel_error_pct": 20.69541411828499,
+            "max_abs_rel_error_pct": 1459.441544311432
+          },
+          "per_model": {
+            "llama_1B": {
+              "count": 8483.0,
+              "mean_abs_rel_error_pct": 8.19721165050857,
+              "rmse_rel_error_pct": 11.846687891449244,
+              "max_abs_rel_error_pct": 248.94854312028286
+            },
+            "llama_3B": {
+              "count": 7565.0,
+              "mean_abs_rel_error_pct": 8.252317692525857,
+              "rmse_rel_error_pct": 11.492159295775497,
+              "max_abs_rel_error_pct": 84.09385282832623
+            },
+            "llama_7B": {
+              "count": 7032.0,
+              "mean_abs_rel_error_pct": 20.74032685183018,
+              "rmse_rel_error_pct": 32.376413680517516,
+              "max_abs_rel_error_pct": 94.85830844077717
+            },
+            "llama_8B": {
+              "count": 6636.0,
+              "mean_abs_rel_error_pct": 9.366163608938564,
+              "rmse_rel_error_pct": 21.8444050057145,
+              "max_abs_rel_error_pct": 1459.441544311432
+            }
+          }
+        },
+        "pressure_plus_min": {
+          "overall_grouped_cv_metrics": {
+            "count": 29716.0,
+            "mean_abs_rel_error_pct": 11.440213336495123,
+            "rmse_rel_error_pct": 20.646362287734995,
+            "max_abs_rel_error_pct": 1444.136613171275
+          },
+          "per_model": {
+            "llama_1B": {
+              "count": 8483.0,
+              "mean_abs_rel_error_pct": 8.36635020314932,
+              "rmse_rel_error_pct": 11.95411413935493,
+              "max_abs_rel_error_pct": 251.3982986154913
+            },
+            "llama_3B": {
+              "count": 7565.0,
+              "mean_abs_rel_error_pct": 8.234844303656393,
+              "rmse_rel_error_pct": 11.397664576279626,
+              "max_abs_rel_error_pct": 83.38868188691642
+            },
+            "llama_7B": {
+              "count": 7032.0,
+              "mean_abs_rel_error_pct": 20.780657384525053,
+              "rmse_rel_error_pct": 32.38005431382302,
+              "max_abs_rel_error_pct": 94.83237359338052
+            },
+            "llama_8B": {
+              "count": 6636.0,
+              "mean_abs_rel_error_pct": 9.125896752385872,
+              "rmse_rel_error_pct": 21.611215012636848,
+              "max_abs_rel_error_pct": 1444.136613171275
+            }
+          }
+        }
+      }
+    }
+  }
+}
