@@ -5,6 +5,7 @@ import pandas as pd
 
 class Request_t(TypedDict):
     req_id: int
+    source_index: int
     prefill_lens: int
     output_lens: int
     pass
@@ -45,6 +46,7 @@ def organize_request_df(requests) -> 'DataFrame[Request_t]':
     request_df = pd.DataFrame([
         {
             'req_id': r.req_id,
+            'source_index': getattr(r, 'source_index', r.req_id),
             'prefill_lens': r.prefill_lens,
             'output_lens': r.output_lens,
             'first_token_prefill': getattr(r, 'first_token_prefill', False),
@@ -118,15 +120,18 @@ def calculate_per_request_latency(
     first_decode_end = df[df.event_type == 'do_decode'].groupby('req_id').end_time.min()
     last_decode_end = df[df.event_type == 'do_decode'].groupby('req_id').end_time.max()
     finish_prefill_time = df[df.event_type == 'finish_prefill'].groupby('req_id').start_time.max()
+    first_visible_event = df[df.event_type == 'first_token_visible'].groupby('req_id').start_time.min()
     last_event = df[df.event_type == 'exit_system'].groupby('req_id').end_time.max()
 
+    first_token_ready = first_decode_end.reindex(first_event.index)
+    first_token_ready = first_visible_event.reindex(first_event.index).combine_first(first_token_ready)
     if first_token_prefill is not None:
+        # Backward compatibility for older traces that only set the
+        # `first_token_prefill` flag without emitting `first_token_visible`.
         first_token_prefill = first_token_prefill.astype(bool)
-        first_token_ready = first_decode_end.reindex(first_event.index)
         prefill_first_ready = finish_prefill_time.reindex(first_event.index)
-        first_token_ready = first_token_ready.where(~first_token_prefill, prefill_first_ready)
-    else:
-        first_token_ready = first_decode_end
+        use_prefill_finish = first_token_prefill & first_visible_event.reindex(first_event.index).isna()
+        first_token_ready = first_token_ready.where(~use_prefill_finish, prefill_first_ready)
 
     # Then, calculate the first token latency and decoding latency for each req_id
     first_token_latency = (first_token_ready - first_event).fillna(0)

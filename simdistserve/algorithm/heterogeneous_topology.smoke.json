@@ -1,0 +1,39 @@
+{
+  "objective": "per_device_goodput",
+  "ttft_target_ms": 1000.0,
+  "tpot_target_ms": 1000.0,
+  "attainment_target_pct": 90.0,
+  "search": {
+    "max_rate": 1.0,
+    "rate_epsilon": 0.5,
+    "num_requests": 16,
+    "seed": 0,
+    "arrival": "poisson",
+    "cv": 1.0,
+    "top_k": 5,
+    "pp_candidates": [1]
+  },
+  "nodes": [
+    {
+      "name": "node0",
+      "devices": {
+        "distserve_cuda": 1,
+        "vllm_ascend": 1
+      }
+    }
+  ],
+  "handoff_ms": {
+    "same_node": {
+      "distserve_cuda->distserve_cuda": { "base": 0.0, "per_token": 0.0 },
+      "distserve_cuda->vllm_ascend": { "base": 65.4, "per_token": 0.0944 },
+      "vllm_ascend->distserve_cuda": { "base": 65.4, "per_token": 0.0944 },
+      "vllm_ascend->vllm_ascend": { "base": 65.4, "per_token": 0.0944 }
+    },
+    "cross_node": {
+      "distserve_cuda->distserve_cuda": { "base": 0.5, "per_token": 0.0 },
+      "distserve_cuda->vllm_ascend": { "base": 80.0, "per_token": 0.12 },
+      "vllm_ascend->distserve_cuda": { "base": 80.0, "per_token": 0.12 },
+      "vllm_ascend->vllm_ascend": { "base": 80.0, "per_token": 0.12 }
+    }
+  }
+}

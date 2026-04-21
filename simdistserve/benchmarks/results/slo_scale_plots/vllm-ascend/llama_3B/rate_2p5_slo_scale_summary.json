@@ -2,52 +2,60 @@
   "backend": "vllm_ascend",
   "model": "llama_3B",
   "rate": "2.5",
-  "benchmark_file": "/users/rh/DistServe/simdistserve/benchmarks/results/latency/vllm_ascend/raw_data/llama_3B/rate_2.5.json",
-  "simulator_file": "/users/rh/DistServe/simdistserve/benchmarks/results/latency/vllm_ascend/organized_data/llama_3B/rate_2.5/request_latency.csv",
+  "compared_root": "/users/rh/DistServe/simdistserve/benchmarks/results/slo/vllm_ascend/compared/llama_3B/rate_2.5",
   "base_slos": {
     "prefill": 1.0,
     "decode": 1.0,
     "total": 1.0
   },
   "scales": [
+    0.2,
     0.4,
-    0.5,
     0.6,
-    0.7,
     0.8,
-    0.9,
     1.0,
-    1.1,
     1.2
   ],
   "points": [
     {
-      "scale": 0.4,
+      "scale": 0.2,
+      "comparison_file": "/users/rh/DistServe/simdistserve/benchmarks/results/slo/vllm_ascend/compared/llama_3B/rate_2.5/scale_0p2/comparison.txt",
+      "thresholds": {
+        "prefill": 0.2,
+        "decode": 0.2,
+        "total": 0.2
+      },
       "metrics": {
         "prefill": {
           "benchmark": 100.0,
-          "simulator": 100.0,
-          "gap": 0.0
+          "simulator": 82.5,
+          "gap": 17.5
         },
         "decode": {
-          "benchmark": 33.0,
-          "simulator": 31.0,
-          "gap": 2.0
+          "benchmark": 7.5,
+          "simulator": 6.67,
+          "gap": 0.8300000000000001
         },
         "total": {
-          "benchmark": 20.0,
-          "simulator": 15.0,
-          "gap": 5.0
+          "benchmark": 1.67,
+          "simulator": 0.83,
+          "gap": 0.84
         },
         "both": {
-          "benchmark": 33.0,
-          "simulator": 31.0,
-          "gap": 2.0
+          "benchmark": 7.5,
+          "simulator": 5.83,
+          "gap": 1.67
         }
       }
     },
     {
-      "scale": 0.5,
+      "scale": 0.4,
+      "comparison_file": "/users/rh/DistServe/simdistserve/benchmarks/results/slo/vllm_ascend/compared/llama_3B/rate_2.5/scale_0p4/comparison.txt",
+      "thresholds": {
+        "prefill": 0.4,
+        "decode": 0.4,
+        "total": 0.4
+      },
       "metrics": {
         "prefill": {
           "benchmark": 100.0,
@@ -55,24 +63,30 @@
           "gap": 0.0
         },
         "decode": {
-          "benchmark": 38.0,
-          "simulator": 38.0,
-          "gap": 0.0
+          "benchmark": 23.33,
+          "simulator": 21.67,
+          "gap": 1.6599999999999966
         },
         "total": {
-          "benchmark": 30.0,
-          "simulator": 27.0,
-          "gap": 3.0
+          "benchmark": 14.17,
+          "simulator": 11.67,
+          "gap": 2.5
         },
         "both": {
-          "benchmark": 38.0,
-          "simulator": 38.0,
-          "gap": 0.0
+          "benchmark": 23.33,
+          "simulator": 21.67,
+          "gap": 1.6599999999999966
         }
       }
     },
     {
       "scale": 0.6,
+      "comparison_file": "/users/rh/DistServe/simdistserve/benchmarks/results/slo/vllm_ascend/compared/llama_3B/rate_2.5/scale_0p6/comparison.txt",
+      "thresholds": {
+        "prefill": 0.6,
+        "decode": 0.6,
+        "total": 0.6
+      },
       "metrics": {
         "prefill": {
           "benchmark": 100.0,
@@ -80,49 +94,30 @@
           "gap": 0.0
         },
         "decode": {
-          "benchmark": 41.0,
-          "simulator": 41.0,
-          "gap": 0.0
+          "benchmark": 32.5,
+          "simulator": 31.67,
+          "gap": 0.8299999999999983
         },
         "total": {
-          "benchmark": 35.0,
-          "simulator": 33.0,
-          "gap": 2.0
+          "benchmark": 27.5,
+          "simulator": 24.17,
+          "gap": 3.3299999999999983
         },
         "both": {
-          "benchmark": 41.0,
-          "simulator": 41.0,
-          "gap": 0.0
-        }
-      }
-    },
-    {
-      "scale": 0.7,
-      "metrics": {
-        "prefill": {
-          "benchmark": 100.0,
-          "simulator": 100.0,
-          "gap": 0.0
-        },
-        "decode": {
-          "benchmark": 41.0,
-          "simulator": 42.0,
-          "gap": -1.0
-        },
-        "total": {
-          "benchmark": 41.0,
-          "simulator": 39.0,
-          "gap": 2.0
-        },
-        "both": {
-          "benchmark": 41.0,
-          "simulator": 42.0,
-          "gap": -1.0
+          "benchmark": 32.5,
+          "simulator": 31.67,
+          "gap": 0.8299999999999983
         }
       }
     },
     {
       "scale": 0.8,
+      "comparison_file": "/users/rh/DistServe/simdistserve/benchmarks/results/slo/vllm_ascend/compared/llama_3B/rate_2.5/scale_0p8/comparison.txt",
+      "thresholds": {
+        "prefill": 0.8,
+        "decode": 0.8,
+        "total": 0.8
+      },
       "metrics": {
         "prefill": {
           "benchmark": 100.0,
@@ -130,49 +125,30 @@
           "gap": 0.0
         },
         "decode": {
-          "benchmark": 44.0,
-          "simulator": 45.0,
-          "gap": -1.0
+          "benchmark": 37.5,
+          "simulator": 38.33,
+          "gap": -0.8299999999999983
         },
         "total": {
-          "benchmark": 41.0,
-          "simulator": 41.0,
-          "gap": 0.0
+          "benchmark": 36.67,
+          "simulator": 33.33,
+          "gap": 3.3400000000000034
         },
         "both": {
-          "benchmark": 44.0,
-          "simulator": 45.0,
-          "gap": -1.0
-        }
-      }
-    },
-    {
-      "scale": 0.9,
-      "metrics": {
-        "prefill": {
-          "benchmark": 100.0,
-          "simulator": 100.0,
-          "gap": 0.0
-        },
-        "decode": {
-          "benchmark": 47.0,
-          "simulator": 46.0,
-          "gap": 1.0
-        },
-        "total": {
-          "benchmark": 44.0,
-          "simulator": 44.0,
-          "gap": 0.0
-        },
-        "both": {
-          "benchmark": 47.0,
-          "simulator": 46.0,
-          "gap": 1.0
+          "benchmark": 37.5,
+          "simulator": 38.33,
+          "gap": -0.8299999999999983
         }
       }
     },
     {
       "scale": 1.0,
+      "comparison_file": "/users/rh/DistServe/simdistserve/benchmarks/results/slo/vllm_ascend/compared/llama_3B/rate_2.5/scale_1p0/comparison.txt",
+      "thresholds": {
+        "prefill": 1.0,
+        "decode": 1.0,
+        "total": 1.0
+      },
       "metrics": {
         "prefill": {
           "benchmark": 100.0,
@@ -180,49 +156,30 @@
           "gap": 0.0
         },
         "decode": {
-          "benchmark": 49.0,
-          "simulator": 49.0,
-          "gap": 0.0
+          "benchmark": 40.0,
+          "simulator": 40.83,
+          "gap": -0.8299999999999983
         },
         "total": {
-          "benchmark": 45.0,
-          "simulator": 46.0,
-          "gap": -1.0
+          "benchmark": 38.33,
+          "simulator": 37.5,
+          "gap": 0.8299999999999983
         },
         "both": {
-          "benchmark": 49.0,
-          "simulator": 49.0,
-          "gap": 0.0
-        }
-      }
-    },
-    {
-      "scale": 1.1,
-      "metrics": {
-        "prefill": {
-          "benchmark": 100.0,
-          "simulator": 100.0,
-          "gap": 0.0
-        },
-        "decode": {
-          "benchmark": 49.0,
-          "simulator": 49.0,
-          "gap": 0.0
-        },
-        "total": {
-          "benchmark": 49.0,
-          "simulator": 49.0,
-          "gap": 0.0
-        },
-        "both": {
-          "benchmark": 49.0,
-          "simulator": 49.0,
-          "gap": 0.0
+          "benchmark": 40.0,
+          "simulator": 40.83,
+          "gap": -0.8299999999999983
         }
       }
     },
     {
       "scale": 1.2,
+      "comparison_file": "/users/rh/DistServe/simdistserve/benchmarks/results/slo/vllm_ascend/compared/llama_3B/rate_2.5/scale_1p2/comparison.txt",
+      "thresholds": {
+        "prefill": 1.2,
+        "decode": 1.2,
+        "total": 1.2
+      },
       "metrics": {
         "prefill": {
           "benchmark": 100.0,
@@ -230,18 +187,18 @@
           "gap": 0.0
         },
         "decode": {
-          "benchmark": 49.0,
-          "simulator": 49.0,
+          "benchmark": 42.5,
+          "simulator": 42.5,
           "gap": 0.0
         },
         "total": {
-          "benchmark": 49.0,
-          "simulator": 49.0,
-          "gap": 0.0
+          "benchmark": 40.83,
+          "simulator": 41.67,
+          "gap": -0.8400000000000034
         },
         "both": {
-          "benchmark": 49.0,
-          "simulator": 49.0,
+          "benchmark": 42.5,
+          "simulator": 42.5,
           "gap": 0.0
         }
       }
@@ -249,20 +206,20 @@
   ],
   "metric_summary": {
     "prefill": {
-      "mean_abs_gap": 0.0,
-      "max_abs_gap": 0.0
+      "mean_abs_gap": 2.9166666666666665,
+      "max_abs_gap": 17.5
     },
     "decode": {
-      "mean_abs_gap": 0.5555555555555556,
-      "max_abs_gap": 2.0
+      "mean_abs_gap": 0.8299999999999986,
+      "max_abs_gap": 1.6599999999999966
     },
     "total": {
-      "mean_abs_gap": 1.4444444444444444,
-      "max_abs_gap": 5.0
+      "mean_abs_gap": 1.9466666666666672,
+      "max_abs_gap": 3.3400000000000034
     },
     "both": {
-      "mean_abs_gap": 0.5555555555555556,
-      "max_abs_gap": 2.0
+      "mean_abs_gap": 0.9699999999999985,
+      "max_abs_gap": 1.67
     }
   }
 }

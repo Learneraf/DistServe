@@ -1,14 +1,29 @@
 backend,model_type,pd,rate,target,attainment,tp_prefill,pp_prefill,tp_decode,pp_decode
+vllm_ascend,LLAMA-3.2-1B,prefill,2.0,40.0,0.0,1,1,1,1
+vllm_ascend,LLAMA-3.2-1B,decode,2.0,20.0,98.33333333333333,1,1,1,1
+vllm_ascend,LLAMA-3.2-1B,both,2.0,"(40.0, 20.0)",0.0,1,1,1,1
+vllm_ascend,LLAMA-3.2-1B,prefill,2.0,80.0,17.5,1,1,1,1
+vllm_ascend,LLAMA-3.2-1B,decode,2.0,40.0,100.0,1,1,1,1
+vllm_ascend,LLAMA-3.2-1B,both,2.0,"(80.0, 40.0)",17.5,1,1,1,1
+vllm_ascend,LLAMA-3.2-1B,prefill,2.0,120.0,93.33333333333333,1,1,1,1
+vllm_ascend,LLAMA-3.2-1B,decode,2.0,60.0,100.0,1,1,1,1
+vllm_ascend,LLAMA-3.2-1B,both,2.0,"(120.0, 60.0)",93.33333333333333,1,1,1,1
+vllm_ascend,LLAMA-3.2-1B,prefill,2.0,160.0,99.16666666666667,1,1,1,1
+vllm_ascend,LLAMA-3.2-1B,decode,2.0,80.0,100.0,1,1,1,1
+vllm_ascend,LLAMA-3.2-1B,both,2.0,"(160.0, 80.0)",99.16666666666667,1,1,1,1
 vllm_ascend,LLAMA-3.2-1B,prefill,2.0,200.0,100.0,1,1,1,1
 vllm_ascend,LLAMA-3.2-1B,decode,2.0,100.0,100.0,1,1,1,1
 vllm_ascend,LLAMA-3.2-1B,both,2.0,"(200.0, 100.0)",100.0,1,1,1,1
-vllm_ascend,LLAMA-3.2-1B,prefill,2.0,133.27152469860113,85.0,1,1,1,1
-vllm_ascend,LLAMA-3.2-1B,decode,2.0,17.74049021971202,85.0,1,1,1,1
-vllm_ascend,LLAMA-3.2-1B,prefill,2.0,144.7595570228954,90.0,1,1,1,1
-vllm_ascend,LLAMA-3.2-1B,decode,2.0,18.102160517802833,90.0,1,1,1,1
-vllm_ascend,LLAMA-3.2-1B,prefill,2.0,164.9212383273195,95.0,1,1,1,1
-vllm_ascend,LLAMA-3.2-1B,decode,2.0,18.582777248604575,95.0,1,1,1,1
-vllm_ascend,LLAMA-3.2-1B,prefill,2.0,175.69200965048327,98.0,1,1,1,1
-vllm_ascend,LLAMA-3.2-1B,decode,2.0,25.200806955367153,98.0,1,1,1,1
-vllm_ascend,LLAMA-3.2-1B,prefill,2.0,186.07974162282764,99.0,1,1,1,1
-vllm_ascend,LLAMA-3.2-1B,decode,2.0,25.53035267273115,99.0,1,1,1,1
+vllm_ascend,LLAMA-3.2-1B,prefill,2.0,240.0,100.0,1,1,1,1
+vllm_ascend,LLAMA-3.2-1B,decode,2.0,120.0,100.0,1,1,1,1
+vllm_ascend,LLAMA-3.2-1B,both,2.0,"(240.0, 120.0)",100.0,1,1,1,1
+vllm_ascend,LLAMA-3.2-1B,prefill,2.0,94.16576944922507,85.0,1,1,1,1
+vllm_ascend,LLAMA-3.2-1B,decode,2.0,17.97445027593444,85.0,1,1,1,1
+vllm_ascend,LLAMA-3.2-1B,prefill,2.0,108.86479296858418,90.0,1,1,1,1
+vllm_ascend,LLAMA-3.2-1B,decode,2.0,18.34752226025582,90.0,1,1,1,1
+vllm_ascend,LLAMA-3.2-1B,prefill,2.0,134.60079079673287,95.0,1,1,1,1
+vllm_ascend,LLAMA-3.2-1B,decode,2.0,18.583997114181937,95.0,1,1,1,1
+vllm_ascend,LLAMA-3.2-1B,prefill,2.0,151.06069288345117,98.0,1,1,1,1
+vllm_ascend,LLAMA-3.2-1B,decode,2.0,18.82081249246007,98.0,1,1,1,1
+vllm_ascend,LLAMA-3.2-1B,prefill,2.0,154.66385709413103,99.0,1,1,1,1
+vllm_ascend,LLAMA-3.2-1B,decode,2.0,20.12778514823086,99.0,1,1,1,1

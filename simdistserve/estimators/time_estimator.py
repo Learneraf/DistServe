@@ -10,6 +10,7 @@ def load_distserve_profile_data():
     profile_data_path = os.environ.get("SIMDISTSERVE_DISTSERVE_PROFILE")
     if profile_data_path is None:
         preferred_paths = [
+            base_dir / "fit_params_live_cuda_data.json",
             base_dir / "fit_params_live.json",
             base_dir / "fit_params_live_decode.json",
             base_dir / "fit_params.json",
@@ -64,6 +65,7 @@ def get_prefill_time(num_tokens=None, pp=1, bs=1, decode_bs=0, model_type=ModelT
     else:
         params = vllm_profile_data[ModelTypes.formalize_model_name(model_type)][str(TP)]
     coeffs = params["prefill"]
+    prefill_scale = params.get("prefill_scale", 1.0)
 
     if prefill_len_list is None:
         prefill_len_list = []
@@ -85,6 +87,7 @@ def get_prefill_time(num_tokens=None, pp=1, bs=1, decode_bs=0, model_type=ModelT
 
     pp_factor = 1 / pp
     pp_const = 1 * pp  # TODO: Modulate the PP overhead
+    delay *= prefill_scale
     delay = delay * pp_factor + pp_const
     return delay
 
@@ -160,8 +163,6 @@ def get_decode_time(num_requests, pp=1, model_type=ModelTypes.opt_13b, TP=1,
             if not coeffs:
                 coeffs = params["decoding_smallbs"]
 
-    decode_scale = params.get("decode_scale", 1.0)
-
     if len(coeffs) == 3:
         a, b, c = coeffs
         num_total_tokens = sum(token_generated_list) if token_generated_list else 0
@@ -181,27 +182,38 @@ def get_decode_time(num_requests, pp=1, model_type=ModelTypes.opt_13b, TP=1,
             + c * sum_context_len
             + d * max_context_len
         )
-    elif len(coeffs) == 6:
-        A, B, C, D, E, F = coeffs
-        if input_lens is None or output_lens is None:
-            raise ValueError("For 6-coefficient model, both input_lens and output_lens must be provided.")
-        total_delay = 0.0
-        for in_len, out_len in zip(input_lens, output_lens):
-            req_delay = (A +
-                         B * in_len +
-                         C * out_len +
-                         D * in_len * out_len +
-                         E * out_len * out_len +
-                         F * in_len * in_len)
-            total_delay += req_delay
-        delay = total_delay
+    elif len(coeffs) == 5:
+        # vLLM Ascend live decode-round fit:
+        #   round_ms = A + B * batch_size
+        #            + C * sum_context_len
+        #            + D * max_context_len
+        #            + E * sum_remaining_output_tokens
+        a, b, c, d, e = coeffs
+        if input_lens is None or output_lens is None or current_context_lens is None:
+            raise ValueError(
+                "For 5-coefficient model, input_lens, output_lens, and current_context_lens are required."
+            )
+        sum_context_len = sum(current_context_lens)
+        max_context_len = max(current_context_lens) if current_context_lens else 0
+        sum_remaining_output_tokens = sum(
+            max(output_len - (current_context_len - input_len), 0)
+            for input_len, output_len, current_context_len in zip(
+                input_lens, output_lens, current_context_lens
+            )
+        )
+        delay = (
+            a
+            + b * batch_size
+            + c * sum_context_len
+            + d * max_context_len
+            + e * sum_remaining_output_tokens
+        )
     else:
         raise ValueError(f"Unsupported number of coefficients: {len(coeffs)}")
 
     f = 1
     pp_factor = 1 / pp
     pp_const = 0
-    delay *= decode_scale
     delay = delay * pp_factor + pp_const
     delay *= f
     return delay

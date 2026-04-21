@@ -1,0 +1,969 @@
+Request 1:
+  Prompt length: 1121
+  Output length: 467
+  First token latency: 0.2172s (SLO: 0.2s) ✗
+  Decode time: 18.5540s (SLO: 0.2s) ✗
+  Total time: 18.7713s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 2:
+  Prompt length: 1236
+  Output length: 661
+  First token latency: 0.2004s (SLO: 0.2s) ✗
+  Decode time: 26.6718s (SLO: 0.2s) ✗
+  Total time: 26.8723s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 3:
+  Prompt length: 1326
+  Output length: 429
+  First token latency: 0.2675s (SLO: 0.2s) ✗
+  Decode time: 17.1159s (SLO: 0.2s) ✗
+  Total time: 17.3834s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 4:
+  Prompt length: 1119
+  Output length: 376
+  First token latency: 0.2492s (SLO: 0.2s) ✗
+  Decode time: 15.0187s (SLO: 0.2s) ✗
+  Total time: 15.2679s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 5:
+  Prompt length: 1047
+  Output length: 628
+  First token latency: 0.1825s (SLO: 0.2s) ✓
+  Decode time: 25.4818s (SLO: 0.2s) ✗
+  Total time: 25.6643s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 6:
+  Prompt length: 1044
+  Output length: 556
+  First token latency: 0.2385s (SLO: 0.2s) ✗
+  Decode time: 22.2134s (SLO: 0.2s) ✗
+  Total time: 22.4519s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 7:
+  Prompt length: 1107
+  Output length: 420
+  First token latency: 0.2497s (SLO: 0.2s) ✗
+  Decode time: 16.9252s (SLO: 0.2s) ✗
+  Total time: 17.1749s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 8:
+  Prompt length: 1646
+  Output length: 131
+  First token latency: 0.3075s (SLO: 0.2s) ✗
+  Decode time: 4.8796s (SLO: 0.2s) ✗
+  Total time: 5.1871s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 9:
+  Prompt length: 1206
+  Output length: 156
+  First token latency: 0.2375s (SLO: 0.2s) ✗
+  Decode time: 6.3259s (SLO: 0.2s) ✗
+  Total time: 6.5634s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 10:
+  Prompt length: 1696
+  Output length: 67
+  First token latency: 0.3362s (SLO: 0.2s) ✗
+  Decode time: 2.6576s (SLO: 0.2s) ✗
+  Total time: 2.9939s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 11:
+  Prompt length: 1270
+  Output length: 185
+  First token latency: 0.2635s (SLO: 0.2s) ✗
+  Decode time: 7.6369s (SLO: 0.2s) ✗
+  Total time: 7.9004s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 12:
+  Prompt length: 1299
+  Output length: 112
+  First token latency: 0.2685s (SLO: 0.2s) ✗
+  Decode time: 4.7671s (SLO: 0.2s) ✗
+  Total time: 5.0355s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 13:
+  Prompt length: 1601
+  Output length: 245
+  First token latency: 0.3295s (SLO: 0.2s) ✗
+  Decode time: 10.0831s (SLO: 0.2s) ✗
+  Total time: 10.4125s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 14:
+  Prompt length: 1191
+  Output length: 155
+  First token latency: 0.2809s (SLO: 0.2s) ✗
+  Decode time: 6.3935s (SLO: 0.2s) ✗
+  Total time: 6.6744s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 15:
+  Prompt length: 1156
+  Output length: 4
+  First token latency: 0.2805s (SLO: 0.2s) ✗
+  Decode time: 0.3561s (SLO: 0.2s) ✗
+  Total time: 0.6366s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 16:
+  Prompt length: 1583
+  Output length: 22
+  First token latency: 0.3930s (SLO: 0.2s) ✗
+  Decode time: 1.0430s (SLO: 0.2s) ✗
+  Total time: 1.4360s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 17:
+  Prompt length: 1083
+  Output length: 10
+  First token latency: 0.5528s (SLO: 0.2s) ✗
+  Decode time: 0.3690s (SLO: 0.2s) ✗
+  Total time: 0.9217s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 18:
+  Prompt length: 1283
+  Output length: 53
+  First token latency: 0.5833s (SLO: 0.2s) ✗
+  Decode time: 2.1492s (SLO: 0.2s) ✗
+  Total time: 2.7325s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 19:
+  Prompt length: 1494
+  Output length: 8
+  First token latency: 0.3306s (SLO: 0.2s) ✗
+  Decode time: 0.2800s (SLO: 0.2s) ✗
+  Total time: 0.6106s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 20:
+  Prompt length: 1688
+  Output length: 13
+  First token latency: 0.3536s (SLO: 0.2s) ✗
+  Decode time: 0.4426s (SLO: 0.2s) ✗
+  Total time: 0.7961s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 21:
+  Prompt length: 1574
+  Output length: 19
+  First token latency: 0.3349s (SLO: 0.2s) ✗
+  Decode time: 0.6981s (SLO: 0.2s) ✗
+  Total time: 1.0330s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 22:
+  Prompt length: 1262
+  Output length: 45
+  First token latency: 0.2604s (SLO: 0.2s) ✗
+  Decode time: 1.7232s (SLO: 0.2s) ✗
+  Total time: 1.9836s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 23:
+  Prompt length: 1785
+  Output length: 21
+  First token latency: 0.3392s (SLO: 0.2s) ✗
+  Decode time: 0.7739s (SLO: 0.2s) ✗
+  Total time: 1.1132s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 24:
+  Prompt length: 1469
+  Output length: 21
+  First token latency: 0.3116s (SLO: 0.2s) ✗
+  Decode time: 0.8124s (SLO: 0.2s) ✗
+  Total time: 1.1241s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 25:
+  Prompt length: 1702
+  Output length: 10
+  First token latency: 0.3662s (SLO: 0.2s) ✗
+  Decode time: 0.3728s (SLO: 0.2s) ✗
+  Total time: 0.7390s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 26:
+  Prompt length: 1355
+  Output length: 26
+  First token latency: 0.3863s (SLO: 0.2s) ✗
+  Decode time: 1.0543s (SLO: 0.2s) ✗
+  Total time: 1.4405s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 27:
+  Prompt length: 1405
+  Output length: 11
+  First token latency: 0.3337s (SLO: 0.2s) ✗
+  Decode time: 0.4248s (SLO: 0.2s) ✗
+  Total time: 0.7585s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 28:
+  Prompt length: 1495
+  Output length: 19
+  First token latency: 0.3478s (SLO: 0.2s) ✗
+  Decode time: 0.6381s (SLO: 0.2s) ✗
+  Total time: 0.9859s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 29:
+  Prompt length: 1618
+  Output length: 37
+  First token latency: 0.3243s (SLO: 0.2s) ✗
+  Decode time: 1.5878s (SLO: 0.2s) ✗
+  Total time: 1.9122s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 30:
+  Prompt length: 1325
+  Output length: 12
+  First token latency: 0.2754s (SLO: 0.2s) ✗
+  Decode time: 0.5659s (SLO: 0.2s) ✗
+  Total time: 0.8413s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 31:
+  Prompt length: 1365
+  Output length: 8
+  First token latency: 0.2969s (SLO: 0.2s) ✗
+  Decode time: 0.3478s (SLO: 0.2s) ✗
+  Total time: 0.6447s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 32:
+  Prompt length: 1665
+  Output length: 40
+  First token latency: 0.3430s (SLO: 0.2s) ✗
+  Decode time: 1.5054s (SLO: 0.2s) ✗
+  Total time: 1.8484s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 33:
+  Prompt length: 1481
+  Output length: 16
+  First token latency: 0.3006s (SLO: 0.2s) ✗
+  Decode time: 0.5276s (SLO: 0.2s) ✗
+  Total time: 0.8282s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 34:
+  Prompt length: 956
+  Output length: 896
+  First token latency: 0.1796s (SLO: 0.2s) ✓
+  Decode time: 39.2087s (SLO: 0.2s) ✗
+  Total time: 39.3882s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 35:
+  Prompt length: 569
+  Output length: 429
+  First token latency: 0.3065s (SLO: 0.2s) ✗
+  Decode time: 20.1445s (SLO: 0.2s) ✗
+  Total time: 20.4510s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 36:
+  Prompt length: 465
+  Output length: 562
+  First token latency: 0.2950s (SLO: 0.2s) ✗
+  Decode time: 26.3215s (SLO: 0.2s) ✗
+  Total time: 26.6166s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 37:
+  Prompt length: 414
+  Output length: 782
+  First token latency: 0.1668s (SLO: 0.2s) ✓
+  Decode time: 35.2149s (SLO: 0.2s) ✗
+  Total time: 35.3817s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 38:
+  Prompt length: 453
+  Output length: 322
+  First token latency: 0.1890s (SLO: 0.2s) ✓
+  Decode time: 14.8942s (SLO: 0.2s) ✗
+  Total time: 15.0832s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 39:
+  Prompt length: 624
+  Output length: 640
+  First token latency: 0.2220s (SLO: 0.2s) ✗
+  Decode time: 29.7209s (SLO: 0.2s) ✗
+  Total time: 29.9430s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 40:
+  Prompt length: 895
+  Output length: 310
+  First token latency: 0.2257s (SLO: 0.2s) ✗
+  Decode time: 14.8383s (SLO: 0.2s) ✗
+  Total time: 15.0640s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 41:
+  Prompt length: 473
+  Output length: 451
+  First token latency: 0.2095s (SLO: 0.2s) ✗
+  Decode time: 21.9715s (SLO: 0.2s) ✗
+  Total time: 22.1810s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 42:
+  Prompt length: 408
+  Output length: 407
+  First token latency: 0.2051s (SLO: 0.2s) ✗
+  Decode time: 19.9235s (SLO: 0.2s) ✗
+  Total time: 20.1286s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 43:
+  Prompt length: 436
+  Output length: 630
+  First token latency: 0.1916s (SLO: 0.2s) ✓
+  Decode time: 29.3772s (SLO: 0.2s) ✗
+  Total time: 29.5688s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 44:
+  Prompt length: 508
+  Output length: 490
+  First token latency: 0.3002s (SLO: 0.2s) ✗
+  Decode time: 23.6550s (SLO: 0.2s) ✗
+  Total time: 23.9552s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 45:
+  Prompt length: 867
+  Output length: 602
+  First token latency: 0.2679s (SLO: 0.2s) ✗
+  Decode time: 28.2536s (SLO: 0.2s) ✗
+  Total time: 28.5215s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 46:
+  Prompt length: 929
+  Output length: 276
+  First token latency: 0.2710s (SLO: 0.2s) ✗
+  Decode time: 13.6607s (SLO: 0.2s) ✗
+  Total time: 13.9317s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 47:
+  Prompt length: 835
+  Output length: 371
+  First token latency: 0.3211s (SLO: 0.2s) ✗
+  Decode time: 18.4145s (SLO: 0.2s) ✗
+  Total time: 18.7356s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 48:
+  Prompt length: 882
+  Output length: 453
+  First token latency: 0.2899s (SLO: 0.2s) ✗
+  Decode time: 22.0172s (SLO: 0.2s) ✗
+  Total time: 22.3071s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 49:
+  Prompt length: 700
+  Output length: 316
+  First token latency: 0.2625s (SLO: 0.2s) ✗
+  Decode time: 15.9196s (SLO: 0.2s) ✗
+  Total time: 16.1820s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 50:
+  Prompt length: 524
+  Output length: 556
+  First token latency: 0.2417s (SLO: 0.2s) ✗
+  Decode time: 26.2103s (SLO: 0.2s) ✗
+  Total time: 26.4521s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 51:
+  Prompt length: 652
+  Output length: 510
+  First token latency: 0.2287s (SLO: 0.2s) ✗
+  Decode time: 24.2713s (SLO: 0.2s) ✗
+  Total time: 24.5000s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 52:
+  Prompt length: 706
+  Output length: 922
+  First token latency: 0.2632s (SLO: 0.2s) ✗
+  Decode time: 38.5456s (SLO: 0.2s) ✗
+  Total time: 38.8088s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 53:
+  Prompt length: 677
+  Output length: 844
+  First token latency: 0.2385s (SLO: 0.2s) ✗
+  Decode time: 36.0011s (SLO: 0.2s) ✗
+  Total time: 36.2396s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 54:
+  Prompt length: 734
+  Output length: 610
+  First token latency: 0.3151s (SLO: 0.2s) ✗
+  Decode time: 27.7814s (SLO: 0.2s) ✗
+  Total time: 28.0965s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 55:
+  Prompt length: 798
+  Output length: 751
+  First token latency: 0.2598s (SLO: 0.2s) ✗
+  Decode time: 32.5623s (SLO: 0.2s) ✗
+  Total time: 32.8221s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 56:
+  Prompt length: 568
+  Output length: 136
+  First token latency: 0.2254s (SLO: 0.2s) ✗
+  Decode time: 7.1899s (SLO: 0.2s) ✗
+  Total time: 7.4153s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 57:
+  Prompt length: 857
+  Output length: 237
+  First token latency: 0.2645s (SLO: 0.2s) ✗
+  Decode time: 12.4291s (SLO: 0.2s) ✗
+  Total time: 12.6935s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 58:
+  Prompt length: 896
+  Output length: 214
+  First token latency: 0.2708s (SLO: 0.2s) ✗
+  Decode time: 11.3454s (SLO: 0.2s) ✗
+  Total time: 11.6161s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 59:
+  Prompt length: 642
+  Output length: 94
+  First token latency: 0.2678s (SLO: 0.2s) ✗
+  Decode time: 5.0229s (SLO: 0.2s) ✗
+  Total time: 5.2906s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 60:
+  Prompt length: 666
+  Output length: 99
+  First token latency: 0.2255s (SLO: 0.2s) ✗
+  Decode time: 5.3146s (SLO: 0.2s) ✗
+  Total time: 5.5401s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 61:
+  Prompt length: 317
+  Output length: 205
+  First token latency: 0.2012s (SLO: 0.2s) ✗
+  Decode time: 10.8115s (SLO: 0.2s) ✗
+  Total time: 11.0126s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 62:
+  Prompt length: 493
+  Output length: 222
+  First token latency: 0.3001s (SLO: 0.2s) ✗
+  Decode time: 11.4657s (SLO: 0.2s) ✗
+  Total time: 11.7658s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 63:
+  Prompt length: 792
+  Output length: 165
+  First token latency: 0.2855s (SLO: 0.2s) ✗
+  Decode time: 8.6589s (SLO: 0.2s) ✗
+  Total time: 8.9444s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 64:
+  Prompt length: 857
+  Output length: 74
+  First token latency: 0.2848s (SLO: 0.2s) ✗
+  Decode time: 3.8679s (SLO: 0.2s) ✗
+  Total time: 4.1527s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 65:
+  Prompt length: 376
+  Output length: 158
+  First token latency: 0.2855s (SLO: 0.2s) ✗
+  Decode time: 8.2451s (SLO: 0.2s) ✗
+  Total time: 8.5306s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 66:
+  Prompt length: 363
+  Output length: 149
+  First token latency: 0.2232s (SLO: 0.2s) ✗
+  Decode time: 7.7370s (SLO: 0.2s) ✗
+  Total time: 7.9602s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 67:
+  Prompt length: 500
+  Output length: 230
+  First token latency: 0.2360s (SLO: 0.2s) ✗
+  Decode time: 11.6581s (SLO: 0.2s) ✗
+  Total time: 11.8942s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 68:
+  Prompt length: 573
+  Output length: 12
+  First token latency: 0.3313s (SLO: 0.2s) ✗
+  Decode time: 0.5739s (SLO: 0.2s) ✗
+  Total time: 0.9052s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 69:
+  Prompt length: 576
+  Output length: 8
+  First token latency: 0.2781s (SLO: 0.2s) ✗
+  Decode time: 0.3686s (SLO: 0.2s) ✗
+  Total time: 0.6467s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 70:
+  Prompt length: 458
+  Output length: 14
+  First token latency: 0.3496s (SLO: 0.2s) ✗
+  Decode time: 0.6531s (SLO: 0.2s) ✗
+  Total time: 1.0027s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 71:
+  Prompt length: 798
+  Output length: 50
+  First token latency: 0.2989s (SLO: 0.2s) ✗
+  Decode time: 2.5069s (SLO: 0.2s) ✗
+  Total time: 2.8058s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 72:
+  Prompt length: 886
+  Output length: 20
+  First token latency: 0.2643s (SLO: 0.2s) ✗
+  Decode time: 0.9485s (SLO: 0.2s) ✗
+  Total time: 1.2128s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 73:
+  Prompt length: 883
+  Output length: 49
+  First token latency: 0.2780s (SLO: 0.2s) ✗
+  Decode time: 2.3275s (SLO: 0.2s) ✗
+  Total time: 2.6055s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 74:
+  Prompt length: 317
+  Output length: 41
+  First token latency: 0.2010s (SLO: 0.2s) ✗
+  Decode time: 2.2734s (SLO: 0.2s) ✗
+  Total time: 2.4744s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 75:
+  Prompt length: 396
+  Output length: 30
+  First token latency: 0.2079s (SLO: 0.2s) ✗
+  Decode time: 1.7139s (SLO: 0.2s) ✗
+  Total time: 1.9218s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 76:
+  Prompt length: 866
+  Output length: 32
+  First token latency: 0.3207s (SLO: 0.2s) ✗
+  Decode time: 1.7596s (SLO: 0.2s) ✗
+  Total time: 2.0804s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 77:
+  Prompt length: 389
+  Output length: 5
+  First token latency: 0.2993s (SLO: 0.2s) ✗
+  Decode time: 0.3244s (SLO: 0.2s) ✗
+  Total time: 0.6238s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 78:
+  Prompt length: 733
+  Output length: 13
+  First token latency: 0.3064s (SLO: 0.2s) ✗
+  Decode time: 0.7527s (SLO: 0.2s) ✗
+  Total time: 1.0591s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 79:
+  Prompt length: 388
+  Output length: 15
+  First token latency: 0.2938s (SLO: 0.2s) ✗
+  Decode time: 0.8364s (SLO: 0.2s) ✗
+  Total time: 1.1302s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 80:
+  Prompt length: 743
+  Output length: 8
+  First token latency: 0.2647s (SLO: 0.2s) ✗
+  Decode time: 0.4103s (SLO: 0.2s) ✗
+  Total time: 0.6751s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 81:
+  Prompt length: 655
+  Output length: 16
+  First token latency: 0.2729s (SLO: 0.2s) ✗
+  Decode time: 0.7996s (SLO: 0.2s) ✗
+  Total time: 1.0724s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 82:
+  Prompt length: 707
+  Output length: 18
+  First token latency: 0.2694s (SLO: 0.2s) ✗
+  Decode time: 0.8977s (SLO: 0.2s) ✗
+  Total time: 1.1671s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 83:
+  Prompt length: 435
+  Output length: 23
+  First token latency: 0.2959s (SLO: 0.2s) ✗
+  Decode time: 1.1146s (SLO: 0.2s) ✗
+  Total time: 1.4105s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 84:
+  Prompt length: 652
+  Output length: 19
+  First token latency: 0.2599s (SLO: 0.2s) ✗
+  Decode time: 0.9120s (SLO: 0.2s) ✗
+  Total time: 1.1719s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 85:
+  Prompt length: 534
+  Output length: 2
+  First token latency: 0.2254s (SLO: 0.2s) ✗
+  Decode time: 0.0477s (SLO: 0.2s) ✓
+  Total time: 0.2731s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 86:
+  Prompt length: 419
+  Output length: 42
+  First token latency: 0.2059s (SLO: 0.2s) ✗
+  Decode time: 1.8820s (SLO: 0.2s) ✗
+  Total time: 2.0878s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 87:
+  Prompt length: 355
+  Output length: 23
+  First token latency: 0.2105s (SLO: 0.2s) ✗
+  Decode time: 1.0583s (SLO: 0.2s) ✗
+  Total time: 1.2688s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 88:
+  Prompt length: 783
+  Output length: 5
+  First token latency: 0.3028s (SLO: 0.2s) ✗
+  Decode time: 0.1666s (SLO: 0.2s) ✓
+  Total time: 0.4694s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 89:
+  Prompt length: 403
+  Output length: 28
+  First token latency: 0.2528s (SLO: 0.2s) ✗
+  Decode time: 1.1720s (SLO: 0.2s) ✗
+  Total time: 1.4248s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 90:
+  Prompt length: 472
+  Output length: 5
+  First token latency: 0.2413s (SLO: 0.2s) ✗
+  Decode time: 0.1755s (SLO: 0.2s) ✓
+  Total time: 0.4168s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 91:
+  Prompt length: 501
+  Output length: 9
+  First token latency: 0.2200s (SLO: 0.2s) ✗
+  Decode time: 0.3839s (SLO: 0.2s) ✗
+  Total time: 0.6039s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 92:
+  Prompt length: 745
+  Output length: 8
+  First token latency: 0.2453s (SLO: 0.2s) ✗
+  Decode time: 0.2972s (SLO: 0.2s) ✗
+  Total time: 0.5426s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 93:
+  Prompt length: 338
+  Output length: 10
+  First token latency: 0.1765s (SLO: 0.2s) ✓
+  Decode time: 0.3963s (SLO: 0.2s) ✗
+  Total time: 0.5728s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 94:
+  Prompt length: 594
+  Output length: 61
+  First token latency: 0.2326s (SLO: 0.2s) ✗
+  Decode time: 2.6525s (SLO: 0.2s) ✗
+  Total time: 2.8851s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 95:
+  Prompt length: 478
+  Output length: 29
+  First token latency: 0.2057s (SLO: 0.2s) ✗
+  Decode time: 1.2898s (SLO: 0.2s) ✗
+  Total time: 1.4955s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 96:
+  Prompt length: 443
+  Output length: 11
+  First token latency: 0.1897s (SLO: 0.2s) ✓
+  Decode time: 0.4726s (SLO: 0.2s) ✗
+  Total time: 0.6623s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 97:
+  Prompt length: 564
+  Output length: 13
+  First token latency: 0.2176s (SLO: 0.2s) ✗
+  Decode time: 0.5373s (SLO: 0.2s) ✗
+  Total time: 0.7549s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 98:
+  Prompt length: 13
+  Output length: 600
+  First token latency: 0.2187s (SLO: 0.2s) ✗
+  Decode time: 21.6343s (SLO: 0.2s) ✗
+  Total time: 21.8531s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 99:
+  Prompt length: 133
+  Output length: 271
+  First token latency: 0.2084s (SLO: 0.2s) ✗
+  Decode time: 10.8544s (SLO: 0.2s) ✗
+  Total time: 11.0628s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 100:
+  Prompt length: 159
+  Output length: 288
+  First token latency: 0.2179s (SLO: 0.2s) ✗
+  Decode time: 11.2828s (SLO: 0.2s) ✗
+  Total time: 11.5007s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 101:
+  Prompt length: 7
+  Output length: 314
+  First token latency: 0.2148s (SLO: 0.2s) ✗
+  Decode time: 12.1623s (SLO: 0.2s) ✗
+  Total time: 12.3770s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 102:
+  Prompt length: 13
+  Output length: 367
+  First token latency: 0.1650s (SLO: 0.2s) ✓
+  Decode time: 13.8016s (SLO: 0.2s) ✗
+  Total time: 13.9665s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 103:
+  Prompt length: 17
+  Output length: 315
+  First token latency: 0.1990s (SLO: 0.2s) ✓
+  Decode time: 12.0085s (SLO: 0.2s) ✗
+  Total time: 12.2075s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 104:
+  Prompt length: 5
+  Output length: 268
+  First token latency: 0.1443s (SLO: 0.2s) ✓
+  Decode time: 10.3019s (SLO: 0.2s) ✗
+  Total time: 10.4462s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 105:
+  Prompt length: 73
+  Output length: 538
+  First token latency: 0.1817s (SLO: 0.2s) ✓
+  Decode time: 18.6443s (SLO: 0.2s) ✗
+  Total time: 18.8260s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 106:
+  Prompt length: 19
+  Output length: 254
+  First token latency: 0.1636s (SLO: 0.2s) ✓
+  Decode time: 9.5331s (SLO: 0.2s) ✗
+  Total time: 9.6967s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 107:
+  Prompt length: 24
+  Output length: 176
+  First token latency: 0.1491s (SLO: 0.2s) ✓
+  Decode time: 6.8194s (SLO: 0.2s) ✗
+  Total time: 6.9685s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 108:
+  Prompt length: 31
+  Output length: 116
+  First token latency: 0.1796s (SLO: 0.2s) ✓
+  Decode time: 4.6015s (SLO: 0.2s) ✗
+  Total time: 4.7811s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 109:
+  Prompt length: 18
+  Output length: 162
+  First token latency: 0.1555s (SLO: 0.2s) ✓
+  Decode time: 6.1443s (SLO: 0.2s) ✗
+  Total time: 6.2997s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 110:
+  Prompt length: 29
+  Output length: 199
+  First token latency: 0.1739s (SLO: 0.2s) ✓
+  Decode time: 7.3658s (SLO: 0.2s) ✗
+  Total time: 7.5397s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 111:
+  Prompt length: 127
+  Output length: 136
+  First token latency: 0.1850s (SLO: 0.2s) ✓
+  Decode time: 4.9786s (SLO: 0.2s) ✗
+  Total time: 5.1636s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 112:
+  Prompt length: 10
+  Output length: 108
+  First token latency: 0.1575s (SLO: 0.2s) ✓
+  Decode time: 3.9880s (SLO: 0.2s) ✗
+  Total time: 4.1455s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 113:
+  Prompt length: 25
+  Output length: 7
+  First token latency: 0.1733s (SLO: 0.2s) ✓
+  Decode time: 0.2366s (SLO: 0.2s) ✗
+  Total time: 0.4100s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 114:
+  Prompt length: 254
+  Output length: 12
+  First token latency: 0.1675s (SLO: 0.2s) ✓
+  Decode time: 0.4395s (SLO: 0.2s) ✗
+  Total time: 0.6070s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 115:
+  Prompt length: 143
+  Output length: 12
+  First token latency: 0.1549s (SLO: 0.2s) ✓
+  Decode time: 0.4307s (SLO: 0.2s) ✗
+  Total time: 0.5856s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 116:
+  Prompt length: 138
+  Output length: 17
+  First token latency: 0.1613s (SLO: 0.2s) ✓
+  Decode time: 0.5671s (SLO: 0.2s) ✗
+  Total time: 0.7285s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 117:
+  Prompt length: 214
+  Output length: 9
+  First token latency: 0.1670s (SLO: 0.2s) ✓
+  Decode time: 0.2739s (SLO: 0.2s) ✗
+  Total time: 0.4409s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 118:
+  Prompt length: 137
+  Output length: 15
+  First token latency: 0.1629s (SLO: 0.2s) ✓
+  Decode time: 0.4879s (SLO: 0.2s) ✗
+  Total time: 0.6508s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 119:
+  Prompt length: 102
+  Output length: 8
+  First token latency: 0.1459s (SLO: 0.2s) ✓
+  Decode time: 0.2428s (SLO: 0.2s) ✗
+  Total time: 0.3887s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+Request 120:
+  Prompt length: 42
+  Output length: 27
+  First token latency: 0.1311s (SLO: 0.2s) ✓
+  Decode time: 0.8650s (SLO: 0.2s) ✗
+  Total time: 0.9960s (SLO: 0.2s) ✗
+  Both prefill and decode SLO met: ✗
+
+============================================================
+SLO Analysis Results
+============================================================
+Total requests: 120
+Prefill SLO met: 26/120 (21.67%)
+Decode SLO met: 3/120 (2.50%)
+Total SLO met: 0/120 (0.00%)
+Both prefill and decode SLO met: 0/120 (0.00%)
+============================================================

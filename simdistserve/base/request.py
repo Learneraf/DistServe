@@ -5,10 +5,14 @@ Request class for the simulation.
 E_INIT = "init"
 E_WAIT_PREFILL = "wait_prefill"
 E_DO_PREFILL = "do_prefill"
+E_WAIT_HANDOFF = "wait_handoff"
+E_DO_HANDOFF = "do_handoff"
+E_FINISH_HANDOFF = "finish_handoff"
 E_WAIT_DECODE = "wait_decode"
 E_DO_DECODE = "do_decode"
 E_FINISH_PREFILL = "finish_prefill"
 E_FINISH_DECODE = "finish_decode"
+E_FIRST_TOKEN_VISIBLE = "first_token_visible"
 E_EXIT_SYSTEM = "exit_system"
 
 
@@ -32,6 +36,7 @@ class Request:
         self,
         env: 'simpy.Environment' = None,
         req_id: int = None,
+        source_index: int = None,
         req_init_counter=-1,
         # TODO: (Refactor) Change name to `prefill_length` and `output_length`.
         prefill_length: int = 512,
@@ -41,6 +46,7 @@ class Request:
         assert req_id is not None, f'Request ID is not set.'
         self.env = env
         self.req_id = req_id
+        self.source_index = req_id if source_index is None else source_index
         # counter: int
         #  - counter < 0: steps to prefill. Only use the value `-1`. Reserve the negative space for future extension.
         #  - counter >=0: steps to decode. Maximum value is `output_lens - 1`, when the request should exit system.
@@ -62,6 +68,7 @@ class Request:
         # The last worker in the pipeline unset this value at a chunk's end.
         self.chunk_id = None
         self.first_token_prefill = False
+        self.first_token_visible = False
 
     @property
     def current_context_len(self):
@@ -84,6 +91,15 @@ class Request:
     def do_prefill(self, wid=None):
         self._log_event(E_DO_PREFILL, wid=wid)
 
+    def wait_handoff(self, wid=None):
+        self._log_event(E_WAIT_HANDOFF, wid=wid)
+
+    def do_handoff(self, wid=None):
+        self._log_event(E_DO_HANDOFF, wid=wid)
+
+    def finish_handoff(self, wid=None):
+        self._log_event(E_FINISH_HANDOFF, wid=wid)
+
     def wait_decode(self, wid=None):
         self._log_event(E_WAIT_DECODE, wid=wid)
 
@@ -96,7 +112,24 @@ class Request:
         self.current_prefill_lens = 0
         return
 
-    def finish_prefill(self, is_finished_one_round=False, wid=None, next_wid=None, generated_tokens: int = 0):
+    def mark_first_token_visible(self, wid=None):
+        if self.first_token_visible:
+            return
+        self.first_token_visible = True
+        self._log_event(E_FIRST_TOKEN_VISIBLE, wid=wid)
+        if self.should_finish():
+            self._log_event(E_EXIT_SYSTEM)
+            self._terminated = True
+        return
+
+    def finish_prefill(
+        self,
+        is_finished_one_round=False,
+        wid=None,
+        next_wid=None,
+        generated_tokens: int = 0,
+        first_token_visible: bool = False,
+    ):
         if not is_finished_one_round:
             self.wait_prefill(wid=next_wid)
             return
@@ -112,15 +145,18 @@ class Request:
         self._log_event(E_FINISH_PREFILL, wid=wid)
         self.first_token_prefill = generated_tokens > 0
         self.counter = generated_tokens
-        # Hack to ensure "wait_decode" appears at least once.
-        self.wait_decode(wid=next_wid)
-        if not self.should_finish():
+        if self.first_token_prefill:
+            if first_token_visible:
+                self.mark_first_token_visible(wid=wid)
             return
-        self._log_event(E_EXIT_SYSTEM)
-        self._terminated = True
+        if self.should_finish():
+            self._log_event(E_EXIT_SYSTEM)
+            self._terminated = True
         return
 
-    def finish_decode(self, is_finished_one_round=False, next_wid=None):
+    def finish_decode(self, is_finished_one_round=False, next_wid=None, wid=None):
+        if is_finished_one_round and self.first_token_prefill and not self.first_token_visible:
+            self.mark_first_token_visible(wid=wid)
         if is_finished_one_round:
             self.counter += 1
         self.wait_decode(wid=next_wid)

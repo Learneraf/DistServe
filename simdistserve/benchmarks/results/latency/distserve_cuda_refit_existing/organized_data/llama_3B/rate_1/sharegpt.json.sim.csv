@@ -1,0 +1,14 @@
+backend,model_type,pd,rate,target,attainment,tp_prefill,pp_prefill,tp_decode,pp_decode
+distserve,LLAMA-3.2-3B,prefill,1.0,200.0,57.99999999999999,1,1,1,1
+distserve,LLAMA-3.2-3B,decode,1.0,100.0,100.0,1,1,1,1
+distserve,LLAMA-3.2-3B,both,1.0,"(200.0, 100.0)",57.99999999999999,1,1,1,1
+distserve,LLAMA-3.2-3B,prefill,1.0,465.7345972302129,85.0,1,1,1,1
+distserve,LLAMA-3.2-3B,decode,1.0,33.34947000131277,85.0,1,1,1,1
+distserve,LLAMA-3.2-3B,prefill,1.0,570.6346773141782,90.0,1,1,1,1
+distserve,LLAMA-3.2-3B,decode,1.0,33.68042992990796,90.0,1,1,1,1
+distserve,LLAMA-3.2-3B,prefill,1.0,661.5700979214743,95.0,1,1,1,1
+distserve,LLAMA-3.2-3B,decode,1.0,34.14030685757294,95.0,1,1,1,1
+distserve,LLAMA-3.2-3B,prefill,1.0,716.6648742780301,98.0,1,1,1,1
+distserve,LLAMA-3.2-3B,decode,1.0,34.22036877433355,98.0,1,1,1,1
+distserve,LLAMA-3.2-3B,prefill,1.0,768.8114000567251,99.0,1,1,1,1
+distserve,LLAMA-3.2-3B,decode,1.0,35.04356754396611,99.0,1,1,1,1

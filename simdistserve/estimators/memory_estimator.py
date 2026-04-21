@@ -18,6 +18,14 @@ def load_profile_data():
             result[model] = {}
         result[model][(tp, pp)] = row['max_num_tokens']
 
+    for source_key in (
+        "anonymous4chan/llama-2-7b",
+        "huggyllama/llama-7b",
+    ):
+        if source_key in result:
+            result[ModelTypes.LLAMA_2_7B_LOCAL_PATH] = dict(result[source_key])
+            break
+
     return result
 
 
@@ -48,6 +56,7 @@ model_hyperparams = {
     "facebook/opt-175b": (96, 96),
     "huggyllama/llama-7b": (32, 32),
     "anonymous4chan/llama-2-7b": (32, 32),
+    "/users/rh/.cache/modelscope/hub/models/LLM-Research/llama-2-7b/converted_bin_v2": (32, 32),
     "/users/rh/.cache/modelscope/hub/models/LLM-Research/Llama-3.2-1B/converted_bin_v2": (16, 16),
     "/users/rh/.cache/modelscope/hub/models/LLM-Research/Llama-3.2-3B/converted_bin_v2": (28, 24),
     "/users/rh/.cache/modelscope/hub/models/LLM-Research/Meta-Llama-3.1-8B/converted_bin_v2": (32, 32)

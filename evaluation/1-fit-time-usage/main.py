@@ -22,8 +22,8 @@ the goal of minimizing \sum relative_error^2.
 
 usage:
 python ./main.py \
-    -i "../0-test-single-forward-performance/db-identical-req.bak.sqlite" \
-    -o "./params/fit_params_6_params.json" > "./main.log"
+    -i "../0-test-single-forward-performance/db-identical-req.sqlite" \
+    -o "./params/fit_params_from_database.json" > "./main.log"
 
 
 """

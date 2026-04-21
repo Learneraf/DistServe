@@ -1,0 +1,269 @@
+{
+  "backend": "distserve_cuda",
+  "model": "llama_8B",
+  "rate": "4",
+  "benchmark_file": "/users/rh/DistServe/evaluation/2-benchmark-serving/result/llama_8B/distserve-100-4.exp",
+  "simulator_file": "/users/rh/DistServe/simdistserve/benchmarks/results/validation/distserve_cuda_final_3param/llama_8B/rate_4/request_latency.csv",
+  "benchmark_format": "exp",
+  "base_slos": {
+    "prefill": 1.0,
+    "decode": 1.0,
+    "total": 1.0
+  },
+  "scales": [
+    0.4,
+    0.5,
+    0.6,
+    0.7,
+    0.8,
+    0.9,
+    1.0,
+    1.1,
+    1.2
+  ],
+  "points": [
+    {
+      "scale": 0.4,
+      "metrics": {
+        "prefill": {
+          "benchmark": 33.0,
+          "simulator": 20.0,
+          "gap": 13.0
+        },
+        "decode": {
+          "benchmark": 11.0,
+          "simulator": 14.000000000000002,
+          "gap": -3.0000000000000018
+        },
+        "total": {
+          "benchmark": 0.0,
+          "simulator": 0.0,
+          "gap": 0.0
+        },
+        "both": {
+          "benchmark": 2.0,
+          "simulator": 1.0,
+          "gap": 1.0
+        }
+      }
+    },
+    {
+      "scale": 0.5,
+      "metrics": {
+        "prefill": {
+          "benchmark": 38.0,
+          "simulator": 28.000000000000004,
+          "gap": 9.999999999999996
+        },
+        "decode": {
+          "benchmark": 17.0,
+          "simulator": 21.0,
+          "gap": -4.0
+        },
+        "total": {
+          "benchmark": 2.0,
+          "simulator": 1.0,
+          "gap": 1.0
+        },
+        "both": {
+          "benchmark": 6.0,
+          "simulator": 3.0,
+          "gap": 3.0
+        }
+      }
+    },
+    {
+      "scale": 0.6,
+      "metrics": {
+        "prefill": {
+          "benchmark": 45.0,
+          "simulator": 33.0,
+          "gap": 12.0
+        },
+        "decode": {
+          "benchmark": 21.0,
+          "simulator": 24.0,
+          "gap": -3.0
+        },
+        "total": {
+          "benchmark": 4.0,
+          "simulator": 1.0,
+          "gap": 3.0
+        },
+        "both": {
+          "benchmark": 6.0,
+          "simulator": 5.0,
+          "gap": 1.0
+        }
+      }
+    },
+    {
+      "scale": 0.7,
+      "metrics": {
+        "prefill": {
+          "benchmark": 50.0,
+          "simulator": 40.0,
+          "gap": 10.0
+        },
+        "decode": {
+          "benchmark": 27.0,
+          "simulator": 31.0,
+          "gap": -4.0
+        },
+        "total": {
+          "benchmark": 5.0,
+          "simulator": 3.0,
+          "gap": 2.0
+        },
+        "both": {
+          "benchmark": 12.0,
+          "simulator": 9.0,
+          "gap": 3.0
+        }
+      }
+    },
+    {
+      "scale": 0.8,
+      "metrics": {
+        "prefill": {
+          "benchmark": 55.00000000000001,
+          "simulator": 41.0,
+          "gap": 14.000000000000007
+        },
+        "decode": {
+          "benchmark": 31.0,
+          "simulator": 33.0,
+          "gap": -2.0
+        },
+        "total": {
+          "benchmark": 5.0,
+          "simulator": 6.0,
+          "gap": -1.0
+        },
+        "both": {
+          "benchmark": 14.000000000000002,
+          "simulator": 10.0,
+          "gap": 4.000000000000002
+        }
+      }
+    },
+    {
+      "scale": 0.9,
+      "metrics": {
+        "prefill": {
+          "benchmark": 60.0,
+          "simulator": 46.0,
+          "gap": 14.0
+        },
+        "decode": {
+          "benchmark": 34.0,
+          "simulator": 37.0,
+          "gap": -3.0
+        },
+        "total": {
+          "benchmark": 9.0,
+          "simulator": 7.000000000000001,
+          "gap": 1.9999999999999991
+        },
+        "both": {
+          "benchmark": 19.0,
+          "simulator": 15.0,
+          "gap": 4.0
+        }
+      }
+    },
+    {
+      "scale": 1.0,
+      "metrics": {
+        "prefill": {
+          "benchmark": 67.0,
+          "simulator": 49.0,
+          "gap": 18.0
+        },
+        "decode": {
+          "benchmark": 39.0,
+          "simulator": 40.0,
+          "gap": -1.0
+        },
+        "total": {
+          "benchmark": 10.0,
+          "simulator": 8.0,
+          "gap": 2.0
+        },
+        "both": {
+          "benchmark": 28.000000000000004,
+          "simulator": 18.0,
+          "gap": 10.000000000000004
+        }
+      }
+    },
+    {
+      "scale": 1.1,
+      "metrics": {
+        "prefill": {
+          "benchmark": 70.0,
+          "simulator": 52.0,
+          "gap": 18.0
+        },
+        "decode": {
+          "benchmark": 41.0,
+          "simulator": 40.0,
+          "gap": 1.0
+        },
+        "total": {
+          "benchmark": 11.0,
+          "simulator": 10.0,
+          "gap": 1.0
+        },
+        "both": {
+          "benchmark": 30.0,
+          "simulator": 19.0,
+          "gap": 11.0
+        }
+      }
+    },
+    {
+      "scale": 1.2,
+      "metrics": {
+        "prefill": {
+          "benchmark": 73.0,
+          "simulator": 56.99999999999999,
+          "gap": 16.000000000000007
+        },
+        "decode": {
+          "benchmark": 41.0,
+          "simulator": 41.0,
+          "gap": 0.0
+        },
+        "total": {
+          "benchmark": 12.0,
+          "simulator": 12.0,
+          "gap": 0.0
+        },
+        "both": {
+          "benchmark": 31.0,
+          "simulator": 24.0,
+          "gap": 7.0
+        }
+      }
+    }
+  ],
+  "metric_summary": {
+    "prefill": {
+      "mean_abs_gap": 13.88888888888889,
+      "max_abs_gap": 18.0
+    },
+    "decode": {
+      "mean_abs_gap": 2.3333333333333335,
+      "max_abs_gap": 4.0
+    },
+    "total": {
+      "mean_abs_gap": 1.3333333333333333,
+      "max_abs_gap": 3.0
+    },
+    "both": {
+      "mean_abs_gap": 4.888888888888889,
+      "max_abs_gap": 11.0
+    }
+  }
+}

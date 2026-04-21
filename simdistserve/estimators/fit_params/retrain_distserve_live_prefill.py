@@ -6,10 +6,8 @@ This script reconstructs live prefill batches from request lifecycle events and 
 the prefill batch runtime as:
 
     round_ms = A
-             + B * batch_size
-             + C * sum_prompt_len
-             + D * max_prompt_len
-             + E * sum_prompt_len_sq
+             + B * sum_prompt_len
+             + C * sum_prompt_len_sq
 
 The output JSON preserves any existing decode coefficients and untouched model/TP
 entries while replacing TP=1 prefill coefficients for the models that have
@@ -33,7 +31,7 @@ import numpy as np
 MODEL_ALIAS_TO_KEY = {
     "llama_1B": "/users/rh/.cache/modelscope/hub/models/LLM-Research/Llama-3.2-1B/converted_bin_v2",
     "llama_3B": "/users/rh/.cache/modelscope/hub/models/LLM-Research/Llama-3.2-3B/converted_bin_v2",
-    "llama_7B": "huggyllama/llama-7b",
+    "llama_7B": "/users/rh/.cache/modelscope/hub/models/LLM-Research/llama-2-7b/converted_bin_v2",
     "llama_8B": "/users/rh/.cache/modelscope/hub/models/LLM-Research/Meta-Llama-3.1-8B/converted_bin_v2",
 }
 
@@ -137,7 +135,7 @@ def cluster_events_into_batches(
     return batch_samples
 
 
-def fit_relative_error_linear_model(
+def fit_relative_error_quadratic_model(
     samples: list[PrefillBatchSample],
 ) -> tuple[list[float], dict[str, float]]:
     if not samples:
@@ -151,9 +149,7 @@ def fit_relative_error_linear_model(
     for sample in samples:
         row = [
             1.0,
-            float(sample.batch_size),
             float(sample.sum_prompt_len),
-            float(sample.max_prompt_len),
             float(sample.sum_prompt_len_sq),
         ]
         duration = max(sample.duration_ms, 1e-6)
@@ -293,7 +289,7 @@ def main() -> None:
             print(f"Skipping {model_key}: TP=1 missing in base profile")
             continue
 
-        coeffs, metrics = fit_relative_error_linear_model(samples)
+        coeffs, metrics = fit_relative_error_quadratic_model(samples)
         base_profile[model_key]["1"]["prefill"] = coeffs
 
         print(f"\nModel: {model_key}")

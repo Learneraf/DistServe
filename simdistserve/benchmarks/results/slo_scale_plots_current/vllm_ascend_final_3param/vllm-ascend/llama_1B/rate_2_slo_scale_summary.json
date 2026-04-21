@@ -1,0 +1,269 @@
+{
+  "backend": "vllm_ascend",
+  "model": "llama_1B",
+  "rate": "2",
+  "benchmark_file": "/users/rh/ascend_data/ascend_vllm_holdout/llama1B/ascend-vllm-120-2.exp",
+  "simulator_file": "/users/rh/ascend_data/validation/final_3param_profile/llama_1B/rate_2/request_latency.csv",
+  "benchmark_format": "exp",
+  "base_slos": {
+    "prefill": 1.0,
+    "decode": 1.0,
+    "total": 1.0
+  },
+  "scales": [
+    0.4,
+    0.5,
+    0.6,
+    0.7,
+    0.8,
+    0.9,
+    1.0,
+    1.1,
+    1.2
+  ],
+  "points": [
+    {
+      "scale": 0.4,
+      "metrics": {
+        "prefill": {
+          "benchmark": 100.0,
+          "simulator": 98.33333333333333,
+          "gap": 1.6666666666666714
+        },
+        "decode": {
+          "benchmark": 36.666666666666664,
+          "simulator": 38.333333333333336,
+          "gap": -1.6666666666666714
+        },
+        "total": {
+          "benchmark": 30.833333333333336,
+          "simulator": 21.666666666666668,
+          "gap": 9.166666666666668
+        },
+        "both": {
+          "benchmark": 36.666666666666664,
+          "simulator": 37.5,
+          "gap": -0.8333333333333357
+        }
+      }
+    },
+    {
+      "scale": 0.5,
+      "metrics": {
+        "prefill": {
+          "benchmark": 100.0,
+          "simulator": 99.16666666666667,
+          "gap": 0.8333333333333286
+        },
+        "decode": {
+          "benchmark": 40.0,
+          "simulator": 41.66666666666667,
+          "gap": -1.6666666666666714
+        },
+        "total": {
+          "benchmark": 37.5,
+          "simulator": 32.5,
+          "gap": 5.0
+        },
+        "both": {
+          "benchmark": 40.0,
+          "simulator": 41.66666666666667,
+          "gap": -1.6666666666666714
+        }
+      }
+    },
+    {
+      "scale": 0.6,
+      "metrics": {
+        "prefill": {
+          "benchmark": 100.0,
+          "simulator": 99.16666666666667,
+          "gap": 0.8333333333333286
+        },
+        "decode": {
+          "benchmark": 42.5,
+          "simulator": 44.166666666666664,
+          "gap": -1.6666666666666643
+        },
+        "total": {
+          "benchmark": 39.166666666666664,
+          "simulator": 37.5,
+          "gap": 1.6666666666666643
+        },
+        "both": {
+          "benchmark": 42.5,
+          "simulator": 44.166666666666664,
+          "gap": -1.6666666666666643
+        }
+      }
+    },
+    {
+      "scale": 0.7,
+      "metrics": {
+        "prefill": {
+          "benchmark": 100.0,
+          "simulator": 100.0,
+          "gap": 0.0
+        },
+        "decode": {
+          "benchmark": 44.166666666666664,
+          "simulator": 44.166666666666664,
+          "gap": 0.0
+        },
+        "total": {
+          "benchmark": 43.333333333333336,
+          "simulator": 40.0,
+          "gap": 3.3333333333333357
+        },
+        "both": {
+          "benchmark": 44.166666666666664,
+          "simulator": 44.166666666666664,
+          "gap": 0.0
+        }
+      }
+    },
+    {
+      "scale": 0.8,
+      "metrics": {
+        "prefill": {
+          "benchmark": 100.0,
+          "simulator": 100.0,
+          "gap": 0.0
+        },
+        "decode": {
+          "benchmark": 45.0,
+          "simulator": 46.666666666666664,
+          "gap": -1.6666666666666643
+        },
+        "total": {
+          "benchmark": 44.166666666666664,
+          "simulator": 44.166666666666664,
+          "gap": 0.0
+        },
+        "both": {
+          "benchmark": 45.0,
+          "simulator": 46.666666666666664,
+          "gap": -1.6666666666666643
+        }
+      }
+    },
+    {
+      "scale": 0.9,
+      "metrics": {
+        "prefill": {
+          "benchmark": 100.0,
+          "simulator": 100.0,
+          "gap": 0.0
+        },
+        "decode": {
+          "benchmark": 45.83333333333333,
+          "simulator": 46.666666666666664,
+          "gap": -0.8333333333333357
+        },
+        "total": {
+          "benchmark": 45.83333333333333,
+          "simulator": 44.166666666666664,
+          "gap": 1.6666666666666643
+        },
+        "both": {
+          "benchmark": 45.83333333333333,
+          "simulator": 46.666666666666664,
+          "gap": -0.8333333333333357
+        }
+      }
+    },
+    {
+      "scale": 1.0,
+      "metrics": {
+        "prefill": {
+          "benchmark": 100.0,
+          "simulator": 100.0,
+          "gap": 0.0
+        },
+        "decode": {
+          "benchmark": 46.666666666666664,
+          "simulator": 47.5,
+          "gap": -0.8333333333333357
+        },
+        "total": {
+          "benchmark": 46.666666666666664,
+          "simulator": 45.83333333333333,
+          "gap": 0.8333333333333357
+        },
+        "both": {
+          "benchmark": 46.666666666666664,
+          "simulator": 47.5,
+          "gap": -0.8333333333333357
+        }
+      }
+    },
+    {
+      "scale": 1.1,
+      "metrics": {
+        "prefill": {
+          "benchmark": 100.0,
+          "simulator": 100.0,
+          "gap": 0.0
+        },
+        "decode": {
+          "benchmark": 47.5,
+          "simulator": 48.333333333333336,
+          "gap": -0.8333333333333357
+        },
+        "total": {
+          "benchmark": 47.5,
+          "simulator": 45.83333333333333,
+          "gap": 1.6666666666666714
+        },
+        "both": {
+          "benchmark": 47.5,
+          "simulator": 48.333333333333336,
+          "gap": -0.8333333333333357
+        }
+      }
+    },
+    {
+      "scale": 1.2,
+      "metrics": {
+        "prefill": {
+          "benchmark": 100.0,
+          "simulator": 100.0,
+          "gap": 0.0
+        },
+        "decode": {
+          "benchmark": 48.333333333333336,
+          "simulator": 48.333333333333336,
+          "gap": 0.0
+        },
+        "total": {
+          "benchmark": 47.5,
+          "simulator": 46.666666666666664,
+          "gap": 0.8333333333333357
+        },
+        "both": {
+          "benchmark": 48.333333333333336,
+          "simulator": 48.333333333333336,
+          "gap": 0.0
+        }
+      }
+    }
+  ],
+  "metric_summary": {
+    "prefill": {
+      "mean_abs_gap": 0.37037037037036985,
+      "max_abs_gap": 1.6666666666666714
+    },
+    "decode": {
+      "mean_abs_gap": 1.01851851851852,
+      "max_abs_gap": 1.6666666666666714
+    },
+    "total": {
+      "mean_abs_gap": 2.685185185185186,
+      "max_abs_gap": 9.166666666666668
+    },
+    "both": {
+      "mean_abs_gap": 0.9259259259259269,
+      "max_abs_gap": 1.6666666666666714
+    }
+  }
+}

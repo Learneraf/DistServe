@@ -25,8 +25,13 @@ class WorkerConfig(TypedDict):
     prefill_max_tokens: int  # Max tokens in prefill iteration (default = 10**7)
     decode_max_tokens: int  # Max tokens in a iteration forward (default = 10**7)
     enable_chunked_prefill: Optional[bool]  # Enable memory pressure simulation (default = False)
+    decode_back_pressure: float  # Decode queue watermark that blocks more prefills (default = 0.9)
     engine_type: Literal["distserve", "vllm", "vllm_ascend"]  # Engine type for prefill/decode time calculation (default = "distserve")
     prefill_generates_first_token: bool  # Whether prefill completes the first token for this backend.
+    handoff_delay_ms: float  # Fixed transfer/control delay between prefill and decode readiness.
+    handoff_delay_per_token_ms: float  # Additional transfer delay per live token at handoff.
+    handoff_capacity: int  # Number of concurrent handoffs the cluster can sustain.
+    prefill_first_token_visible_immediately: bool  # Whether prefill-generated first token is user-visible before handoff.
 
     # TODO: Deprecated
     TP: Optional[int]  # Tensor parallelism (default = 1)
@@ -272,6 +277,7 @@ class Worker:
                 wid=self.wid,
                 next_wid=next_wid,
                 generated_tokens=(1 if self.prefill_generates_first_token else 0),
+                first_token_visible=getattr(self.cluster, "prefill_first_token_visible_immediately", True),
             )
             if not self.is_last_in_pipeline or (item.remain_prefill_lens > 0):
                 # Finish one chunk of prefill. Now forward to the next worker
@@ -280,9 +286,19 @@ class Worker:
                 continue
 
             # Arrive at worker who is at the last of pipeline.
-            if item.should_finish():
+            if item.should_finish() and getattr(item, "_terminated", False):
                 # ... just a sanity check to avoid any infinite loop.
                 continue
+            if hasattr(self.cluster, "start_handoff"):
+                self.cluster.start_handoff(
+                    item,
+                    source_worker=self,
+                    to_scheduler=(not self.should_request_stay),
+                )
+                continue
+
+            if self.should_request_stay:
+                item.wait_decode(wid=next_wid)
             self.forward_decode(item, to_scheduler=(not self.should_request_stay))
         return
 
@@ -291,7 +307,11 @@ class Worker:
             return
         next_wid = self.next_worker.wid if self.next_worker else None
         for r in decode_reqs:
-            r.finish_decode(is_finished_one_round=self.is_last_in_pipeline, next_wid=next_wid)
+            r.finish_decode(
+                is_finished_one_round=self.is_last_in_pipeline,
+                next_wid=next_wid,
+                wid=self.wid,
+            )
         next_decode_batch = tuple(r for r in decode_reqs if not r.should_finish())
         self.forward_decode(next_decode_batch)
         return

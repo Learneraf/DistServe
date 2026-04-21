@@ -2,11 +2,14 @@
 """
 Plot benchmark-vs-simulator SLO met rates across a sweep of SLO scales for one fixed rate.
 
+This script reads pre-generated per-scale `comparison.txt` files under:
+    results/slo/<backend>/compared/<model>/rate_<rate>/scale_<scale>/comparison.txt
+
 Example:
     python3 /users/rh/DistServe/simdistserve/benchmarks/plot_slo_scale_for_rate.py \
-        --backend distserve_cuda \
+        --backend vllm_ascend \
         --model llama_7B \
-        --rate 1 \
+        --rate 4 \
         --output-dir /users/rh/DistServe/simdistserve/benchmarks/results/slo_scale_plots
 """
 
@@ -15,45 +18,35 @@ from __future__ import annotations
 import argparse
 import ast
 import json
+import re
 from pathlib import Path
 
 import matplotlib.pyplot as plt
 import numpy as np
 
-from merged_analyze import analyze_csv, analyze_exp, analyze_json
-
 
 ROOT = Path("/users/rh/DistServe")
 BENCH_ROOT = ROOT / "simdistserve" / "benchmarks"
 RESULTS_ROOT = BENCH_ROOT / "results"
-DISTSERVE_BENCH_ROOT = ROOT / "evaluation" / "2-benchmark-serving" / "result"
-VLLM_ASCEND_BENCH_ROOT = RESULTS_ROOT / "latency" / "vllm_ascend" / "raw_data"
 
 METRICS = [
-    ("prefill", "Prefill SLO met rate", "prefill_slo_rate"),
-    ("decode", "Decode SLO met rate", "decode_slo_rate"),
-    ("total", "Total SLO met rate", "total_slo_rate"),
-    ("both", "Both (Prefill+Decode) SLO met rate", "both_slo_rate"),
+    ("prefill", "Prefill SLO met rate"),
+    ("decode", "Decode SLO met rate"),
+    ("total", "Total SLO met rate"),
+    ("both", "Both (Prefill+Decode) SLO met rate"),
 ]
-DEFAULT_MODELS = ["llama_1B", "llama_3B", "llama_7B", "llama_8B"]
-DEFAULT_RATES = ["1", "1.5", "2", "2.5", "3", "3.5", "4"]
-DEFAULT_SLO_SCALES = [0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0, 1.1, 1.2]
+DEFAULT_SLO_SCALES = [0.4, 0.6, 0.8, 1.0, 1.2]
 BACKEND_OUTPUT_NAMES = {
     "distserve_cuda": "dist-serve",
     "vllm_ascend": "vllm-ascend",
 }
+THRESHOLD_RE = re.compile(
+    r"Unified SLO thresholds:\s*Prefill=([0-9.]+)s,\s*Decode=([0-9.]+)s,\s*Total=([0-9.]+)s"
+)
 
 
-def benchmark_file_for(backend: str, model: str, rate: str) -> Path:
-    if backend == "distserve_cuda":
-        return DISTSERVE_BENCH_ROOT / model / f"distserve-100-{rate}.exp"
-    if backend == "vllm_ascend":
-        return VLLM_ASCEND_BENCH_ROOT / model / f"rate_{rate}.json"
-    raise ValueError(f"Unsupported backend: {backend}")
-
-
-def simulator_file_for(backend: str, model: str, rate: str) -> Path:
-    return RESULTS_ROOT / "latency" / backend / "organized_data" / model / f"rate_{rate}" / "request_latency.csv"
+def compared_dir_for(backend: str, model: str, rate: str) -> Path:
+    return RESULTS_ROOT / "slo" / backend / "compared" / model / f"rate_{rate}"
 
 
 def backend_output_name(backend: str) -> str:
@@ -67,7 +60,9 @@ def output_dir_for_case(root_output_dir: Path, backend: str, model: str) -> Path
     return root_output_dir / backend_output_name(backend) / model
 
 
-def parse_scales(raw_scales: str) -> list[float]:
+def parse_scales(raw_scales: str | None) -> list[float] | None:
+    if raw_scales is None:
+        return None
     values = ast.literal_eval(raw_scales)
     if not isinstance(values, list):
         raise ValueError("--slo-scales must be a Python list")
@@ -78,65 +73,181 @@ def parse_scales(raw_scales: str) -> list[float]:
     return scales
 
 
-def sweep_one_case(
-    backend: str,
-    model: str,
-    rate: str,
-    benchmark_file: Path,
-    simulator_file: Path,
+def parse_scale_from_label(label: str) -> float:
+    return float(label.replace("p", "."))
+
+
+def infer_scale(
+    thresholds: dict[str, float] | None,
+    scale_label: str | None,
     base_prefill_slo: float,
     base_decode_slo: float,
     base_total_slo: float,
-    scales: list[float],
+) -> float:
+    if scale_label is not None:
+        return parse_scale_from_label(scale_label)
+
+    ratios: list[float] = []
+    if thresholds:
+        if base_prefill_slo > 0:
+            ratios.append(thresholds["prefill"] / base_prefill_slo)
+        if base_decode_slo > 0:
+            ratios.append(thresholds["decode"] / base_decode_slo)
+        if base_total_slo > 0:
+            ratios.append(thresholds["total"] / base_total_slo)
+    if ratios:
+        return float(sum(ratios) / len(ratios))
+    if scale_label is None:
+        raise ValueError("Unable to infer SLO scale from comparison data.")
+    return parse_scale_from_label(scale_label)
+
+
+def parse_comparison_txt(filepath: Path) -> dict:
+    results = {metric_label: None for _, metric_label in METRICS}
+    thresholds = None
+
+    with open(filepath, "r", encoding="utf-8") as f:
+        for line in f:
+            if thresholds is None:
+                match = THRESHOLD_RE.search(line)
+                if match:
+                    thresholds = {
+                        "prefill": float(match.group(1)),
+                        "decode": float(match.group(2)),
+                        "total": float(match.group(3)),
+                    }
+
+            for _, metric_label in METRICS:
+                if metric_label not in line:
+                    continue
+                percents = re.findall(r"(\d+\.?\d*)%", line)
+                if len(percents) < 2:
+                    continue
+                benchmark = float(percents[0])
+                simulator = float(percents[1])
+                results[metric_label] = {
+                    "benchmark": benchmark,
+                    "simulator": simulator,
+                    "gap": benchmark - simulator,
+                }
+                break
+
+    missing_metrics = [label for _, label in METRICS if results[label] is None]
+    if missing_metrics:
+        raise ValueError(f"Missing metrics in {filepath}: {', '.join(missing_metrics)}")
+
+    return {
+        "thresholds": thresholds,
+        "metrics": results,
+    }
+
+
+def matches_requested_scale(scale: float, requested_scales: list[float] | None) -> bool:
+    if requested_scales is None:
+        return True
+    return any(abs(scale - requested) <= 1e-9 for requested in requested_scales)
+
+
+def load_summary_from_comparisons(
+    backend: str,
+    model: str,
+    rate: str,
+    compared_root: Path,
+    base_prefill_slo: float,
+    base_decode_slo: float,
+    base_total_slo: float,
+    requested_scales: list[float] | None,
 ) -> dict:
-    summary = {
+    if not compared_root.exists():
+        raise FileNotFoundError(f"Compared root not found: {compared_root}")
+
+    points: list[dict] = []
+
+    scale_dirs = sorted(
+        path for path in compared_root.iterdir()
+        if path.is_dir() and path.name.startswith("scale_")
+    )
+    if scale_dirs:
+        for scale_dir in scale_dirs:
+            comparison_path = scale_dir / "comparison.txt"
+            if not comparison_path.exists():
+                continue
+            scale_label = scale_dir.name.removeprefix("scale_")
+            parsed = parse_comparison_txt(comparison_path)
+            scale = infer_scale(
+                parsed["thresholds"],
+                scale_label,
+                base_prefill_slo,
+                base_decode_slo,
+                base_total_slo,
+            )
+            if not matches_requested_scale(scale, requested_scales):
+                continue
+            points.append(
+                {
+                    "scale": scale,
+                    "comparison_file": str(comparison_path),
+                    "thresholds": parsed["thresholds"],
+                    "metrics": {
+                        metric_key: parsed["metrics"][metric_label]
+                        for metric_key, metric_label in METRICS
+                    },
+                }
+            )
+    else:
+        comparison_path = compared_root / "comparison.txt"
+        if not comparison_path.exists():
+            raise FileNotFoundError(
+                f"No per-scale comparison outputs found under {compared_root}"
+            )
+        parsed = parse_comparison_txt(comparison_path)
+        scale = infer_scale(
+            parsed["thresholds"],
+            "1p0",
+            base_prefill_slo,
+            base_decode_slo,
+            base_total_slo,
+        )
+        if matches_requested_scale(scale, requested_scales):
+            points.append(
+                {
+                    "scale": scale,
+                    "comparison_file": str(comparison_path),
+                    "thresholds": parsed["thresholds"],
+                    "metrics": {
+                        metric_key: parsed["metrics"][metric_label]
+                        for metric_key, metric_label in METRICS
+                    },
+                }
+            )
+
+    if not points:
+        raise ValueError(f"No comparison points matched under {compared_root}")
+
+    points.sort(key=lambda point: point["scale"])
+
+    metric_summary = {}
+    for metric_key, _ in METRICS:
+        gaps = [abs(point["metrics"][metric_key]["gap"]) for point in points]
+        metric_summary[metric_key] = {
+            "mean_abs_gap": float(np.mean(gaps)),
+            "max_abs_gap": float(np.max(gaps)),
+        }
+
+    return {
         "backend": backend,
         "model": model,
         "rate": rate,
-        "benchmark_file": str(benchmark_file),
-        "simulator_file": str(simulator_file),
+        "compared_root": str(compared_root),
         "base_slos": {
             "prefill": base_prefill_slo,
             "decode": base_decode_slo,
             "total": base_total_slo,
         },
-        "scales": scales,
-        "points": [],
+        "scales": [point["scale"] for point in points],
+        "points": points,
+        "metric_summary": metric_summary,
     }
-
-    for scale in scales:
-        prefill_slo = base_prefill_slo * scale
-        decode_slo = base_decode_slo * scale
-        total_slo = base_total_slo * scale
-
-        if backend == "vllm_ascend":
-            exp_stats, _ = analyze_json(str(benchmark_file), prefill_slo, decode_slo, total_slo)
-        else:
-            exp_stats, _ = analyze_exp(str(benchmark_file), prefill_slo, decode_slo, total_slo)
-        csv_stats, _ = analyze_csv(str(simulator_file), prefill_slo, decode_slo, total_slo)
-
-        point = {
-            "scale": scale,
-            "metrics": {},
-        }
-        for metric_key, _, stats_key in METRICS:
-            point["metrics"][metric_key] = {
-                "benchmark": exp_stats[stats_key],
-                "simulator": csv_stats[stats_key],
-                "gap": exp_stats[stats_key] - csv_stats[stats_key],
-        }
-        summary["points"].append(point)
-
-    metric_summary = {}
-    for metric_key, _, _ in METRICS:
-        gaps = [abs(point["metrics"][metric_key]["gap"]) for point in summary["points"]]
-        metric_summary[metric_key] = {
-            "mean_abs_gap": float(np.mean(gaps)),
-            "max_abs_gap": float(np.max(gaps)),
-        }
-    summary["metric_summary"] = metric_summary
-
-    return summary
 
 
 def style_axis(ax):
@@ -160,7 +271,7 @@ def plot_summary(summary: dict, model: str, rate: str, output_path: Path) -> Non
     fig.text(
         0.5,
         0.945,
-        "Actual benchmark vs simulator prediction across SLO scales",
+        "Actual benchmark vs simulator prediction from saved comparison reports",
         ha="center",
         va="center",
         fontsize=10,
@@ -170,7 +281,7 @@ def plot_summary(summary: dict, model: str, rate: str, output_path: Path) -> Non
     scales = np.array(summary["scales"], dtype=float)
     axes = axes.flatten()
 
-    for idx, (metric_key, title, _) in enumerate(METRICS):
+    for idx, (metric_key, title) in enumerate(METRICS):
         ax = axes[idx]
         style_axis(ax)
         benchmark = np.array(
@@ -245,11 +356,17 @@ def plot_summary(summary: dict, model: str, rate: str, output_path: Path) -> Non
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Sweep SLO scales for one fixed (backend, model, rate) case and plot the result."
+        description="Plot SLO-scale curves directly from saved comparison.txt files."
     )
     parser.add_argument("--backend", choices=["distserve_cuda", "vllm_ascend"], required=True)
     parser.add_argument("--model", required=True, help="Model alias such as llama_1B, llama_3B, llama_7B, llama_8B")
     parser.add_argument("--rate", required=True, help="Specific rate to evaluate, for example 1 or 2.5")
+    parser.add_argument(
+        "--compared-root",
+        type=Path,
+        default=None,
+        help="Optional override for the compared/<model>/rate_<rate> directory.",
+    )
     parser.add_argument("--prefill-slo", type=float, default=1.0)
     parser.add_argument("--decode-slo", type=float, default=1.0)
     parser.add_argument("--total-slo", type=float, default=1.0)
@@ -257,6 +374,7 @@ def parse_args() -> argparse.Namespace:
         "--slo-scales",
         type=str,
         default=str(DEFAULT_SLO_SCALES),
+        help="Optional list of scales to include. The script reads saved comparison files instead of recomputing.",
     )
     parser.add_argument(
         "--output-dir",
@@ -268,25 +386,18 @@ def parse_args() -> argparse.Namespace:
 
 def main() -> None:
     args = parse_args()
-    scales = parse_scales(args.slo_scales)
-    benchmark_file = benchmark_file_for(args.backend, args.model, args.rate)
-    simulator_file = simulator_file_for(args.backend, args.model, args.rate)
+    requested_scales = parse_scales(args.slo_scales)
+    compared_root = args.compared_root or compared_dir_for(args.backend, args.model, args.rate)
 
-    if not benchmark_file.exists():
-        raise FileNotFoundError(f"Benchmark file not found: {benchmark_file}")
-    if not simulator_file.exists():
-        raise FileNotFoundError(f"Simulator file not found: {simulator_file}")
-
-    summary = sweep_one_case(
+    summary = load_summary_from_comparisons(
         args.backend,
         args.model,
         args.rate,
-        benchmark_file,
-        simulator_file,
+        compared_root,
         args.prefill_slo,
         args.decode_slo,
         args.total_slo,
-        scales,
+        requested_scales,
     )
 
     case_output_dir = output_dir_for_case(args.output_dir, args.backend, args.model)

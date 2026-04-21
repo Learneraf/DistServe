@@ -39,40 +39,37 @@ import csv
 import argparse
 import os
 
-def analyze_exp(file_path, prefill_slo, decode_slo, total_slo):
-    """分析 .exp 文件，返回 (stats_dict, output_string)"""
-    with open(file_path, 'r') as f:
-        data = json.load(f)
 
+def analyze_request_trace_payload(data, prefill_slo, decode_slo, total_slo):
+    """Analyze request-trace payloads used by DistServe CUDA and Ascend vLLM `.exp` files."""
     total_requests = len(data)
     prefill_slo_met = 0
     decode_slo_met = 0
     total_slo_met = 0
     both_slo_met = 0
 
-    lines = []  # 收集输出行
+    lines = []
 
     for i, request in enumerate(data):
-        lifecycle_events = request['lifecycle_events']
-        context_begin = None
-        context_end = None
+        lifecycle_events = request.get('lifecycle_events') or []
         decoding_begin = None
         decoding_end = None
 
+        prefill_time = request.get('ftl', 0)
+        total_time = request['latency']
+        decode_time = None
+
         for event in lifecycle_events:
-            if event['event_type'] == 'context_begin':
-                context_begin = event['timestamp']
-            elif event['event_type'] == 'context_end':
-                context_end = event['timestamp']
-            elif event['event_type'] == 'decoding_begin':
+            if event['event_type'] == 'decoding_begin':
                 decoding_begin = event['timestamp']
             elif event['event_type'] == 'decoding_end':
                 decoding_end = event['timestamp']
 
-        # Compare against the same user-visible first-token latency that the simulator reports.
-        prefill_time = request.get('ftl', 0)
-        decode_time = decoding_end - decoding_begin if decoding_begin and decoding_end else 0
-        total_time = request['latency']
+        if decoding_begin is not None and decoding_end is not None:
+            decode_time = decoding_end - decoding_begin
+
+        if decode_time is None:
+            decode_time = max(total_time - prefill_time, 0)
 
         prefill_ok = prefill_time <= prefill_slo
         decode_ok = decode_time <= decode_slo
@@ -97,10 +94,10 @@ def analyze_exp(file_path, prefill_slo, decode_slo, total_slo):
         lines.append(f"  Both prefill and decode SLO met: {'✓' if both_ok else '✗'}")
         lines.append("")
 
-    prefill_slo_rate = prefill_slo_met / total_requests * 100
-    decode_slo_rate = decode_slo_met / total_requests * 100
-    total_slo_rate = total_slo_met / total_requests * 100
-    both_slo_rate = both_slo_met / total_requests * 100
+    prefill_slo_rate = prefill_slo_met / total_requests * 100 if total_requests else 0
+    decode_slo_rate = decode_slo_met / total_requests * 100 if total_requests else 0
+    total_slo_rate = total_slo_met / total_requests * 100 if total_requests else 0
+    both_slo_rate = both_slo_met / total_requests * 100 if total_requests else 0
 
     lines.append("=" * 60)
     lines.append("SLO Analysis Results")
@@ -125,11 +122,21 @@ def analyze_exp(file_path, prefill_slo, decode_slo, total_slo):
     }
     return stats, "\n".join(lines)
 
+def analyze_exp(file_path, prefill_slo, decode_slo, total_slo):
+    """分析 .exp 文件，返回 (stats_dict, output_string)"""
+    with open(file_path, 'r') as f:
+        data = json.load(f)
+
+    return analyze_request_trace_payload(data, prefill_slo, decode_slo, total_slo)
+
 # This function is for vllm-ascend benchmark
 def analyze_json(file_path, prefill_slo, decode_slo, total_slo):
     """分析 vLLM benchmark 输出的 JSON 文件（每个请求一次运行），返回 (stats_dict, output_string)"""
     with open(file_path, 'r') as f:
         data = json.load(f)
+
+    if isinstance(data, list):
+        return analyze_request_trace_payload(data, prefill_slo, decode_slo, total_slo)
 
     # 提取数组
     input_lens = data.get('input_lens', [])

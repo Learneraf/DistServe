@@ -1,0 +1,122 @@
+{
+    "/users/rh/.cache/modelscope/hub/models/LLM-Research/Llama-3.2-1B/converted_bin_v2": {
+        "1": {
+            "decoding_large_small_bs_threshold": 95,
+            "prefill": [
+                13.448692899242328,
+                -0.008517113257218316,
+                4.9455376603979454e-05
+            ],
+            "decoding_smallbs": [
+                8.295979648854072,
+                0.0014697067598595833,
+                -0.7986128240424499
+            ],
+            "decoding_largebs": []
+        },
+        "2": {
+            "decoding_large_small_bs_threshold": 95,
+            "prefill": [
+                15.632214635901006,
+                0.00719667372164449,
+                4.6605342418226394e-05
+            ],
+            "decoding_smallbs": [
+                8.330771782561454,
+                0.0015572363745873345,
+                -0.7325287428703983
+            ],
+            "decoding_largebs": []
+        }
+    },
+    "/users/rh/.cache/modelscope/hub/models/LLM-Research/Llama-3.2-3B/converted_bin_v2": {
+        "1": {
+            "decoding_large_small_bs_threshold": 95,
+            "prefill": [
+                31.536013836460956,
+                -0.03180564767449298,
+                0.00019787513375593032
+            ],
+            "decoding_smallbs": [
+                16.71609016725927,
+                0.0058979579967777624,
+                -1.7887577437616067
+            ],
+            "decoding_largebs": []
+        },
+        "2": {
+            "decoding_large_small_bs_threshold": 95,
+            "prefill": [
+                40.51806031477112,
+                0.011632388587263082,
+                0.00014548476996638964
+            ],
+            "decoding_smallbs": [
+                17.821145331013962,
+                0.00436371001580914,
+                -2.147674403797342
+            ],
+            "decoding_largebs": []
+        }
+    },
+    "/users/rh/.cache/modelscope/hub/models/LLM-Research/Meta-Llama-3.1-8B/converted_bin_v2": {
+        "1": {
+            "decoding_large_small_bs_threshold": 95,
+            "prefill": [
+                47.80247291655827,
+                -0.02355576832300517,
+                0.0002448718969579881
+            ],
+            "decoding_smallbs": [
+                28.480763087621106,
+                0.005002795104919073,
+                -2.819607327086069
+            ],
+            "decoding_largebs": []
+        },
+        "2": {
+            "decoding_large_small_bs_threshold": 95,
+            "prefill": [
+                49.07783008804849,
+                0.040228028309189055,
+                0.00018847634439486902
+            ],
+            "decoding_smallbs": [
+                23.41821529613549,
+                0.0050374858928588125,
+                -2.5196561415652887
+            ],
+            "decoding_largebs": []
+        }
+    },
+    "/users/rh/.cache/modelscope/hub/models/LLM-Research/llama-2-7b/converted_bin_v2": {
+        "1": {
+            "decoding_large_small_bs_threshold": 95,
+            "prefill": [
+                4.934920532025255,
+                0.0639705929178333,
+                4.7865509398653425e-06
+            ],
+            "decoding_smallbs": [
+                14.397488263228539,
+                0.0005746576264797406,
+                -0.03541599448233168
+            ],
+            "decoding_largebs": []
+        },
+        "2": {
+            "decoding_large_small_bs_threshold": 95,
+            "prefill": [
+                6.352783135217053,
+                0.12145195414743894,
+                1.7860361759755242e-06
+            ],
+            "decoding_smallbs": [
+                11.09487139195478,
+                0.0004977057936746102,
+                -0.013493153202505482
+            ],
+            "decoding_largebs": []
+        }
+    }
+}

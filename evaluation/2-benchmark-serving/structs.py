@@ -1,6 +1,7 @@
 import dataclasses
 from typing import List
 import marshal
+import json
 
 @dataclasses.dataclass
 class TestRequest:
@@ -29,16 +30,60 @@ class Dataset:
     
     @staticmethod
     def load(input_path: str):
-        loaded_data = marshal.load(open(input_path, "rb"))
-        return Dataset(
-            loaded_data["dataset_name"],
-            [TestRequest(req[0], req[1], req[2]) for req in loaded_data["reqs"]]
-        )
+        try:
+            with open(input_path, "rb") as f:
+                loaded_data = marshal.load(f)
+            return Dataset(
+                loaded_data["dataset_name"],
+                [TestRequest(req[0], req[1], req[2]) for req in loaded_data["reqs"]]
+            )
+        except (ValueError, EOFError, TypeError):
+            pass
+
+        with open(input_path, "r", encoding="utf-8") as f:
+            raw_text = f.read().strip()
+
+        if not raw_text:
+            raise ValueError(f"Dataset file is empty: {input_path}")
+
+        try:
+            if raw_text[0] == "[":
+                items = json.loads(raw_text)
+            else:
+                items = [
+                    json.loads(line)
+                    for line in raw_text.splitlines()
+                    if line.strip()
+                ]
+        except json.JSONDecodeError as exc:
+            raise ValueError(
+                f"Unsupported dataset format for {input_path}. "
+                "Expected a marshal .ds file or JSON/JSONL records with "
+                "`prompt`, `prompt_len`, and `output_len`/`output_tokens`."
+            ) from exc
+
+        reqs: List[TestRequest] = []
+        for item in items:
+            if not isinstance(item, dict):
+                raise ValueError(
+                    f"Unsupported JSON dataset item in {input_path}: {type(item).__name__}"
+                )
+
+            prompt = item.get("prompt")
+            prompt_len = item.get("prompt_len")
+            output_len = item.get("output_len", item.get("output_tokens"))
+            if prompt is None or prompt_len is None or output_len is None:
+                raise ValueError(
+                    f"JSON dataset item in {input_path} is missing required keys. "
+                    "Expected `prompt`, `prompt_len`, and `output_len`/`output_tokens`."
+                )
+            reqs.append(TestRequest(prompt, int(prompt_len), int(output_len)))
+
+        return Dataset("jsonl", reqs)
         
 import dataclasses
 import numpy as np
 from typing import List
-import json
 
 from distserve.lifetime import LifetimeEvent, LifetimeEventType, json_decode_lifetime_events
 

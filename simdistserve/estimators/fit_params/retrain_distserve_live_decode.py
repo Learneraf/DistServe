@@ -4,12 +4,14 @@ Retrain DistServe decode parameters from real benchmark .exp files.
 
 This script reconstructs live decode rounds by clustering near-simultaneous token
 timestamps from the real DistServe benchmark results. It then fits a decode-round
-latency model using batch-state features:
+latency model in the legacy 3-parameter form:
 
     round_ms = A
-             + B * batch_size
-             + C * sum_current_context_len
-             + D * max_current_context_len
+             + B * total_tokens
+             + C * batch_size
+
+where `total_tokens = sum(current_context_len + 1)` for the active decode round,
+which matches the 3-coefficient runtime path used by `time_estimator.py`.
 
 The output JSON preserves the existing prefill fit and any untouched model/TP
 entries, while replacing TP=1 decode coefficients for the models that have
@@ -33,7 +35,7 @@ import numpy as np
 MODEL_ALIAS_TO_KEY = {
     "llama_1B": "/users/rh/.cache/modelscope/hub/models/LLM-Research/Llama-3.2-1B/converted_bin_v2",
     "llama_3B": "/users/rh/.cache/modelscope/hub/models/LLM-Research/Llama-3.2-3B/converted_bin_v2",
-    "llama_7B": "huggyllama/llama-7b",
+    "llama_7B": "/users/rh/.cache/modelscope/hub/models/LLM-Research/llama-2-7b/converted_bin_v2",
     "llama_8B": "/users/rh/.cache/modelscope/hub/models/LLM-Research/Meta-Llama-3.1-8B/converted_bin_v2",
 }
 
@@ -152,7 +154,7 @@ def cluster_events_into_rounds(
     return round_samples
 
 
-def fit_relative_error_linear_model(samples: list[RoundSample]) -> tuple[list[float], dict[str, float]]:
+def fit_relative_error_three_param_model(samples: list[RoundSample]) -> tuple[list[float], dict[str, float]]:
     if not samples:
         raise ValueError("No samples to fit.")
 
@@ -164,9 +166,8 @@ def fit_relative_error_linear_model(samples: list[RoundSample]) -> tuple[list[fl
     for sample in samples:
         row = [
             1.0,
+            float(sample.sum_context_len + sample.batch_size),
             float(sample.batch_size),
-            float(sample.sum_context_len),
-            float(sample.max_context_len),
         ]
         duration = max(sample.duration_ms, 1e-6)
         design_matrix.append([value / duration for value in row])
@@ -261,7 +262,7 @@ def main() -> None:
         "--decode-large-small-bs-threshold",
         type=int,
         default=95,
-        help="Batch-size threshold used to split small/large decode fits.",
+        help="Threshold retained for JSON compatibility. Large-batch coefficients fall back to the same fit.",
     )
     parser.add_argument(
         "--rounds-csv",
@@ -312,35 +313,16 @@ def main() -> None:
             print(f"Skipping {model_key}: TP=1 missing in base profile")
             continue
 
-        small_bs_samples = [sample for sample in samples if sample.batch_size < threshold]
-        large_bs_samples = [sample for sample in samples if sample.batch_size >= threshold]
-
         print(f"\nModel: {model_key}")
         print(f"  total reconstructed rounds: {len(samples)}")
-        print(f"  small-batch rounds: {len(small_bs_samples)}")
-        print(f"  large-batch rounds: {len(large_bs_samples)}")
 
         tp_profile = base_profile[model_key]["1"]
-
-        if small_bs_samples:
-            small_coeffs, small_metrics = fit_relative_error_linear_model(small_bs_samples)
-            tp_profile["decoding_smallbs"] = small_coeffs
-            print(f"  small-batch coeffs: {small_coeffs}")
-            print(f"  small-batch fit: {small_metrics}")
-        else:
-            print("  small-batch coeffs unchanged: no samples")
-
-        if large_bs_samples:
-            large_coeffs, large_metrics = fit_relative_error_linear_model(large_bs_samples)
-            tp_profile["decoding_largebs"] = large_coeffs
-            print(f"  large-batch coeffs: {large_coeffs}")
-            print(f"  large-batch fit: {large_metrics}")
-        else:
-            if not tp_profile.get("decoding_largebs"):
-                tp_profile["decoding_largebs"] = tp_profile.get("decoding_smallbs", [])
-            print("  large-batch coeffs fallback to small-batch fit: no samples")
-
+        coeffs, metrics = fit_relative_error_three_param_model(samples)
+        tp_profile["decoding_smallbs"] = coeffs
+        tp_profile["decoding_largebs"] = coeffs
         tp_profile["decoding_large_small_bs_threshold"] = threshold
+        print(f"  coeffs: {coeffs}")
+        print(f"  fit: {metrics}")
 
     args.output.parent.mkdir(parents=True, exist_ok=True)
     with open(args.output, "w") as f:

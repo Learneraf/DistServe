@@ -47,6 +47,26 @@ MODEL_TO_PARALLEL_PARAMS = {
         "deepspeed": 8,
         "distserve": (3, 3, 4, 3)
     },
+    "/users/rh/.cache/modelscope/hub/models/LLM-Research/llama-2-7b/converted_bin_v2": {
+        "vllm": 1,
+        "deepspeed": 1,
+        "distserve": (1, 1, 1, 1)
+    },
+    "/users/rh/.cache/modelscope/hub/models/LLM-Research/Llama-3.2-1B/converted_bin_v2": {
+        "vllm": 1,
+        "deepspeed": 1,
+        "distserve": (1, 1, 1, 1)
+    },
+    "/users/rh/.cache/modelscope/hub/models/LLM-Research/Llama-3.2-3B/converted_bin_v2": {
+        "vllm": 1,
+        "deepspeed": 1,
+        "distserve": (1, 1, 1, 1)
+    },
+    "/users/rh/.cache/modelscope/hub/models/LLM-Research/Meta-Llama-3.1-8B/converted_bin_v2": {
+        "vllm": 1,
+        "deepspeed": 1,
+        "distserve": (1, 1, 1, 1)
+    },
 }
 
 def api_server_starter_routine(

@@ -60,3 +60,26 @@ In the high level, our simulator is composed of the following core components (u
 - `Cluster`: The cluster is just a wrapper around the workers and scheduler. `DisaggCluster` and `VLLMCluster` are the available options to choose from.
 
 On top of the core components, we implement the placement algorithm mentioned in our paper that searches for the optimal parallelism configuration. It utilizes a binary search algorithm that tries to find the optimal placement strategy that maximizes the per-GPU goodput.
+
+## Small Runnable Examples
+
+If you want a smaller place to start than `python -m simdistserve.simulate`, there are self-contained learning
+examples under `simdistserve/examples`.
+
+From the repo root:
+
+```bash
+cd /users/rh/DistServe
+python -m simdistserve.examples.basic_lifecycle
+python -m simdistserve.examples.continuous_batching
+python -m simdistserve.examples.chunked_prefill
+python -m simdistserve.examples.pipeline_parallelism
+python -m simdistserve.examples.worker_mechanics_trace
+python -m simdistserve.examples.compare_arrival_patterns
+python -m simdistserve.examples.arrival_sweep
+```
+
+Those examples avoid the external workload dataset path and instead build tiny request lists directly from
+`(prefill_tokens, output_tokens)` pairs, which makes it easier to inspect request events, worker batches, and SLO
+attainment behavior. In this repo snapshot, the available profiled models differ by backend, so the example defaults are
+backend-specific. See `simdistserve/examples/README.md` for a short feature-support matrix and caveats.

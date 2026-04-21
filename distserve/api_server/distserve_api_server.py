@@ -33,8 +33,8 @@ python -m distserve.api_server.distserve_api_server \
     --use-dummy-weights \
     --host 127.0.0.1 \
     --port 8400 \
-    --model huggyllama/llama-7b \
-    --tokenizer huggyllama/llama-7b \
+    --model /users/rh/.cache/modelscope/hub/models/LLM-Research/Meta-Llama-3.1-8B/converted_bin_v2 \
+    --tokenizer /users/rh/.cache/modelscope/hub/models/LLM-Research/Meta-Llama-3.1-8B/converted_bin_v2 \
     --context-tensor-parallel-size 1 \
     --context-pipeline-parallel-size 1 \
     --decoding-tensor-parallel-size 1 \
@@ -151,12 +151,19 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--host", type=str, default="localhost")
     parser.add_argument("--port", type=int, default=8000)
+    parser.add_argument(
+        "--ray-temp-dir",
+        type=str,
+        default=os.environ.get("DISTSERVE_RAY_TEMP_DIR", "/users/rh/tmp/ray_distserve_api"),
+        help="Temp directory for a fresh local Ray runtime.",
+    )
     
     distserve.engine.add_engine_cli_args(parser)
     args = parser.parse_args()
     
     set_random_seed(args.seed)
-    ray.init()
+    os.makedirs(args.ray_temp_dir, exist_ok=True)
+    ray.init(address="local", ignore_reinit_error=True, _temp_dir=args.ray_temp_dir)
     
     engine = AsyncLLM.from_engine_args(args)
 

@@ -10,6 +10,18 @@ Each panel shows:
     - Simulator prediction line
     - Shaded absolute-gap band
     - Mean/max absolute gap summary
+
+Usage:
+
+VLLM Side:
+python ./visualize_slo.py \
+    --input_dir "./results/slo/vllm_ascend/compared/" \
+    --output_dir "./results/slo/vllm_ascend/plots/"
+
+CUDA Side:
+python ./visualize_slo.py \
+    --input_dir "./results/slo/distserve_cuda/compared/" \
+    --output_dir "./results/slo/distserve_cuda/plots/"
 """
 
 import os

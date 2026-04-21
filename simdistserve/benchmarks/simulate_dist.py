@@ -32,6 +32,12 @@ from simdistserve.constants import ModelTypes
 from simdistserve.estimators.memory_estimator import get_max_num_tokens, is_model_runnable
 
 
+# VLLM_ASCEND_HANDOFF_DELAY_MS = 65.40447611397082
+# VLLM_ASCEND_HANDOFF_DELAY_PER_TOKEN_MS = 0.09436758011886258
+VLLM_ASCEND_HANDOFF_DELAY_MS = 0
+VLLM_ASCEND_HANDOFF_DELAY_PER_TOKEN_MS = 0
+
+
 def parse_args(args_=None):
     parser = argparse.ArgumentParser(description='Simulation: vLLM, DistServe')
     parser.add_argument('--backend', type=str, default='distserve',
@@ -84,6 +90,34 @@ def parse_args(args_=None):
                         help='Target latency for decode')
     parser.add_argument('--verbose', action='store_true', default=False,
                         help='Print verbose output')
+    parser.add_argument(
+        '--handoff-delay-ms',
+        type=float,
+        default=None,
+        help=('Fixed prefill-to-decode handoff delay in ms for disaggregated backends. '
+              f'Defaults to {VLLM_ASCEND_HANDOFF_DELAY_MS:.6f} for vllm_ascend and 0 otherwise.'),
+    )
+    parser.add_argument(
+        '--handoff-delay-per-token-ms',
+        type=float,
+        default=None,
+        help=('Additional handoff delay per live token at transfer time. '
+              f'Defaults to {VLLM_ASCEND_HANDOFF_DELAY_PER_TOKEN_MS:.6f} for vllm_ascend and 0 otherwise.'),
+    )
+    parser.add_argument(
+        '--handoff-capacity',
+        type=int,
+        default=1,
+        help='Maximum number of concurrent handoffs in the simulated cluster.',
+    )
+    parser.add_argument(
+        '--prefill-first-token-visible-immediately',
+        action=argparse.BooleanOptionalAction,
+        default=None,
+        help=('Whether a first token generated during prefill is immediately visible '
+              'to the user before the handoff completes. Defaults to false for '
+              'vllm_ascend and true otherwise.'),
+    )
 
     args = parser.parse_args(args=args_)
 
@@ -102,7 +136,16 @@ def check_dataset_existence(x):
     return
 
 
-def load_workload(workload, N, rate, cv, seed, process: Literal["fixed", "gamma"], model_path: str, do_sample=False):
+def load_workload(
+    workload,
+    N,
+    rate,
+    cv,
+    seed,
+    process: Literal["fixed", "gamma", "custom"],
+    model_path: str,
+    do_sample=False,
+):
     random.seed(seed)
     np.random.seed(seed)
 
@@ -162,21 +205,42 @@ def load_workload(workload, N, rate, cv, seed, process: Literal["fixed", "gamma"
             prefill_len = req.prompt_len
             print(f"Warning: Request {i} missing 'prompt' attribute, falling back to prompt_len={prefill_len}")
 
+        if isinstance(req, dict):
+            output_len = req.get("output_len", req.get("output_tokens"))
+            if output_len is None:
+                raise ValueError(
+                    f"Custom workload request {i} must provide either 'output_len' or 'output_tokens'."
+                )
+        else:
+            output_len = req.output_len
+
         requests.append(
             Request(
                 env=None,
                 req_id=i,
+                source_index=(int(req["source_index"]) if isinstance(req, dict) and req.get("source_index") is not None else i),
                 prefill_length=prefill_len,
-                output_lens=req.output_len if isinstance(req, TestRequest) else req["output_tokens"],
+                output_lens=output_len,
             )
         )
 
+    request_count = len(sampled_test_requests)
+
     # 生成到达间隔（与原逻辑相同）
-    if process == 'fixed':
+    if process == 'custom':
+        start_times = []
+        for i, req in enumerate(sampled_test_requests):
+            if not isinstance(req, dict) or req.get("start_time") is None:
+                raise ValueError(
+                    f"Custom workload request {i} must provide 'start_time' when --arrival custom is used."
+                )
+            start_times.append(float(req["start_time"]))
+        arrival = convert_absolutearrival_to_interarrival(start_times)
+    elif process == 'fixed':
         delay = 1 / rate * 1000  # ms
-        arrival = get_fixed_interarrival(N, delay)
+        arrival = get_fixed_interarrival(request_count, delay)
     else:
-        arrival = get_gamma_interarrival(N, rate, cv, seed=seed)
+        arrival = get_gamma_interarrival(request_count, rate, cv, seed=seed)
 
     print(f"First {10} requests: {requests[:10]}")
     print(f"First {10} arrivals: {arrival[:10]}")
@@ -224,6 +288,18 @@ def main(args, outputs=None):
 
     # Setting the seed to sample request / process
     requests, arrival = load_workload(workload, N, rate, cv, seed, process, args.model, False)
+    N = len(requests)
+    handoff_delay_ms = args.handoff_delay_ms
+    if handoff_delay_ms is None:
+        handoff_delay_ms = VLLM_ASCEND_HANDOFF_DELAY_MS if args.backend == 'vllm_ascend' else 0.0
+    handoff_delay_per_token_ms = args.handoff_delay_per_token_ms
+    if handoff_delay_per_token_ms is None:
+        handoff_delay_per_token_ms = (
+            VLLM_ASCEND_HANDOFF_DELAY_PER_TOKEN_MS if args.backend == 'vllm_ascend' else 0.0
+        )
+    prefill_first_token_visible_immediately = args.prefill_first_token_visible_immediately
+    if prefill_first_token_visible_immediately is None:
+        prefill_first_token_visible_immediately = args.backend != 'vllm_ascend'
 
     # Run simulation
     env = simpy.Environment()
@@ -246,13 +322,17 @@ def main(args, outputs=None):
         worker_config = WorkerConfig(
             model_type=model_type,
             TP=TP_Prefill, TP_Prefill=TP_Prefill, TP_Decode=TP_Decode,
-            prefill_max_batch_size=10 ** 7,  # inf
+            prefill_max_batch_size=10 ** 7,
             decode_max_batch_size=10 ** 7,  # inf
             prefill_max_tokens=prefill_max_tokens,
             decode_max_tokens=decode_max_tokens,
             enable_chunked_prefill=False,
             engine_type=args.backend,
             prefill_generates_first_token=True,
+            handoff_delay_ms=handoff_delay_ms,
+            handoff_delay_per_token_ms=handoff_delay_per_token_ms,
+            handoff_capacity=args.handoff_capacity,
+            prefill_first_token_visible_immediately=prefill_first_token_visible_immediately,
         )
 
         cluster = DisaggCluster(
@@ -269,6 +349,10 @@ def main(args, outputs=None):
             decode_max_tokens=decode_max_tokens,
             enable_chunked_prefill=False,
             engine_type=args.backend,
+            handoff_delay_ms=handoff_delay_ms,
+            handoff_delay_per_token_ms=handoff_delay_per_token_ms,
+            handoff_capacity=args.handoff_capacity,
+            prefill_first_token_visible_immediately=prefill_first_token_visible_immediately,
         )
 
         cluster = DisaggCluster(
@@ -294,6 +378,7 @@ def main(args, outputs=None):
     outputs['request_df'] = request_df
     outputs['request_event_df'] = request_event_df
     outputs['per_request_latency_df'] = per_request_latency_df
+    per_request_latency_export_df = per_request_latency_df.reset_index()
     if args.output_request_info:
         os.makedirs(os.path.dirname(args.output_request_info), exist_ok=True)
         with open(args.output_request_info, 'w') as f:
@@ -305,7 +390,7 @@ def main(args, outputs=None):
     if args.output_request_latency:
         os.makedirs(os.path.dirname(args.output_request_latency), exist_ok=True)
         with open(args.output_request_latency, 'w') as f:
-            per_request_latency_df.to_csv(f, index=False)
+            per_request_latency_export_df.to_csv(f, index=False)
 
     columns = [
         "backend", "model_type", "pd", "rate", "target", "attainment",

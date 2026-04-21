@@ -1,14 +1,29 @@
 backend,model_type,pd,rate,target,attainment,tp_prefill,pp_prefill,tp_decode,pp_decode
-distserve,LLAMA-3.1-8B,prefill,1.5,200.0,33.0,1,1,1,1
+distserve,LLAMA-3.1-8B,prefill,1.5,40.0,0.0,1,1,1,1
+distserve,LLAMA-3.1-8B,decode,1.5,20.0,0.0,1,1,1,1
+distserve,LLAMA-3.1-8B,both,1.5,"(40.0, 20.0)",0.0,1,1,1,1
+distserve,LLAMA-3.1-8B,prefill,1.5,80.0,0.8333333333333334,1,1,1,1
+distserve,LLAMA-3.1-8B,decode,1.5,40.0,19.166666666666668,1,1,1,1
+distserve,LLAMA-3.1-8B,both,1.5,"(80.0, 40.0)",0.8333333333333334,1,1,1,1
+distserve,LLAMA-3.1-8B,prefill,1.5,120.0,15.0,1,1,1,1
+distserve,LLAMA-3.1-8B,decode,1.5,60.0,59.166666666666664,1,1,1,1
+distserve,LLAMA-3.1-8B,both,1.5,"(120.0, 60.0)",15.0,1,1,1,1
+distserve,LLAMA-3.1-8B,prefill,1.5,160.0,27.500000000000004,1,1,1,1
+distserve,LLAMA-3.1-8B,decode,1.5,80.0,98.33333333333333,1,1,1,1
+distserve,LLAMA-3.1-8B,both,1.5,"(160.0, 80.0)",27.500000000000004,1,1,1,1
+distserve,LLAMA-3.1-8B,prefill,1.5,200.0,45.0,1,1,1,1
 distserve,LLAMA-3.1-8B,decode,1.5,100.0,100.0,1,1,1,1
-distserve,LLAMA-3.1-8B,both,1.5,"(200.0, 100.0)",33.0,1,1,1,1
-distserve,LLAMA-3.1-8B,prefill,1.5,803.3425636934343,85.0,1,1,1,1
-distserve,LLAMA-3.1-8B,decode,1.5,48.994854781498326,85.0,1,1,1,1
-distserve,LLAMA-3.1-8B,prefill,1.5,896.4635700390373,90.0,1,1,1,1
-distserve,LLAMA-3.1-8B,decode,1.5,49.11976670107979,90.0,1,1,1,1
-distserve,LLAMA-3.1-8B,prefill,1.5,985.0328511806662,95.0,1,1,1,1
-distserve,LLAMA-3.1-8B,decode,1.5,50.430431168045835,95.0,1,1,1,1
-distserve,LLAMA-3.1-8B,prefill,1.5,1117.030720941514,98.0,1,1,1,1
-distserve,LLAMA-3.1-8B,decode,1.5,50.76741932266759,98.0,1,1,1,1
-distserve,LLAMA-3.1-8B,prefill,1.5,1127.8799183871452,99.0,1,1,1,1
-distserve,LLAMA-3.1-8B,decode,1.5,51.07855112065101,99.0,1,1,1,1
+distserve,LLAMA-3.1-8B,both,1.5,"(200.0, 100.0)",45.0,1,1,1,1
+distserve,LLAMA-3.1-8B,prefill,1.5,240.0,60.83333333333333,1,1,1,1
+distserve,LLAMA-3.1-8B,decode,1.5,120.0,100.0,1,1,1,1
+distserve,LLAMA-3.1-8B,both,1.5,"(240.0, 120.0)",60.83333333333333,1,1,1,1
+distserve,LLAMA-3.1-8B,prefill,1.5,526.9116736977485,85.0,1,1,1,1
+distserve,LLAMA-3.1-8B,decode,1.5,72.75764267186673,85.0,1,1,1,1
+distserve,LLAMA-3.1-8B,prefill,1.5,597.0147824044985,90.0,1,1,1,1
+distserve,LLAMA-3.1-8B,decode,1.5,75.06060541083274,90.0,1,1,1,1
+distserve,LLAMA-3.1-8B,prefill,1.5,797.7753101718758,95.0,1,1,1,1
+distserve,LLAMA-3.1-8B,decode,1.5,78.2389625583674,95.0,1,1,1,1
+distserve,LLAMA-3.1-8B,prefill,1.5,1022.336656280784,98.0,1,1,1,1
+distserve,LLAMA-3.1-8B,decode,1.5,79.79620216284677,98.0,1,1,1,1
+distserve,LLAMA-3.1-8B,prefill,1.5,1088.295400832772,99.0,1,1,1,1
+distserve,LLAMA-3.1-8B,decode,1.5,80.95134230726454,99.0,1,1,1,1
