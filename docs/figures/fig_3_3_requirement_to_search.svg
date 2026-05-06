@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1020" height="360" viewBox="0 0 1020 360">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#333"/>
+    </marker>
+    <style>
+      .title { font: 700 22px Arial, sans-serif; fill: #1f2933; }
+      .label { font: 600 16px Arial, sans-serif; fill: #1f2933; }
+      .small { font: 14px Arial, sans-serif; fill: #3b4652; }
+      .box { fill: #f7f9fb; stroke: #334e68; stroke-width: 1.5; rx: 8; }
+      .data { fill: #eef7ff; stroke: #2f6fae; }
+      .model { fill: #fff7e8; stroke: #c96b26; }
+      .search { fill: #f3f0ff; stroke: #6b4fb5; }
+      .result { fill: #eef8ee; stroke: #4d8b57; }
+      .arrow { stroke: #333; stroke-width: 1.8; fill: none; marker-end: url(#arrow); }
+    </style>
+  </defs>
+
+  <text x="30" y="38" class="title">从系统需求到搜索结果</text>
+
+  <rect x="40" y="80" width="170" height="95" class="box data"/>
+  <text x="125" y="110" text-anchor="middle" class="label">输入配置</text>
+  <text x="125" y="135" text-anchor="middle" class="small">模型 / 工作负载</text>
+  <text x="125" y="157" text-anchor="middle" class="small">延迟目标 / 设备池</text>
+
+  <rect x="270" y="80" width="170" height="95" class="box model"/>
+  <text x="355" y="110" text-anchor="middle" class="label">时间模型</text>
+  <text x="355" y="135" text-anchor="middle" class="small">由实测数据拟合</text>
+  <text x="355" y="157" text-anchor="middle" class="small">预填充 / 解码</text>
+
+  <rect x="500" y="80" width="170" height="95" class="box search"/>
+  <text x="585" y="110" text-anchor="middle" class="label">并行配置评估</text>
+  <text x="585" y="135" text-anchor="middle" class="small">单实例能力</text>
+  <text x="585" y="157" text-anchor="middle" class="small">延迟目标下的有效吞吐</text>
+
+  <rect x="730" y="80" width="210" height="95" class="box search"/>
+  <text x="835" y="110" text-anchor="middle" class="label">资源分配器</text>
+  <text x="835" y="135" text-anchor="middle" class="small">实例数量</text>
+  <text x="835" y="157" text-anchor="middle" class="small">x_cc / x_ca / x_ac / x_aa</text>
+
+  <rect x="270" y="235" width="170" height="80" class="box data"/>
+  <text x="355" y="265" text-anchor="middle" class="label">拟合/验证数据检查</text>
+  <text x="355" y="290" text-anchor="middle" class="small">达标率误差</text>
+
+  <rect x="730" y="235" width="210" height="80" class="box result"/>
+  <text x="835" y="265" text-anchor="middle" class="label">输出结果</text>
+  <text x="835" y="290" text-anchor="middle" class="small">有效吞吐 / 资源分配 / 流量</text>
+
+  <path d="M 210 127 L 270 127" class="arrow"/>
+  <path d="M 440 127 L 500 127" class="arrow"/>
+  <path d="M 670 127 L 730 127" class="arrow"/>
+  <path d="M 835 175 L 835 235" class="arrow"/>
+  <path d="M 355 235 L 355 175" class="arrow"/>
+  <path d="M 440 275 C 560 275, 610 275, 730 275" class="arrow"/>
+
+  <text x="42" y="225" class="small">系统需求不只是把推理跑起来，</text>
+  <text x="42" y="245" class="small">还要找到满足延迟目标且有效吞吐更高的部署方案。</text>
+</svg>

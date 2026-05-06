@@ -148,7 +148,6 @@ def _build_cluster(env: simpy.Environment, config: ExampleConfig):
         enable_chunked_prefill=config.enable_chunked_prefill,
         decode_back_pressure=config.decode_back_pressure,
         engine_type=config.backend,
-        prefill_generates_first_token=(config.backend == "vllm_ascend"),
     )
     if config.backend != "vllm":
         if config.handoff_delay_ms is not None:

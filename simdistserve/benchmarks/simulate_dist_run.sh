@@ -12,14 +12,44 @@ SLO_SCALES_STR="${SLO_SCALES:-0.4 0.6 0.8 1.0 1.2}"
 NUM_REQUESTS="120"
 SEED="0"
 ARRIVAL="poisson"
-PYTHON_BIN="python3"
-RATES_STR="1 1.5 2 2.5 3 3.5 4"
+PYTHON_BIN="${PYTHON_BIN:-python3}"
+RATES_STR="${RATES:-1 1.5 2 2.5 3 3.5 4}"
 WORKLOAD_BASE="/users/rh/DistServe/simdistserve/dataset/splits/sharegpt_four_models_common_ascend1900_seed0"
-LATENCY_ROOT="/users/rh/DistServe/simdistserve/benchmarks/results/latency"
+LATENCY_ROOT="${LATENCY_ROOT:-/users/rh/DistServe/simdistserve/benchmarks/results/latency}"
+PREFILL_FIRST_TOKEN_VISIBLE_IMMEDIATELY="${PREFILL_FIRST_TOKEN_VISIBLE_IMMEDIATELY:-1}"
 
 read -r -a RATES <<< "$RATES_STR"
 read -r -a MODELS <<< "$MODELS_STR"
 SLO_SCALES_PY="[${SLO_SCALES_STR// /, }]"
+
+EXTRA_SIM_ARGS=()
+case "$PREFILL_FIRST_TOKEN_VISIBLE_IMMEDIATELY" in
+    1|true|TRUE|yes|YES)
+        EXTRA_SIM_ARGS+=(--prefill-first-token-visible-immediately)
+        ;;
+    0|false|FALSE|no|NO)
+        EXTRA_SIM_ARGS+=(--no-prefill-first-token-visible-immediately)
+        ;;
+    *)
+        echo "Error: invalid PREFILL_FIRST_TOKEN_VISIBLE_IMMEDIATELY='$PREFILL_FIRST_TOKEN_VISIBLE_IMMEDIATELY'" >&2
+        exit 1
+        ;;
+esac
+if [[ -n "${HANDOFF_DELAY_MS:-}" ]]; then
+    EXTRA_SIM_ARGS+=(--handoff-delay-ms "$HANDOFF_DELAY_MS")
+fi
+if [[ -n "${HANDOFF_DELAY_PER_TOKEN_MS:-}" ]]; then
+    EXTRA_SIM_ARGS+=(--handoff-delay-per-token-ms "$HANDOFF_DELAY_PER_TOKEN_MS")
+fi
+if [[ -n "${HANDOFF_CAPACITY:-}" ]]; then
+    EXTRA_SIM_ARGS+=(--handoff-capacity "$HANDOFF_CAPACITY")
+fi
+if [[ -n "${LATENCY_CALIBRATION_FILE:-}" ]]; then
+    EXTRA_SIM_ARGS+=(--latency-calibration-file "$LATENCY_CALIBRATION_FILE")
+fi
+if [[ -n "${FTL_OVERHEAD_MODEL_FILE:-}" ]]; then
+    EXTRA_SIM_ARGS+=(--ftl-overhead-model-file "$FTL_OVERHEAD_MODEL_FILE")
+fi
 
 declare -A WORKLOAD_MAP
 declare -A MODEL_PATH_MAP
@@ -38,12 +68,12 @@ case "$TYPE" in
     distserve_cuda)
         BACKEND="distserve"
         PROFILE_ENV="SIMDISTSERVE_DISTSERVE_PROFILE"
-        PROFILE_PATH="/users/rh/DistServe/simdistserve/estimators/profiled_data/distserve-cuda/ablation/fit_params_from_database.json"
+        PROFILE_PATH="${PROFILE_PATH:-/users/rh/DistServe/simdistserve/estimators/profiled_data/distserve-cuda/fit_params_live_5p4d.json}"
         ;;
     vllm_ascend)
         BACKEND="vllm_ascend"
         PROFILE_ENV="SIMDISTSERVE_VLLM_ASCEND_PROFILE"
-        PROFILE_PATH="/users/rh/DistServe/simdistserve/estimators/profiled_data/vllm-ascend/ablation/fit_params_live_5p4d_no_maxlen.json"
+        PROFILE_PATH="${PROFILE_PATH:-/users/rh/DistServe/simdistserve/estimators/profiled_data/vllm-ascend/fit_params_live_5p4d_filtered.json}"
         ;;
     *)
         echo "Error: Unsupported TYPE '$TYPE'. Use distserve_cuda or vllm_ascend."
@@ -82,7 +112,7 @@ for MODEL in "${MODELS[@]}"; do
             --slo-scales "$SLO_SCALES_PY" \
             --output-request-event "$OUTPUT_DIR/request_event.csv" \
             --output-request-info "$OUTPUT_DIR/request_info.csv" \
-            --prefill-first-token-visible-immediately
+            "${EXTRA_SIM_ARGS[@]}"
     done
 done
 

@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="780" height="430" viewBox="0 0 780 430">
+  <defs>
+    <style>
+      .title { font: 700 22px Arial, sans-serif; fill: #1f2933; }
+      .axis { font: 600 17px Arial, sans-serif; fill: #1f2933; }
+      .cellText { font: 700 24px Arial, sans-serif; fill: #1f2933; }
+      .desc { font: 14px Arial, sans-serif; fill: #3b4652; }
+      .cuda { fill: #e8f2ff; stroke: #2f6fae; stroke-width: 1.5; }
+      .ascend { fill: #fff0e4; stroke: #c96b26; stroke-width: 1.5; }
+      .cross { fill: #f3f0ff; stroke: #6b4fb5; stroke-width: 1.5; }
+      .same { fill: #f4faf4; stroke: #4d8b57; stroke-width: 1.5; }
+    </style>
+  </defs>
+
+  <text x="30" y="40" class="title">请求流向矩阵</text>
+  <text x="330" y="82" text-anchor="middle" class="axis">解码设备</text>
+  <text x="55" y="250" text-anchor="middle" class="axis" transform="rotate(-90 55 250)">预填充设备</text>
+
+  <rect x="180" y="100" width="210" height="55" class="cuda"/>
+  <text x="285" y="135" text-anchor="middle" class="axis">CUDA 解码</text>
+  <rect x="390" y="100" width="210" height="55" class="ascend"/>
+  <text x="495" y="135" text-anchor="middle" class="axis">Ascend 解码</text>
+
+  <rect x="90" y="155" width="90" height="110" class="cuda"/>
+  <text x="135" y="202" text-anchor="middle" class="axis">CUDA</text>
+  <text x="135" y="225" text-anchor="middle" class="axis">预填充</text>
+
+  <rect x="90" y="265" width="90" height="110" class="ascend"/>
+  <text x="135" y="312" text-anchor="middle" class="axis">Ascend</text>
+  <text x="135" y="335" text-anchor="middle" class="axis">预填充</text>
+
+  <rect x="180" y="155" width="210" height="110" class="same"/>
+  <text x="285" y="205" text-anchor="middle" class="cellText">x_cc</text>
+  <text x="285" y="232" text-anchor="middle" class="desc">CUDA 预填充 -> CUDA 解码</text>
+
+  <rect x="390" y="155" width="210" height="110" class="cross"/>
+  <text x="495" y="205" text-anchor="middle" class="cellText">x_ca</text>
+  <text x="495" y="232" text-anchor="middle" class="desc">CUDA 预填充 -> Ascend 解码</text>
+
+  <rect x="180" y="265" width="210" height="110" class="cross"/>
+  <text x="285" y="315" text-anchor="middle" class="cellText">x_ac</text>
+  <text x="285" y="342" text-anchor="middle" class="desc">Ascend 预填充 -> CUDA 解码</text>
+
+  <rect x="390" y="265" width="210" height="110" class="same"/>
+  <text x="495" y="315" text-anchor="middle" class="cellText">x_aa</text>
+  <text x="495" y="342" text-anchor="middle" class="desc">Ascend 预填充 -> Ascend 解码</text>
+
+  <text x="630" y="180" class="desc">同设备池流量</text>
+  <text x="630" y="200" class="desc">不需要跨池传输。</text>
+  <text x="630" y="250" class="desc">跨设备池流量</text>
+  <text x="630" y="270" class="desc">需要传输 KV cache。</text>
+  <text x="630" y="320" class="desc">总有效吞吐:</text>
+  <text x="630" y="340" class="desc">x_cc + x_ca + x_ac + x_aa</text>
+</svg>

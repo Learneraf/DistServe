@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="330" viewBox="0 0 980 330">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#333"/>
+    </marker>
+    <style>
+      .title { font: 700 22px Arial, sans-serif; fill: #1f2933; }
+      .label { font: 600 17px Arial, sans-serif; fill: #1f2933; }
+      .small { font: 14px Arial, sans-serif; fill: #3b4652; }
+      .box { fill: #f7f9fb; stroke: #334e68; stroke-width: 1.5; rx: 8; }
+      .cuda { fill: #e8f2ff; stroke: #2f6fae; }
+      .ascend { fill: #fff0e4; stroke: #c96b26; }
+      .handoff { fill: #f3f0ff; stroke: #6b4fb5; }
+      .arrow { stroke: #333; stroke-width: 1.8; fill: none; marker-end: url(#arrow); }
+    </style>
+  </defs>
+
+  <text x="30" y="38" class="title">分离式大模型推理流程</text>
+
+  <rect x="35" y="120" width="120" height="70" class="box"/>
+  <text x="95" y="150" text-anchor="middle" class="label">请求</text>
+  <text x="95" y="174" text-anchor="middle" class="small">输入长度 / 输出长度</text>
+
+  <rect x="230" y="70" width="180" height="85" class="box cuda"/>
+  <text x="320" y="102" text-anchor="middle" class="label">CUDA 预填充</text>
+  <text x="320" y="127" text-anchor="middle" class="small">影响首词延迟</text>
+
+  <rect x="230" y="180" width="180" height="85" class="box ascend"/>
+  <text x="320" y="212" text-anchor="middle" class="label">Ascend 预填充</text>
+  <text x="320" y="237" text-anchor="middle" class="small">设备能力不同</text>
+
+  <rect x="480" y="122" width="150" height="70" class="box handoff"/>
+  <text x="555" y="151" text-anchor="middle" class="label">KV 传输</text>
+  <text x="555" y="175" text-anchor="middle" class="small">受带宽限制</text>
+
+  <rect x="700" y="70" width="180" height="85" class="box cuda"/>
+  <text x="790" y="102" text-anchor="middle" class="label">CUDA 解码</text>
+  <text x="790" y="127" text-anchor="middle" class="small">影响每词生成时间</text>
+
+  <rect x="700" y="180" width="180" height="85" class="box ascend"/>
+  <text x="790" y="212" text-anchor="middle" class="label">Ascend 解码</text>
+  <text x="790" y="237" text-anchor="middle" class="small">逐词生成</text>
+
+  <rect x="910" y="120" width="55" height="70" class="box"/>
+  <text x="937" y="151" text-anchor="middle" class="label">响应</text>
+  <text x="937" y="175" text-anchor="middle" class="small">生成结果</text>
+
+  <path d="M 155 155 C 185 155, 190 112, 230 112" class="arrow"/>
+  <path d="M 155 155 C 185 155, 190 222, 230 222" class="arrow"/>
+  <path d="M 410 112 C 435 112, 450 157, 480 157" class="arrow"/>
+  <path d="M 410 222 C 435 222, 450 157, 480 157" class="arrow"/>
+  <path d="M 630 157 C 660 157, 670 112, 700 112" class="arrow"/>
+  <path d="M 630 157 C 660 157, 670 222, 700 222" class="arrow"/>
+  <path d="M 880 112 C 900 112, 900 155, 910 155" class="arrow"/>
+  <path d="M 880 222 C 900 222, 900 155, 910 155" class="arrow"/>
+
+  <text x="250" y="303" class="small">预填充和解码可以放在不同设备池上执行。</text>
+  <text x="250" y="323" class="small">搜索器会寻找满足延迟目标且有效吞吐更高的部署方案。</text>
+</svg>

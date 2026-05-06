@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="430" viewBox="0 0 1080 430">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#334155"/>
+    </marker>
+    <style>
+      .title { font: 700 22px Arial, sans-serif; fill: #1f2937; }
+      .label { font: 700 16px Arial, sans-serif; fill: #1f2937; }
+      .small { font: 14px Arial, sans-serif; fill: #334155; }
+      .tiny { font: 13px Arial, sans-serif; fill: #475569; }
+      .box { fill: #f8fafc; stroke: #334155; stroke-width: 1.4; rx: 8; }
+      .need { fill: #eef7ff; stroke: #2563eb; }
+      .module { fill: #fff7ed; stroke: #ea580c; }
+      .result { fill: #f0fdf4; stroke: #16a34a; }
+      .arrow { stroke: #334155; stroke-width: 1.8; fill: none; marker-end: url(#arrow); }
+    </style>
+  </defs>
+  <text x="34" y="40" class="title">第三章需求与第四章模块的对应关系</text>
+  <rect x="50" y="88" width="220" height="105" class="box need"/>
+  <text x="160" y="120" text-anchor="middle" class="label">系统输入需求</text>
+  <text x="160" y="148" text-anchor="middle" class="small">模型/工作负载</text>
+  <text x="160" y="170" text-anchor="middle" class="small">设备池/延迟目标</text>
+  <rect x="330" y="88" width="220" height="105" class="box module"/>
+  <text x="440" y="120" text-anchor="middle" class="label">实测数据采集</text>
+  <text x="440" y="148" text-anchor="middle" class="small">请求级延迟</text>
+  <text x="440" y="170" text-anchor="middle" class="small">日志/批处理轨迹</text>
+  <rect x="610" y="88" width="220" height="105" class="box module"/>
+  <text x="720" y="120" text-anchor="middle" class="label">服务能力建模</text>
+  <text x="720" y="148" text-anchor="middle" class="small">预填充公式</text>
+  <text x="720" y="170" text-anchor="middle" class="small">解码公式/单实例能力</text>
+  <rect x="330" y="265" width="220" height="105" class="box module"/>
+  <text x="440" y="297" text-anchor="middle" class="label">异构资源搜索</text>
+  <text x="440" y="325" text-anchor="middle" class="small">实例数量</text>
+  <text x="440" y="347" text-anchor="middle" class="small">请求流向/有效吞吐</text>
+  <rect x="610" y="265" width="220" height="105" class="box result"/>
+  <text x="720" y="297" text-anchor="middle" class="label">结果可视化</text>
+  <text x="720" y="325" text-anchor="middle" class="small">有效吞吐/SLO误差</text>
+  <text x="720" y="347" text-anchor="middle" class="small">资源分配/请求流向</text>
+  <rect x="885" y="176" width="150" height="105" class="box result"/>
+  <text x="960" y="209" text-anchor="middle" class="label">实验评估</text>
+  <text x="960" y="237" text-anchor="middle" class="small">验证效果</text>
+  <text x="960" y="259" text-anchor="middle" class="small">解释原因</text>
+  <path d="M 270 140 L 330 140" class="arrow"/>
+  <path d="M 550 140 L 610 140" class="arrow"/>
+  <path d="M 720 193 C 700 240, 610 286, 550 317" class="arrow"/>
+  <path d="M 550 317 L 610 317" class="arrow"/>
+  <path d="M 830 317 C 870 295, 900 270, 885 230" class="arrow"/>
+  <path d="M 830 140 C 900 145, 930 165, 945 176" class="arrow"/>
+</svg>

@@ -27,11 +27,17 @@ class WorkerConfig(TypedDict):
     enable_chunked_prefill: Optional[bool]  # Enable memory pressure simulation (default = False)
     decode_back_pressure: float  # Decode queue watermark that blocks more prefills (default = 0.9)
     engine_type: Literal["distserve", "vllm", "vllm_ascend"]  # Engine type for prefill/decode time calculation (default = "distserve")
-    prefill_generates_first_token: bool  # Whether prefill completes the first token for this backend.
+    prefill_generates_first_token: bool  # Deprecated: prefill always completes the first token.
     handoff_delay_ms: float  # Fixed transfer/control delay between prefill and decode readiness.
     handoff_delay_per_token_ms: float  # Additional transfer delay per live token at handoff.
     handoff_capacity: int  # Number of concurrent handoffs the cluster can sustain.
+    handoff_delays: dict  # Directional scheduler handoff delays.
+    ingress_delays: dict  # Directional scheduler ingress delays.
+    scheduler_type: str  # Scheduler implementation selected by cluster.
     prefill_first_token_visible_immediately: bool  # Whether prefill-generated first token is user-visible before handoff.
+    device_type: Optional[Literal["cuda", "ascend"]]
+    role: Optional[Literal["prefill", "decode"]]
+    instance_id: Optional[int]
 
     # TODO: Deprecated
     TP: Optional[int]  # Tensor parallelism (default = 1)
@@ -57,7 +63,10 @@ class Worker:
         decode_max_tokens=10 ** 7,
         decode_back_pressure: float = 0.9,
         engine_type: Literal["distserve", "vllm", "vllm_ascend"] = "distserve",
-        prefill_generates_first_token: bool = False,
+        prefill_generates_first_token: bool = True,
+        device_type: Optional[Literal["cuda", "ascend"]] = None,
+        role: Optional[Literal["prefill", "decode"]] = None,
+        instance_id: Optional[int] = None,
     ):
         self.env = env
         self.cluster = cluster  # Refer to the cluster of init.
@@ -98,12 +107,22 @@ class Worker:
         self.enable_chunked_prefill: bool = enable_chunked_prefill
         # Decode worker stop accepting incoming request when this is full.
         self.decode_back_pressure = decode_back_pressure
-        self.prefill_generates_first_token = prefill_generates_first_token
+        # All supported disaggregated backends generate the first token during
+        # prefill. Keep the constructor argument for compatibility, but do not
+        # let backend-specific configuration change this behavior.
+        self.prefill_generates_first_token = True
+        self.device_type = device_type
+        self.role = role
+        self.instance_id = instance_id
 
         self.prefill_queue: 'deque[Request]' = deque()
         self.decode_queue: 'deque[Request]' = deque()
         self._prefill_ips: int = 0  # Elements in progress for prefill
         self._decode_ips: int = 0  # Elements in progress for decode
+        self._executing_decode_tokens: int = 0
+        self.avg_prefill_time: float = 1.0
+        self.avg_tpot: float = 1.0
+        self._ema_alpha: float = 0.1
         self._wakeup_event = env.event()
         self.log: 'list[tuple[float, str, int, int, int, list[int], list[int]]]' = []
 
@@ -276,7 +295,7 @@ class Worker:
                 is_finished_one_round=self.is_last_in_pipeline,
                 wid=self.wid,
                 next_wid=next_wid,
-                generated_tokens=(1 if self.prefill_generates_first_token else 0),
+                generated_tokens=1,
                 first_token_visible=getattr(self.cluster, "prefill_first_token_visible_immediately", True),
             )
             if not self.is_last_in_pipeline or (item.remain_prefill_lens > 0):
@@ -344,16 +363,25 @@ class Worker:
             pp=self.cluster.PP_prefill,
             model_type=self.model_type, TP=self.TP_Prefill,
             prefill_len_list=[x.current_prefill_lens for x in prefill_items],
+            prefill_computed_before_list=[
+                x.prefill_lens - x.remain_prefill_lens - x.current_prefill_lens
+                for x in prefill_items
+            ],
+            prefill_total_len_list=[x.prefill_lens for x in prefill_items],
+            prefill_remaining_after_list=[x.remain_prefill_lens for x in prefill_items],
             engine_type=self.engine_type,
             # __prefill_reqs=prefill_items,
             # __decode_reqs=decode_reqs,
         )
         num_tokens = sum(x.current_context_len for x in (prefill_items + decode_reqs))
-        if self.is_first_in_pipeline and self.engine_type != "vllm_ascend":
+        if self.is_first_in_pipeline:
             delay += self.add_ray_overhead(num_tokens)
         # Set the number of prefills in progress such that the scheduler get proper information about the worker.
         self._prefill_ips = len(prefill_items)
         yield self.env.timeout(delay)
+        if prefill_items:
+            observed = delay / max(1, len(prefill_items))
+            self.avg_prefill_time = (1 - self._ema_alpha) * self.avg_prefill_time + self._ema_alpha * observed
         self._prefill_ips = 0
         self._exit_prefill(prefill_items)
         self._exit_decode(decode_reqs)
@@ -370,17 +398,26 @@ class Worker:
         input_lens = [req.prefill_lens for req in decode_reqs]
         output_lens = [req.output_lens for req in decode_reqs]
         current_context_lens = [req.current_context_len for req in decode_reqs]
+        first_decode_flags = [req.counter <= 1 for req in decode_reqs]
         delay = get_decode_time(batch_size, pp=self.cluster.PP_decode,
                                 model_type=self.model_type, TP=self.TP_Decode,
                                 token_generated_list=_token_generated_list,
                                 input_lens=input_lens,
                                 output_lens=output_lens,
                                 current_context_lens=current_context_lens,
+                                first_decode_flags=first_decode_flags,
                                 engine_type=self.engine_type, )
         num_tokens = sum(x.current_context_len for x in decode_reqs)
-        if self.is_first_in_pipeline and self.engine_type != "vllm_ascend":
+        if self.is_first_in_pipeline:
             delay += self.add_ray_overhead(num_tokens)
+        self._decode_ips = batch_size
+        self._executing_decode_tokens = sum(max(req.output_lens - max(req.counter, 0), 0) for req in decode_reqs)
         yield self.env.timeout(delay)
+        if batch_size > 0:
+            observed_tpot = delay / batch_size
+            self.avg_tpot = (1 - self._ema_alpha) * self.avg_tpot + self._ema_alpha * observed_tpot
+        self._decode_ips = 0
+        self._executing_decode_tokens = 0
         self._exit_decode(decode_reqs)
         return
 

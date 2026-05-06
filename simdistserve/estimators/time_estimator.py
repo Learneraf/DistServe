@@ -1,4 +1,5 @@
 import json
+import math
 import os
 from pathlib import Path
 
@@ -10,7 +11,7 @@ def load_distserve_profile_data():
     profile_data_path = os.environ.get("SIMDISTSERVE_DISTSERVE_PROFILE")
     if profile_data_path is None:
         preferred_paths = [
-            base_dir / "fit_params_live_cuda_data.json",
+            base_dir / "fit_params_live_5p4d.json",
             base_dir / "fit_params_live.json",
             base_dir / "fit_params_live_decode.json",
             base_dir / "fit_params.json",
@@ -24,10 +25,10 @@ def load_distserve_profile_data():
 
 
 def load_vllm_profile_data():
-    base_dir = Path(__file__).parent / "profiled_data"
+    base_dir = Path(__file__).parent / "profiled_data" / "distserve-cuda"
     profile_data_path = os.environ.get("SIMDISTSERVE_VLLM_PROFILE")
     if profile_data_path is None:
-        profile_data_path = base_dir / "profiler-a100-80g.vllm.json"
+        profile_data_path = base_dir / "fit_params_cuda_data_fit_5p4d_infer_batch.json"
     else:
         profile_data_path = Path(profile_data_path)
     with open(profile_data_path) as f:
@@ -40,7 +41,7 @@ def load_vllm_ascend_profile_data():
     profile_data_path = os.environ.get("SIMDISTSERVE_VLLM_ASCEND_PROFILE")
     if profile_data_path is None:
         preferred_paths = [
-            base_dir / "fit_params_live.json",
+            base_dir / "fit_params_live_5p4d_filtered.json",
             base_dir / "fit_params_all.json",
         ]
         profile_data_path = next(path for path in preferred_paths if path.exists())
@@ -54,7 +55,6 @@ def load_vllm_ascend_profile_data():
 distserve_profile_data = load_distserve_profile_data()
 vllm_profile_data = load_vllm_profile_data()
 vllm_ascend_profile_data = load_vllm_ascend_profile_data()
-
 
 def get_prefill_time(num_tokens=None, pp=1, bs=1, decode_bs=0, model_type=ModelTypes.opt_13b, TP=1,
                      prefill_len_list=None, engine_type="distserve", **kw):
@@ -162,7 +162,7 @@ def get_decode_time(num_requests, pp=1, model_type=ModelTypes.opt_13b, TP=1,
             coeffs = params["decoding_largebs"]
             if not coeffs:
                 coeffs = params["decoding_smallbs"]
-
+    
     if len(coeffs) == 3:
         a, b, c = coeffs
         num_total_tokens = sum(token_generated_list) if token_generated_list else 0
@@ -196,10 +196,8 @@ def get_decode_time(num_requests, pp=1, model_type=ModelTypes.opt_13b, TP=1,
         sum_context_len = sum(current_context_lens)
         max_context_len = max(current_context_lens) if current_context_lens else 0
         sum_remaining_output_tokens = sum(
-            max(output_len - (current_context_len - input_len), 0)
-            for input_len, output_len, current_context_len in zip(
-                input_lens, output_lens, current_context_lens
-            )
+            max(int(input_len) + int(output_len) - int(context_len), 0)
+            for input_len, output_len, context_len in zip(input_lens, output_lens, current_context_lens)
         )
         delay = (
             a

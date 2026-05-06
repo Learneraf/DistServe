@@ -35,7 +35,7 @@ python -m distserve.api_server.distserve_api_server \
     --port 8400 \
     --model /users/rh/.cache/modelscope/hub/models/LLM-Research/Meta-Llama-3.1-8B/converted_bin_v2 \
     --tokenizer /users/rh/.cache/modelscope/hub/models/LLM-Research/Meta-Llama-3.1-8B/converted_bin_v2 \
-    --context-tensor-parallel-size 1 \
+    --context-tensor-parallel-size 2 \
     --context-pipeline-parallel-size 1 \
     --decoding-tensor-parallel-size 1 \
     --decoding-pipeline-parallel-size 1 \

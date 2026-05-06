@@ -1,0 +1,152 @@
+{
+    "/users/rh/.cache/modelscope/hub/models/LLM-Research/Llama-3.2-1B/converted_bin_v2": {
+        "1": {
+            "block_size": 16,
+            "prefill": {
+                "features": [
+                    "constant",
+                    "batch_size",
+                    "sum_scheduled_tokens",
+                    "attention_work",
+                    "final_kv_blocks"
+                ],
+                "coeffs": [
+                    8.343739621845598,
+                    8.343739621911222,
+                    0.026857348761932586,
+                    -1.604263924861955e-05,
+                    0.026030164729552496
+                ]
+            },
+            "decoding_smallbs": {
+                "features": [
+                    "constant",
+                    "batch_size",
+                    "sum_context_len",
+                    "max_context_len"
+                ],
+                "coeffs": [
+                    2.998120768602535,
+                    0.033952347228519635,
+                    2.3291795925715812e-05,
+                    1.3699948335451958e-05
+                ]
+            },
+            "decoding_largebs": {
+                "features": [
+                    "constant",
+                    "batch_size",
+                    "sum_context_len",
+                    "max_context_len"
+                ],
+                "coeffs": [
+                    2.998120768602535,
+                    0.033952347228519635,
+                    2.3291795925715812e-05,
+                    1.3699948335451958e-05
+                ]
+            },
+            "decoding_large_small_bs_threshold": 95
+        }
+    },
+    "/users/rh/.cache/modelscope/hub/models/LLM-Research/Llama-3.2-3B/converted_bin_v2": {
+        "1": {
+            "block_size": 16,
+            "prefill": {
+                "features": [
+                    "constant",
+                    "batch_size",
+                    "sum_scheduled_tokens",
+                    "attention_work",
+                    "final_kv_blocks"
+                ],
+                "coeffs": [
+                    25.93386306519523,
+                    -4.0621474362892895,
+                    0.048464859242561366,
+                    -3.0121246212178736e-05,
+                    0.21228752670103002
+                ]
+            },
+            "decoding_smallbs": {
+                "features": [
+                    "constant",
+                    "batch_size",
+                    "sum_context_len",
+                    "max_context_len"
+                ],
+                "coeffs": [
+                    6.587037664821443,
+                    0.04846034063120108,
+                    6.844282591382737e-05,
+                    6.0691666226312134e-05
+                ]
+            },
+            "decoding_largebs": {
+                "features": [
+                    "constant",
+                    "batch_size",
+                    "sum_context_len",
+                    "max_context_len"
+                ],
+                "coeffs": [
+                    6.587037664821443,
+                    0.04846034063120108,
+                    6.844282591382737e-05,
+                    6.0691666226312134e-05
+                ]
+            },
+            "decoding_large_small_bs_threshold": 95
+        }
+    },
+    "/users/rh/.cache/modelscope/hub/models/LLM-Research/Meta-Llama-3.1-8B/converted_bin_v2": {
+        "1": {
+            "block_size": 16,
+            "prefill": {
+                "features": [
+                    "constant",
+                    "batch_size",
+                    "sum_scheduled_tokens",
+                    "attention_work",
+                    "final_kv_blocks"
+                ],
+                "coeffs": [
+                    40.165427531998176,
+                    -8.106992182580022,
+                    0.09868203560233035,
+                    -3.361782057198741e-05,
+                    0.19268716956117565
+                ]
+            },
+            "decoding_smallbs": {
+                "features": [
+                    "constant",
+                    "batch_size",
+                    "sum_context_len",
+                    "max_context_len"
+                ],
+                "coeffs": [
+                    12.529827584444362,
+                    0.07141188475998424,
+                    8.901353956919459e-05,
+                    4.4606852832113204e-05
+                ]
+            },
+            "decoding_largebs": {
+                "features": [
+                    "constant",
+                    "batch_size",
+                    "sum_context_len",
+                    "max_context_len"
+                ],
+                "coeffs": [
+                    12.529827584444362,
+                    0.07141188475998424,
+                    8.901353956919459e-05,
+                    4.4606852832113204e-05
+                ]
+            },
+            "decoding_large_small_bs_threshold": 95
+        }
+    }
+}

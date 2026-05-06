@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="520" viewBox="0 0 1080 520">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#334155"/>
+    </marker>
+    <style>
+      .title { font: 700 22px Arial, sans-serif; fill: #1f2937; }
+      .label { font: 700 17px Arial, sans-serif; fill: #1f2937; }
+      .small { font: 14px Arial, sans-serif; fill: #334155; }
+      .tiny { font: 13px Arial, sans-serif; fill: #475569; }
+      .prefill { fill: #fff7ed; stroke: #ea580c; stroke-width: 1.6; rx: 8; }
+      .decode { fill: #f5f3ff; stroke: #7c3aed; stroke-width: 1.6; rx: 8; }
+      .note { fill: #f8fafc; stroke: #94a3b8; stroke-width: 1.2; rx: 8; }
+      .same { stroke: #2563eb; stroke-width: 3.0; fill: none; marker-end: url(#arrow); }
+      .cross { stroke: #dc2626; stroke-width: 3.0; fill: none; marker-end: url(#arrow); stroke-dasharray: 8 6; }
+      .cap { font: 700 14px Arial, sans-serif; fill: #0f172a; }
+      .red { fill: #991b1b; }
+      .blue { fill: #1d4ed8; }
+    </style>
+  </defs>
+
+  <text x="40" y="42" class="title">固定并行配置下的 2×2 请求流网络</text>
+  <text x="40" y="70" class="small">左侧表示预填充总能力，右侧表示解码总能力；中间四条边表示请求从预填充侧到解码侧的流向。</text>
+
+  <text x="185" y="118" text-anchor="middle" class="label">预填充侧能力</text>
+  <text x="875" y="118" text-anchor="middle" class="label">解码侧能力</text>
+
+  <rect x="70" y="150" width="230" height="92" class="prefill"/>
+  <text x="185" y="184" text-anchor="middle" class="label">CUDA 预填充</text>
+  <text x="185" y="212" text-anchor="middle" class="small">p_cuda = n_cp·μ_cp</text>
+
+  <rect x="70" y="330" width="230" height="92" class="prefill"/>
+  <text x="185" y="364" text-anchor="middle" class="label">Ascend 预填充</text>
+  <text x="185" y="392" text-anchor="middle" class="small">p_ascend = n_ap·μ_ap</text>
+
+  <rect x="760" y="150" width="230" height="92" class="decode"/>
+  <text x="875" y="184" text-anchor="middle" class="label">CUDA 解码</text>
+  <text x="875" y="212" text-anchor="middle" class="small">d_cuda = n_cd·μ_cd</text>
+
+  <rect x="760" y="330" width="230" height="92" class="decode"/>
+  <text x="875" y="364" text-anchor="middle" class="label">Ascend 解码</text>
+  <text x="875" y="392" text-anchor="middle" class="small">d_ascend = n_ad·μ_ad</text>
+
+  <path d="M 300 196 L 760 196" class="same"/>
+  <text x="530" y="184" text-anchor="middle" class="cap blue">x_cc</text>
+  <text x="530" y="211" text-anchor="middle" class="tiny">同设备池流向</text>
+
+  <path d="M 300 376 L 760 376" class="same"/>
+  <text x="530" y="364" text-anchor="middle" class="cap blue">x_aa</text>
+  <text x="530" y="391" text-anchor="middle" class="tiny">同设备池流向</text>
+
+  <path d="M 300 210 C 475 248, 585 302, 760 354" class="cross"/>
+  <text x="530" y="286" text-anchor="middle" class="cap red">x_ca ≤ H_ca</text>
+  <text x="530" y="306" text-anchor="middle" class="tiny">CUDA 到 Ascend 的 KV 缓存传输限制</text>
+
+  <path d="M 300 362 C 475 322, 585 268, 760 218" class="cross"/>
+  <text x="530" y="244" text-anchor="middle" class="cap red">x_ac ≤ H_ac</text>
+  <text x="530" y="264" text-anchor="middle" class="tiny">Ascend 到 CUDA 的 KV 缓存传输限制</text>
+
+  <rect x="340" y="442" width="400" height="48" class="note"/>
+  <text x="540" y="464" text-anchor="middle" class="small">目标：最大化有效吞吐 Λ = x_cc + x_ca + x_ac + x_aa</text>
+  <text x="540" y="484" text-anchor="middle" class="tiny">每条请求同时消耗一个预填充侧能力和一个解码侧能力</text>
+</svg>

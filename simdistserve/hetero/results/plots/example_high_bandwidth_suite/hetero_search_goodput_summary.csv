@@ -1,0 +1,4 @@
+model,mode,mode_label,estimated_goodput,elapsed_seconds,profile_seconds,allocation_milp_seconds,path
+llama_8B,no_cross,No Cross,140.49999999999997,0.12030191393569112,5.055009387433529e-05,0.11821367940865457,/users/rh/DistServe/simdistserve/hetero/results/search/example_high_bandwidth_suite/llama_8B/no_cross/search_4nodes_high_affinity.json
+llama_8B,cuda_prefill_ascend_decode,CUDA-P / Ascend-D,44.0,0.010626121889799833,3.487803041934967e-05,0.009797208942472935,/users/rh/DistServe/simdistserve/hetero/results/search/example_high_bandwidth_suite/llama_8B/cuda_prefill_ascend_decode/search_4nodes_high_affinity.json
+llama_8B,milp,Hetero MILP,163.5,29.913639444159344,29.769662589067593,0.14169507869519293,/users/rh/DistServe/simdistserve/hetero/results/search/example_high_bandwidth_suite/llama_8B/milp/search_4nodes_high_affinity.json

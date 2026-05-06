@@ -1,0 +1,46 @@
+{
+  "prefill": {
+    "cases": 168,
+    "max_abs_delta_pct": 7.5,
+    "worst": {
+      "model": "llama_3B",
+      "rate": 1.0,
+      "slo_scale": 0.2,
+      "delta_pct": -7.5
+    }
+  },
+  "decode": {
+    "cases": 168,
+    "max_abs_delta_pct": 10.0,
+    "worst": {
+      "model": "llama_1B",
+      "rate": 2.0,
+      "slo_scale": 0.2,
+      "delta_pct": 10.0
+    }
+  },
+  "total": {
+    "cases": 168,
+    "max_abs_delta_pct": 6.67,
+    "worst": {
+      "model": "llama_7B",
+      "rate": 4.0,
+      "slo_scale": 0.8,
+      "delta_pct": -6.67
+    }
+  },
+  "both": {
+    "cases": 168,
+    "max_abs_delta_pct": 8.33,
+    "worst": {
+      "model": "llama_1B",
+      "rate": 2.0,
+      "slo_scale": 0.2,
+      "delta_pct": 8.33
+    }
+  },
+  "overall": {
+    "cases": 672,
+    "max_abs_delta_pct": 10.0
+  }
+}

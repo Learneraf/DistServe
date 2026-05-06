@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1060" height="420" viewBox="0 0 1060 420">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#334155"/>
+    </marker>
+    <style>
+      .title { font: 700 22px Arial, sans-serif; fill: #1f2937; }
+      .label { font: 700 16px Arial, sans-serif; fill: #1f2937; }
+      .small { font: 14px Arial, sans-serif; fill: #334155; }
+      .tiny { font: 13px Arial, sans-serif; fill: #475569; }
+      .box { fill: #f8fafc; stroke: #334155; stroke-width: 1.4; rx: 8; }
+      .workload { fill: #eef7ff; stroke: #2563eb; }
+      .system { fill: #fff7ed; stroke: #ea580c; }
+      .target { fill: #f0fdf4; stroke: #16a34a; }
+      .split { fill: #f5f3ff; stroke: #7c3aed; }
+      .arrow { stroke: #334155; stroke-width: 1.8; fill: none; marker-end: url(#arrow); }
+      .dash { stroke: #64748b; stroke-width: 1.5; stroke-dasharray: 6 5; fill: none; }
+    </style>
+  </defs>
+
+  <text x="34" y="40" class="title">工作负载与服务目标建模</text>
+
+  <rect x="45" y="78" width="245" height="145" class="box workload"/>
+  <text x="168" y="108" text-anchor="middle" class="label">请求集合</text>
+  <text x="168" y="136" text-anchor="middle" class="small">每条请求 i</text>
+  <text x="168" y="160" text-anchor="middle" class="small">输入长度 p_i</text>
+  <text x="168" y="184" text-anchor="middle" class="small">输出长度 o_i</text>
+  <text x="168" y="208" text-anchor="middle" class="tiny">来自拟合集或验证集</text>
+
+  <rect x="45" y="268" width="245" height="92" class="box split"/>
+  <text x="168" y="300" text-anchor="middle" class="label">负载强度</text>
+  <text x="168" y="328" text-anchor="middle" class="small">请求到达率 lambda</text>
+
+  <rect x="405" y="105" width="245" height="220" class="box system"/>
+  <text x="528" y="137" text-anchor="middle" class="label">推理服务结果</text>
+  <text x="528" y="168" text-anchor="middle" class="small">首词延迟 FTL_i</text>
+  <text x="528" y="197" text-anchor="middle" class="small">每词元生成时间 TPOT_i</text>
+  <text x="528" y="226" text-anchor="middle" class="small">请求总延迟 L_i</text>
+  <path d="M 435 252 L 620 252" class="dash"/>
+  <text x="528" y="280" text-anchor="middle" class="tiny">这些结果由真实测试或仿真得到</text>
+
+  <rect x="770" y="78" width="245" height="145" class="box target"/>
+  <text x="893" y="108" text-anchor="middle" class="label">延迟目标</text>
+  <text x="893" y="140" text-anchor="middle" class="small">FTL_i ≤ T_ftl</text>
+  <text x="893" y="168" text-anchor="middle" class="small">TPOT_i ≤ T_tpot</text>
+  <text x="893" y="198" text-anchor="middle" class="tiny">满足目标的请求计入达标</text>
+
+  <rect x="770" y="268" width="245" height="92" class="box target"/>
+  <text x="893" y="300" text-anchor="middle" class="label">评价结果</text>
+  <text x="893" y="328" text-anchor="middle" class="small">SLO 达标率</text>
+  <text x="893" y="350" text-anchor="middle" class="tiny">用于判断该负载是否可承载</text>
+
+  <path d="M 290 150 C 335 150, 360 170, 405 190" class="arrow"/>
+  <path d="M 290 315 C 345 315, 365 285, 405 255" class="arrow"/>
+  <path d="M 650 160 C 690 150, 725 145, 770 145" class="arrow"/>
+  <path d="M 650 255 C 700 270, 725 305, 770 315" class="arrow"/>
+
+  <text x="330" y="135" class="tiny">请求长度决定计算量</text>
+  <text x="310" y="345" class="tiny">到达率决定排队压力</text>
+  <text x="665" y="128" class="tiny">逐请求比较</text>
+  <text x="680" y="340" class="tiny">统计比例</text>
+</svg>

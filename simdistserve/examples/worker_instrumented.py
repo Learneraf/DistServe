@@ -259,7 +259,7 @@ class InstrumentedWorker(Worker):
                 is_finished_one_round=self.is_last_in_pipeline,
                 wid=self.wid,
                 next_wid=next_wid,
-                generated_tokens=(1 if self.prefill_generates_first_token else 0),
+                generated_tokens=1,
                 first_token_visible=getattr(
                     self.cluster,
                     "prefill_first_token_visible_immediately",
@@ -620,7 +620,6 @@ def _build_instrumented_cluster(env: simpy.Environment, config: ExampleConfig):
         enable_chunked_prefill=config.enable_chunked_prefill,
         decode_back_pressure=config.decode_back_pressure,
         engine_type=config.backend,
-        prefill_generates_first_token=(config.backend == "vllm_ascend"),
     )
     if config.backend != "vllm":
         if config.handoff_delay_ms is not None:

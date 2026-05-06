@@ -1,0 +1,100 @@
+{
+  "model": "llama_3B",
+  "workload": "/users/rh/DistServe/simdistserve/hetero/examples/workloads/llama-3.2-3B/profile_3000_seed0_minp32_mino32_maxp4096_maxo2048.jsonl",
+  "network_summary_csv": "/users/rh/DistServe/simdistserve/benchmarks/results/network/iperf3/20260423T090835Z/summary.csv",
+  "prompt_len_field": "prompt_len",
+  "length_aggregation": "mean",
+  "num_requests": 3000,
+  "prompt_len_stats": {
+    "mean": 359.07433333333336,
+    "median": 103.0,
+    "p90": 1041.2999999999997,
+    "p95": 1750.300000000001,
+    "max": 3787,
+    "effective": 359.07433333333336
+  },
+  "model_config": {
+    "model_path": "/users/rh/.cache/modelscope/hub/models/LLM-Research/Llama-3.2-3B/converted_bin_v2",
+    "config_path": "/users/rh/.cache/modelscope/hub/models/LLM-Research/Llama-3.2-3B/converted_bin_v2/config.json",
+    "hidden_size": 3072,
+    "num_attention_heads": 24,
+    "num_key_value_heads": 8,
+    "num_hidden_layers": 28,
+    "head_dim": 128,
+    "dtype": "bfloat16",
+    "dtype_bytes": 2,
+    "kv_bytes_per_token": 114688
+  },
+  "payload": {
+    "kv_bytes_per_token": 114688,
+    "effective_payload_bytes_per_request": 41181517.141333334,
+    "effective_payload_mib_per_request": 39.273755208333334,
+    "effective_payload_bits_per_request": 329452137.1306667
+  },
+  "bandwidth": {
+    "cuda_to_ascend": {
+      "direction_flag": "reverse",
+      "transfer_direction": "server_to_client",
+      "parallel_streams": 8,
+      "bandwidth_column": "mean_receiver_bits_per_second",
+      "bits_per_second": 611305739.0878094,
+      "mbits_per_second": 611.3057390878095,
+      "source_row": {
+        "direction_flag": "reverse",
+        "transfer_direction": "server_to_client",
+        "parallel_streams": "8",
+        "repeats": "3",
+        "mean_sender_bits_per_second": "613343855.1126801",
+        "std_sender_bits_per_second": "25448169.47546133",
+        "mean_receiver_bits_per_second": "611305739.0878094",
+        "std_receiver_bits_per_second": "25341268.817477506",
+        "mean_receiver_mbits_per_second": "611.3057390878095",
+        "best_receiver_bits_per_second": "635669518.878571",
+        "best_receiver_mbits_per_second": "635.669518878571",
+        "mean_retransmits": "2480.0",
+        "max_retransmits": "3074.0",
+        "best_run_id": "reverse_p8_r3",
+        "best_raw_json_path": "/mnt/data/utils/results/network/iperf3/20260423T090835Z/raw/reverse_p8_r3.json"
+      }
+    },
+    "ascend_to_cuda": {
+      "direction_flag": "forward",
+      "transfer_direction": "client_to_server",
+      "parallel_streams": 8,
+      "bandwidth_column": "mean_receiver_bits_per_second",
+      "bits_per_second": 812264899.2606387,
+      "mbits_per_second": 812.2648992606387,
+      "source_row": {
+        "direction_flag": "forward",
+        "transfer_direction": "client_to_server",
+        "parallel_streams": "8",
+        "repeats": "3",
+        "mean_sender_bits_per_second": "813115082.6758286",
+        "std_sender_bits_per_second": "2209873.7657417767",
+        "mean_receiver_bits_per_second": "812264899.2606387",
+        "std_receiver_bits_per_second": "2205017.468559007",
+        "mean_receiver_mbits_per_second": "812.2648992606387",
+        "best_receiver_bits_per_second": "813672266.292062",
+        "best_receiver_mbits_per_second": "813.6722662920621",
+        "mean_retransmits": "12447.666666666666",
+        "max_retransmits": "12550.0",
+        "best_run_id": "forward_p8_r3",
+        "best_raw_json_path": "/mnt/data/utils/results/network/iperf3/20260423T090835Z/raw/forward_p8_r3.json"
+      }
+    }
+  },
+  "handoff": {
+    "cuda_to_ascend": {
+      "handoff_goodput_upper_bound": 1.8555221538761928,
+      "fixed_delay_ms": 0.0,
+      "delay_per_token_ms": 1.5008921744610146,
+      "effective_payload_delay_ms": 538.9318569498059
+    },
+    "ascend_to_cuda": {
+      "handoff_goodput_upper_bound": 2.465501988649962,
+      "fixed_delay_ms": 0.0,
+      "delay_per_token_ms": 1.1295625366000115,
+      "effective_payload_delay_ms": 405.5969147879581
+    }
+  }
+}

@@ -6,7 +6,7 @@ Unified SLO thresholds: Prefill=0.4s, Decode=0.4s, Total=0.4s
 Metric                         EXP (DistServe)           CSV (simdistserve)        Difference (Exp - CSV)
 ----------------------------------------------------------------------------------------------------
 Prefill SLO met rate           120/120 (100.00%)         120/120 (100.00%)         +0.00%              
-Decode SLO met rate            44/120 (36.67%)           44/120 (36.67%)           +0.00%              
-Total SLO met rate             37/120 (30.83%)           38/120 (31.67%)           -0.83%              
-Both (Prefill+Decode) SLO met rate 44/120 (36.67%)           44/120 (36.67%)           +0.00%              
+Decode SLO met rate            44/120 (36.67%)           38/120 (31.67%)           +5.00%              
+Total SLO met rate             37/120 (30.83%)           33/120 (27.50%)           +3.33%              
+Both (Prefill+Decode) SLO met rate 44/120 (36.67%)           38/120 (31.67%)           +5.00%              
 ======================================================================

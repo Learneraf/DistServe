@@ -18,14 +18,6 @@ def load_profile_data():
             result[model] = {}
         result[model][(tp, pp)] = row['max_num_tokens']
 
-    for source_key in (
-        "anonymous4chan/llama-2-7b",
-        "huggyllama/llama-7b",
-    ):
-        if source_key in result:
-            result[ModelTypes.LLAMA_2_7B_LOCAL_PATH] = dict(result[source_key])
-            break
-
     return result
 
 

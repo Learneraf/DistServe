@@ -1,0 +1,426 @@
+{
+  "search_mode": "cuda_prefill_ascend_decode",
+  "best_config": {
+    "cuda_prefill": {
+      "shape": {
+        "device": "cuda",
+        "role": "prefill",
+        "tp": 1,
+        "pp_local": 1,
+        "pp_cross": 1
+      },
+      "num_instances": 1
+    },
+    "cuda_decode": {
+      "shape": null,
+      "num_instances": 0
+    },
+    "ascend_prefill": {
+      "shape": null,
+      "num_instances": 0
+    },
+    "ascend_decode": {
+      "shape": {
+        "device": "ascend",
+        "role": "decode",
+        "tp": 1,
+        "pp_local": 1,
+        "pp_cross": 1
+      },
+      "num_instances": 1
+    },
+    "flows": {
+      "x_cc": 0.0,
+      "x_ca": 4.0417933092091625,
+      "x_ac": 0.0,
+      "x_aa": 0.0
+    },
+    "estimated_goodput": 4.0417933092091625
+  },
+  "top_configs": [
+    {
+      "cuda_prefill": {
+        "shape": {
+          "device": "cuda",
+          "role": "prefill",
+          "tp": 1,
+          "pp_local": 1,
+          "pp_cross": 1
+        },
+        "num_instances": 1
+      },
+      "cuda_decode": {
+        "shape": null,
+        "num_instances": 0
+      },
+      "ascend_prefill": {
+        "shape": null,
+        "num_instances": 0
+      },
+      "ascend_decode": {
+        "shape": {
+          "device": "ascend",
+          "role": "decode",
+          "tp": 1,
+          "pp_local": 1,
+          "pp_cross": 1
+        },
+        "num_instances": 1
+      },
+      "flows": {
+        "x_cc": 0.0,
+        "x_ca": 4.0417933092091625,
+        "x_ac": 0.0,
+        "x_aa": 0.0
+      },
+      "estimated_goodput": 4.0417933092091625
+    },
+    {
+      "cuda_prefill": {
+        "shape": {
+          "device": "cuda",
+          "role": "prefill",
+          "tp": 1,
+          "pp_local": 1,
+          "pp_cross": 1
+        },
+        "num_instances": 1
+      },
+      "cuda_decode": {
+        "shape": null,
+        "num_instances": 0
+      },
+      "ascend_prefill": {
+        "shape": null,
+        "num_instances": 0
+      },
+      "ascend_decode": {
+        "shape": {
+          "device": "ascend",
+          "role": "decode",
+          "tp": 1,
+          "pp_local": 2,
+          "pp_cross": 1
+        },
+        "num_instances": 1
+      },
+      "flows": {
+        "x_cc": 0.0,
+        "x_ca": 4.0417933092091625,
+        "x_ac": 0.0,
+        "x_aa": 0.0
+      },
+      "estimated_goodput": 4.0417933092091625
+    },
+    {
+      "cuda_prefill": {
+        "shape": {
+          "device": "cuda",
+          "role": "prefill",
+          "tp": 1,
+          "pp_local": 1,
+          "pp_cross": 1
+        },
+        "num_instances": 1
+      },
+      "cuda_decode": {
+        "shape": null,
+        "num_instances": 0
+      },
+      "ascend_prefill": {
+        "shape": null,
+        "num_instances": 0
+      },
+      "ascend_decode": {
+        "shape": {
+          "device": "ascend",
+          "role": "decode",
+          "tp": 1,
+          "pp_local": 4,
+          "pp_cross": 1
+        },
+        "num_instances": 1
+      },
+      "flows": {
+        "x_cc": 0.0,
+        "x_ca": 4.0417933092091625,
+        "x_ac": 0.0,
+        "x_aa": 0.0
+      },
+      "estimated_goodput": 4.0417933092091625
+    },
+    {
+      "cuda_prefill": {
+        "shape": {
+          "device": "cuda",
+          "role": "prefill",
+          "tp": 1,
+          "pp_local": 1,
+          "pp_cross": 1
+        },
+        "num_instances": 1
+      },
+      "cuda_decode": {
+        "shape": null,
+        "num_instances": 0
+      },
+      "ascend_prefill": {
+        "shape": null,
+        "num_instances": 0
+      },
+      "ascend_decode": {
+        "shape": {
+          "device": "ascend",
+          "role": "decode",
+          "tp": 1,
+          "pp_local": 8,
+          "pp_cross": 1
+        },
+        "num_instances": 1
+      },
+      "flows": {
+        "x_cc": 0.0,
+        "x_ca": 4.0417933092091625,
+        "x_ac": 0.0,
+        "x_aa": 0.0
+      },
+      "estimated_goodput": 4.0417933092091625
+    },
+    {
+      "cuda_prefill": {
+        "shape": {
+          "device": "cuda",
+          "role": "prefill",
+          "tp": 1,
+          "pp_local": 1,
+          "pp_cross": 1
+        },
+        "num_instances": 1
+      },
+      "cuda_decode": {
+        "shape": null,
+        "num_instances": 0
+      },
+      "ascend_prefill": {
+        "shape": null,
+        "num_instances": 0
+      },
+      "ascend_decode": {
+        "shape": {
+          "device": "ascend",
+          "role": "decode",
+          "tp": 1,
+          "pp_local": 16,
+          "pp_cross": 1
+        },
+        "num_instances": 1
+      },
+      "flows": {
+        "x_cc": 0.0,
+        "x_ca": 4.0417933092091625,
+        "x_ac": 0.0,
+        "x_aa": 0.0
+      },
+      "estimated_goodput": 4.0417933092091625
+    },
+    {
+      "cuda_prefill": {
+        "shape": {
+          "device": "cuda",
+          "role": "prefill",
+          "tp": 1,
+          "pp_local": 1,
+          "pp_cross": 1
+        },
+        "num_instances": 1
+      },
+      "cuda_decode": {
+        "shape": null,
+        "num_instances": 0
+      },
+      "ascend_prefill": {
+        "shape": null,
+        "num_instances": 0
+      },
+      "ascend_decode": {
+        "shape": {
+          "device": "ascend",
+          "role": "decode",
+          "tp": 2,
+          "pp_local": 1,
+          "pp_cross": 1
+        },
+        "num_instances": 1
+      },
+      "flows": {
+        "x_cc": 0.0,
+        "x_ca": 4.0417933092091625,
+        "x_ac": 0.0,
+        "x_aa": 0.0
+      },
+      "estimated_goodput": 4.0417933092091625
+    },
+    {
+      "cuda_prefill": {
+        "shape": {
+          "device": "cuda",
+          "role": "prefill",
+          "tp": 1,
+          "pp_local": 1,
+          "pp_cross": 1
+        },
+        "num_instances": 1
+      },
+      "cuda_decode": {
+        "shape": null,
+        "num_instances": 0
+      },
+      "ascend_prefill": {
+        "shape": null,
+        "num_instances": 0
+      },
+      "ascend_decode": {
+        "shape": {
+          "device": "ascend",
+          "role": "decode",
+          "tp": 2,
+          "pp_local": 2,
+          "pp_cross": 1
+        },
+        "num_instances": 1
+      },
+      "flows": {
+        "x_cc": 0.0,
+        "x_ca": 4.0417933092091625,
+        "x_ac": 0.0,
+        "x_aa": 0.0
+      },
+      "estimated_goodput": 4.0417933092091625
+    },
+    {
+      "cuda_prefill": {
+        "shape": {
+          "device": "cuda",
+          "role": "prefill",
+          "tp": 1,
+          "pp_local": 1,
+          "pp_cross": 1
+        },
+        "num_instances": 1
+      },
+      "cuda_decode": {
+        "shape": null,
+        "num_instances": 0
+      },
+      "ascend_prefill": {
+        "shape": null,
+        "num_instances": 0
+      },
+      "ascend_decode": {
+        "shape": {
+          "device": "ascend",
+          "role": "decode",
+          "tp": 2,
+          "pp_local": 4,
+          "pp_cross": 1
+        },
+        "num_instances": 1
+      },
+      "flows": {
+        "x_cc": 0.0,
+        "x_ca": 4.0417933092091625,
+        "x_ac": 0.0,
+        "x_aa": 0.0
+      },
+      "estimated_goodput": 4.0417933092091625
+    },
+    {
+      "cuda_prefill": {
+        "shape": {
+          "device": "cuda",
+          "role": "prefill",
+          "tp": 1,
+          "pp_local": 1,
+          "pp_cross": 1
+        },
+        "num_instances": 1
+      },
+      "cuda_decode": {
+        "shape": null,
+        "num_instances": 0
+      },
+      "ascend_prefill": {
+        "shape": null,
+        "num_instances": 0
+      },
+      "ascend_decode": {
+        "shape": {
+          "device": "ascend",
+          "role": "decode",
+          "tp": 2,
+          "pp_local": 8,
+          "pp_cross": 1
+        },
+        "num_instances": 1
+      },
+      "flows": {
+        "x_cc": 0.0,
+        "x_ca": 4.0417933092091625,
+        "x_ac": 0.0,
+        "x_aa": 0.0
+      },
+      "estimated_goodput": 4.0417933092091625
+    },
+    {
+      "cuda_prefill": {
+        "shape": {
+          "device": "cuda",
+          "role": "prefill",
+          "tp": 1,
+          "pp_local": 2,
+          "pp_cross": 1
+        },
+        "num_instances": 1
+      },
+      "cuda_decode": {
+        "shape": null,
+        "num_instances": 0
+      },
+      "ascend_prefill": {
+        "shape": null,
+        "num_instances": 0
+      },
+      "ascend_decode": {
+        "shape": {
+          "device": "ascend",
+          "role": "decode",
+          "tp": 1,
+          "pp_local": 1,
+          "pp_cross": 1
+        },
+        "num_instances": 1
+      },
+      "flows": {
+        "x_cc": 0.0,
+        "x_ca": 4.0417933092091625,
+        "x_ac": 0.0,
+        "x_aa": 0.0
+      },
+      "estimated_goodput": 4.0417933092091625
+    }
+  ],
+  "num_shape_tuples": 81,
+  "num_allocation_problems": 81,
+  "num_count_tuples": 81,
+  "profiled_shapes": 36,
+  "timing": {
+    "enumerate_shapes_seconds": 0.0002258438616991043,
+    "profile_seconds": 5.936832167208195e-05,
+    "precompute_mu_seconds": 5.936832167208195e-05,
+    "allocation_milp_seconds": 0.011121875140815973,
+    "search_loop_seconds": 0.011940227821469307,
+    "sort_seconds": 1.0214047506451607e-05,
+    "total_search_seconds": 0.012177665950730443
+  },
+  "elapsed_seconds": 0.012680473970249295
+}

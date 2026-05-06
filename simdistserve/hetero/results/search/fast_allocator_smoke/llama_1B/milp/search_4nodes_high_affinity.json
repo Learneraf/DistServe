@@ -1,0 +1,558 @@
+{
+  "search_mode": "milp",
+  "best_config": {
+    "cuda_prefill": {
+      "shape": {
+        "device": "cuda",
+        "role": "prefill",
+        "tp": 1,
+        "pp_local": 2,
+        "pp_cross": 1
+      },
+      "num_instances": 4
+    },
+    "cuda_decode": {
+      "shape": {
+        "device": "cuda",
+        "role": "decode",
+        "tp": 1,
+        "pp_local": 1,
+        "pp_cross": 1
+      },
+      "num_instances": 8
+    },
+    "ascend_prefill": {
+      "shape": {
+        "device": "ascend",
+        "role": "prefill",
+        "tp": 1,
+        "pp_local": 1,
+        "pp_cross": 1
+      },
+      "num_instances": 10
+    },
+    "ascend_decode": {
+      "shape": {
+        "device": "ascend",
+        "role": "decode",
+        "tp": 1,
+        "pp_local": 1,
+        "pp_cross": 1
+      },
+      "num_instances": 6
+    },
+    "flows": {
+      "x_cc": 127.4375,
+      "x_ca": 0.53125,
+      "x_ac": 0.0,
+      "x_aa": 166.171875
+    },
+    "estimated_goodput": 294.140625
+  },
+  "top_configs": [
+    {
+      "cuda_prefill": {
+        "shape": {
+          "device": "cuda",
+          "role": "prefill",
+          "tp": 1,
+          "pp_local": 2,
+          "pp_cross": 1
+        },
+        "num_instances": 4
+      },
+      "cuda_decode": {
+        "shape": {
+          "device": "cuda",
+          "role": "decode",
+          "tp": 1,
+          "pp_local": 1,
+          "pp_cross": 1
+        },
+        "num_instances": 8
+      },
+      "ascend_prefill": {
+        "shape": {
+          "device": "ascend",
+          "role": "prefill",
+          "tp": 1,
+          "pp_local": 1,
+          "pp_cross": 1
+        },
+        "num_instances": 10
+      },
+      "ascend_decode": {
+        "shape": {
+          "device": "ascend",
+          "role": "decode",
+          "tp": 1,
+          "pp_local": 1,
+          "pp_cross": 1
+        },
+        "num_instances": 6
+      },
+      "flows": {
+        "x_cc": 127.4375,
+        "x_ca": 0.53125,
+        "x_ac": 0.0,
+        "x_aa": 166.171875
+      },
+      "estimated_goodput": 294.140625
+    },
+    {
+      "cuda_prefill": {
+        "shape": {
+          "device": "cuda",
+          "role": "prefill",
+          "tp": 1,
+          "pp_local": 2,
+          "pp_cross": 1
+        },
+        "num_instances": 4
+      },
+      "cuda_decode": {
+        "shape": {
+          "device": "cuda",
+          "role": "decode",
+          "tp": 1,
+          "pp_local": 2,
+          "pp_cross": 1
+        },
+        "num_instances": 4
+      },
+      "ascend_prefill": {
+        "shape": {
+          "device": "ascend",
+          "role": "prefill",
+          "tp": 1,
+          "pp_local": 1,
+          "pp_cross": 1
+        },
+        "num_instances": 10
+      },
+      "ascend_decode": {
+        "shape": {
+          "device": "ascend",
+          "role": "decode",
+          "tp": 1,
+          "pp_local": 1,
+          "pp_cross": 1
+        },
+        "num_instances": 6
+      },
+      "flows": {
+        "x_cc": 127.96875,
+        "x_ca": 0.0,
+        "x_ac": 0.0,
+        "x_aa": 166.171875
+      },
+      "estimated_goodput": 294.140625
+    },
+    {
+      "cuda_prefill": {
+        "shape": {
+          "device": "cuda",
+          "role": "prefill",
+          "tp": 1,
+          "pp_local": 2,
+          "pp_cross": 1
+        },
+        "num_instances": 4
+      },
+      "cuda_decode": {
+        "shape": {
+          "device": "cuda",
+          "role": "decode",
+          "tp": 2,
+          "pp_local": 1,
+          "pp_cross": 1
+        },
+        "num_instances": 4
+      },
+      "ascend_prefill": {
+        "shape": {
+          "device": "ascend",
+          "role": "prefill",
+          "tp": 1,
+          "pp_local": 1,
+          "pp_cross": 1
+        },
+        "num_instances": 10
+      },
+      "ascend_decode": {
+        "shape": {
+          "device": "ascend",
+          "role": "decode",
+          "tp": 1,
+          "pp_local": 1,
+          "pp_cross": 1
+        },
+        "num_instances": 6
+      },
+      "flows": {
+        "x_cc": 127.96875,
+        "x_ca": 0.0,
+        "x_ac": 0.0,
+        "x_aa": 166.171875
+      },
+      "estimated_goodput": 294.140625
+    },
+    {
+      "cuda_prefill": {
+        "shape": {
+          "device": "cuda",
+          "role": "prefill",
+          "tp": 1,
+          "pp_local": 1,
+          "pp_cross": 1
+        },
+        "num_instances": 8
+      },
+      "cuda_decode": {
+        "shape": {
+          "device": "cuda",
+          "role": "decode",
+          "tp": 1,
+          "pp_local": 1,
+          "pp_cross": 1
+        },
+        "num_instances": 8
+      },
+      "ascend_prefill": {
+        "shape": {
+          "device": "ascend",
+          "role": "prefill",
+          "tp": 1,
+          "pp_local": 1,
+          "pp_cross": 1
+        },
+        "num_instances": 10
+      },
+      "ascend_decode": {
+        "shape": {
+          "device": "ascend",
+          "role": "decode",
+          "tp": 1,
+          "pp_local": 1,
+          "pp_cross": 1
+        },
+        "num_instances": 6
+      },
+      "flows": {
+        "x_cc": 127.4375,
+        "x_ca": 0.0,
+        "x_ac": 0.0,
+        "x_aa": 166.171875
+      },
+      "estimated_goodput": 293.609375
+    },
+    {
+      "cuda_prefill": {
+        "shape": {
+          "device": "cuda",
+          "role": "prefill",
+          "tp": 1,
+          "pp_local": 1,
+          "pp_cross": 1
+        },
+        "num_instances": 8
+      },
+      "cuda_decode": {
+        "shape": {
+          "device": "cuda",
+          "role": "decode",
+          "tp": 1,
+          "pp_local": 2,
+          "pp_cross": 1
+        },
+        "num_instances": 4
+      },
+      "ascend_prefill": {
+        "shape": {
+          "device": "ascend",
+          "role": "prefill",
+          "tp": 1,
+          "pp_local": 1,
+          "pp_cross": 1
+        },
+        "num_instances": 10
+      },
+      "ascend_decode": {
+        "shape": {
+          "device": "ascend",
+          "role": "decode",
+          "tp": 1,
+          "pp_local": 1,
+          "pp_cross": 1
+        },
+        "num_instances": 6
+      },
+      "flows": {
+        "x_cc": 127.4375,
+        "x_ca": 0.0,
+        "x_ac": 0.53125,
+        "x_aa": 165.640625
+      },
+      "estimated_goodput": 293.609375
+    },
+    {
+      "cuda_prefill": {
+        "shape": {
+          "device": "cuda",
+          "role": "prefill",
+          "tp": 1,
+          "pp_local": 1,
+          "pp_cross": 1
+        },
+        "num_instances": 8
+      },
+      "cuda_decode": {
+        "shape": {
+          "device": "cuda",
+          "role": "decode",
+          "tp": 2,
+          "pp_local": 1,
+          "pp_cross": 1
+        },
+        "num_instances": 4
+      },
+      "ascend_prefill": {
+        "shape": {
+          "device": "ascend",
+          "role": "prefill",
+          "tp": 1,
+          "pp_local": 1,
+          "pp_cross": 1
+        },
+        "num_instances": 10
+      },
+      "ascend_decode": {
+        "shape": {
+          "device": "ascend",
+          "role": "decode",
+          "tp": 1,
+          "pp_local": 1,
+          "pp_cross": 1
+        },
+        "num_instances": 6
+      },
+      "flows": {
+        "x_cc": 127.4375,
+        "x_ca": 0.0,
+        "x_ac": 0.53125,
+        "x_aa": 165.640625
+      },
+      "estimated_goodput": 293.609375
+    },
+    {
+      "cuda_prefill": {
+        "shape": {
+          "device": "cuda",
+          "role": "prefill",
+          "tp": 1,
+          "pp_local": 2,
+          "pp_cross": 1
+        },
+        "num_instances": 4
+      },
+      "cuda_decode": {
+        "shape": {
+          "device": "cuda",
+          "role": "decode",
+          "tp": 1,
+          "pp_local": 1,
+          "pp_cross": 1
+        },
+        "num_instances": 8
+      },
+      "ascend_prefill": {
+        "shape": {
+          "device": "ascend",
+          "role": "prefill",
+          "tp": 1,
+          "pp_local": 2,
+          "pp_cross": 1
+        },
+        "num_instances": 5
+      },
+      "ascend_decode": {
+        "shape": {
+          "device": "ascend",
+          "role": "decode",
+          "tp": 1,
+          "pp_local": 1,
+          "pp_cross": 1
+        },
+        "num_instances": 6
+      },
+      "flows": {
+        "x_cc": 127.4375,
+        "x_ca": 0.53125,
+        "x_ac": 0.0,
+        "x_aa": 159.9609375
+      },
+      "estimated_goodput": 287.9296875
+    },
+    {
+      "cuda_prefill": {
+        "shape": {
+          "device": "cuda",
+          "role": "prefill",
+          "tp": 1,
+          "pp_local": 2,
+          "pp_cross": 1
+        },
+        "num_instances": 4
+      },
+      "cuda_decode": {
+        "shape": {
+          "device": "cuda",
+          "role": "decode",
+          "tp": 1,
+          "pp_local": 2,
+          "pp_cross": 1
+        },
+        "num_instances": 4
+      },
+      "ascend_prefill": {
+        "shape": {
+          "device": "ascend",
+          "role": "prefill",
+          "tp": 1,
+          "pp_local": 2,
+          "pp_cross": 1
+        },
+        "num_instances": 5
+      },
+      "ascend_decode": {
+        "shape": {
+          "device": "ascend",
+          "role": "decode",
+          "tp": 1,
+          "pp_local": 1,
+          "pp_cross": 1
+        },
+        "num_instances": 5
+      },
+      "flows": {
+        "x_cc": 127.96875,
+        "x_ca": 0.0,
+        "x_ac": 0.0,
+        "x_aa": 159.9609375
+      },
+      "estimated_goodput": 287.9296875
+    },
+    {
+      "cuda_prefill": {
+        "shape": {
+          "device": "cuda",
+          "role": "prefill",
+          "tp": 1,
+          "pp_local": 2,
+          "pp_cross": 1
+        },
+        "num_instances": 4
+      },
+      "cuda_decode": {
+        "shape": {
+          "device": "cuda",
+          "role": "decode",
+          "tp": 2,
+          "pp_local": 1,
+          "pp_cross": 1
+        },
+        "num_instances": 4
+      },
+      "ascend_prefill": {
+        "shape": {
+          "device": "ascend",
+          "role": "prefill",
+          "tp": 1,
+          "pp_local": 2,
+          "pp_cross": 1
+        },
+        "num_instances": 5
+      },
+      "ascend_decode": {
+        "shape": {
+          "device": "ascend",
+          "role": "decode",
+          "tp": 1,
+          "pp_local": 1,
+          "pp_cross": 1
+        },
+        "num_instances": 5
+      },
+      "flows": {
+        "x_cc": 127.96875,
+        "x_ca": 0.0,
+        "x_ac": 0.0,
+        "x_aa": 159.9609375
+      },
+      "estimated_goodput": 287.9296875
+    },
+    {
+      "cuda_prefill": {
+        "shape": {
+          "device": "cuda",
+          "role": "prefill",
+          "tp": 1,
+          "pp_local": 1,
+          "pp_cross": 1
+        },
+        "num_instances": 8
+      },
+      "cuda_decode": {
+        "shape": {
+          "device": "cuda",
+          "role": "decode",
+          "tp": 1,
+          "pp_local": 1,
+          "pp_cross": 1
+        },
+        "num_instances": 8
+      },
+      "ascend_prefill": {
+        "shape": {
+          "device": "ascend",
+          "role": "prefill",
+          "tp": 1,
+          "pp_local": 2,
+          "pp_cross": 1
+        },
+        "num_instances": 5
+      },
+      "ascend_decode": {
+        "shape": {
+          "device": "ascend",
+          "role": "decode",
+          "tp": 1,
+          "pp_local": 1,
+          "pp_cross": 1
+        },
+        "num_instances": 5
+      },
+      "flows": {
+        "x_cc": 127.4375,
+        "x_ca": 0.0,
+        "x_ac": 0.0,
+        "x_aa": 159.9609375
+      },
+      "estimated_goodput": 287.3984375
+    }
+  ],
+  "num_shape_tuples": 9801,
+  "num_allocation_problems": 9801,
+  "num_count_tuples": 9801,
+  "profiled_shapes": 36,
+  "timing": {
+    "enumerate_shapes_seconds": 0.00020080502144992352,
+    "profile_seconds": 0.0009475545957684517,
+    "precompute_mu_seconds": 0.0009475545957684517,
+    "allocation_milp_seconds": 4.639920321293175,
+    "search_loop_seconds": 4.739350223215297,
+    "sort_seconds": 0.002297398168593645,
+    "total_search_seconds": 4.741849933983758
+  },
+  "elapsed_seconds": 4.749029172118753
+}

@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1060" height="430" viewBox="0 0 1060 430">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#334155"/>
+    </marker>
+    <style>
+      .title { font: 700 22px Arial, sans-serif; fill: #1f2937; }
+      .label { font: 700 16px Arial, sans-serif; fill: #1f2937; }
+      .small { font: 14px Arial, sans-serif; fill: #334155; }
+      .tiny { font: 13px Arial, sans-serif; fill: #475569; }
+      .box { fill: #f8fafc; stroke: #334155; stroke-width: 1.4; rx: 8; }
+      .cuda { fill: #eef7ff; stroke: #2563eb; }
+      .ascend { fill: #fff7ed; stroke: #ea580c; }
+      .role { fill: #f5f3ff; stroke: #7c3aed; }
+      .cap { fill: #f0fdf4; stroke: #16a34a; }
+      .arrow { stroke: #334155; stroke-width: 1.8; fill: none; marker-end: url(#arrow); }
+      .dash { stroke: #94a3b8; stroke-width: 1.4; stroke-dasharray: 6 5; fill: none; }
+    </style>
+  </defs>
+
+  <text x="34" y="40" class="title">异构资源与服务能力建模</text>
+
+  <rect x="45" y="82" width="230" height="120" class="box cuda"/>
+  <text x="160" y="114" text-anchor="middle" class="label">CUDA 设备池</text>
+  <text x="160" y="144" text-anchor="middle" class="small">B_c 个可用设备</text>
+  <text x="160" y="170" text-anchor="middle" class="tiny">节点数 / 每节点设备数 / 放置约束</text>
+
+  <rect x="45" y="248" width="230" height="120" class="box ascend"/>
+  <text x="160" y="280" text-anchor="middle" class="label">Ascend 设备池</text>
+  <text x="160" y="310" text-anchor="middle" class="small">B_a 个可用设备</text>
+  <text x="160" y="336" text-anchor="middle" class="tiny">节点数 / 每节点设备数 / 放置约束</text>
+
+  <rect x="390" y="78" width="245" height="135" class="box role"/>
+  <text x="513" y="110" text-anchor="middle" class="label">CUDA 服务角色</text>
+  <text x="513" y="140" text-anchor="middle" class="small">CUDA 预填充实例</text>
+  <text x="513" y="166" text-anchor="middle" class="small">CUDA 解码实例</text>
+  <text x="513" y="192" text-anchor="middle" class="tiny">每类实例选择自己的并行配置</text>
+
+  <rect x="390" y="243" width="245" height="135" class="box role"/>
+  <text x="513" y="275" text-anchor="middle" class="label">Ascend 服务角色</text>
+  <text x="513" y="305" text-anchor="middle" class="small">Ascend 预填充实例</text>
+  <text x="513" y="331" text-anchor="middle" class="small">Ascend 解码实例</text>
+  <text x="513" y="357" text-anchor="middle" class="tiny">每类实例选择自己的并行配置</text>
+
+  <rect x="760" y="100" width="245" height="90" class="box cap"/>
+  <text x="883" y="132" text-anchor="middle" class="label">单实例能力</text>
+  <text x="883" y="160" text-anchor="middle" class="small">mu_cp, mu_cd</text>
+  <text x="883" y="180" text-anchor="middle" class="tiny">延迟目标下可承载请求率</text>
+
+  <rect x="760" y="265" width="245" height="90" class="box cap"/>
+  <text x="883" y="297" text-anchor="middle" class="label">单实例能力</text>
+  <text x="883" y="325" text-anchor="middle" class="small">mu_ap, mu_ad</text>
+  <text x="883" y="345" text-anchor="middle" class="tiny">延迟目标下可承载请求率</text>
+
+  <path d="M 275 142 L 390 142" class="arrow"/>
+  <path d="M 275 308 L 390 308" class="arrow"/>
+  <path d="M 635 145 L 760 145" class="arrow"/>
+  <path d="M 635 310 L 760 310" class="arrow"/>
+
+  <path d="M 160 202 L 160 248" class="dash"/>
+  <path d="M 513 213 L 513 243" class="dash"/>
+
+  <text x="306" y="124" class="tiny">资源限制</text>
+  <text x="306" y="292" class="tiny">资源限制</text>
+  <text x="672" y="125" class="tiny">实测与仿真评估</text>
+  <text x="672" y="292" class="tiny">实测与仿真评估</text>
+</svg>

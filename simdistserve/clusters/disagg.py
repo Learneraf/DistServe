@@ -4,7 +4,7 @@ from typing import List, Optional
 
 import simpy
 
-from simdistserve.base.scheduler import Scheduler
+from simdistserve.base.scheduler import HeteroGreedyScheduler, Scheduler
 from simdistserve.base.worker import Worker, WorkerConfig
 from simdistserve.utils import set_next_worker
 
@@ -38,7 +38,10 @@ class DisaggCluster:
             "handoff_delay_ms",
             "handoff_delay_per_token_ms",
             "handoff_capacity",
+            "handoff_delays",
+            "ingress_delays",
             "prefill_first_token_visible_immediately",
+            "scheduler_type",
         )
         cluster_config = {
             key: worker_kwargs.pop(key)
@@ -75,11 +78,21 @@ class DisaggCluster:
             decode_instances.append(instance)
             pass
 
-        scheduler = Scheduler(env, prefill_heads=[
-            i[0] for i in prefill_instances
-        ], decode_heads=[
-            i[0] for i in decode_instances
-        ])
+        prefill_heads = [i[0] for i in prefill_instances]
+        decode_heads = [i[0] for i in decode_instances]
+        scheduler_type = cluster_config.get("scheduler_type", "default")
+        if scheduler_type == "hetero_greedy":
+            scheduler = HeteroGreedyScheduler(
+                env,
+                prefill_heads=prefill_heads,
+                decode_heads=decode_heads,
+                handoff_delays=cluster_config.get("handoff_delays"),
+                ingress_delays=cluster_config.get("ingress_delays"),
+            )
+        elif scheduler_type == "default":
+            scheduler = Scheduler(env, prefill_heads=prefill_heads, decode_heads=decode_heads)
+        else:
+            raise ValueError(f"Unknown scheduler_type: {scheduler_type}")
 
         for last_in_prefill in (instances[-1] for instances in prefill_instances):
             last_in_prefill.global_scheduler = scheduler

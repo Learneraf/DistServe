@@ -118,6 +118,22 @@ def parse_args(args_=None):
               'to the user before the handoff completes. Defaults to false for '
               'vllm_ascend and true otherwise.'),
     )
+    parser.add_argument(
+        '--latency-calibration-file',
+        type=str,
+        default=None,
+        help='Optional JSON file with per-model first_token_latency quantile maps.',
+    )
+    parser.add_argument(
+        '--ftl-overhead-model-file',
+        type=str,
+        default=None,
+        help=(
+            'Optional JSON file with a per-model parametric overhead added to '
+            'first_token_latency. This is intended for P/D connector and '
+            'decode-side first-token visibility overhead.'
+        ),
+    )
 
     args = parser.parse_args(args=args_)
 
@@ -128,6 +144,83 @@ def parse_args(args_=None):
     assert isinstance(args.slo_scales, list)
     assert isinstance(args.slas, list)
     return args
+
+
+def apply_latency_calibration(per_request_latency_df, model_type, calibration_file):
+    if not calibration_file:
+        return per_request_latency_df
+
+    with open(calibration_file, encoding="utf-8") as f:
+        calibration = json.load(f)
+    model_key = ModelTypes.formalize_model_name(model_type)
+    model_calibration = calibration.get(model_key) or calibration.get(model_type)
+    if not model_calibration:
+        return per_request_latency_df
+
+    ftl_calibration = model_calibration.get("first_token_latency")
+    if not ftl_calibration:
+        return per_request_latency_df
+
+    x_ms = np.array(ftl_calibration["x_ms"], dtype=float)
+    y_ms = np.array(ftl_calibration["y_ms"], dtype=float)
+    if len(x_ms) != len(y_ms) or len(x_ms) < 2:
+        raise ValueError(
+            f"Invalid first_token_latency calibration for {model_key}: "
+            "x_ms and y_ms must have the same length >= 2."
+        )
+
+    calibrated_df = per_request_latency_df.copy()
+    old_ftl = calibrated_df["first_token_latency"].to_numpy(dtype=float)
+    new_ftl = np.interp(old_ftl, x_ms, y_ms, left=y_ms[0], right=y_ms[-1])
+    calibrated_df["first_token_latency"] = new_ftl
+    if "decoding_latency" in calibrated_df:
+        calibrated_df["total_latency"] = (
+            calibrated_df["first_token_latency"] + calibrated_df["decoding_latency"]
+        )
+    return calibrated_df
+
+
+def apply_ftl_overhead_model(per_request_latency_df, request_df, model_type, model_file):
+    if not model_file:
+        return per_request_latency_df
+
+    with open(model_file, encoding="utf-8") as f:
+        models = json.load(f)
+    model_key = ModelTypes.formalize_model_name(model_type)
+    model_config = models.get(model_key) or models.get(model_type)
+    if not model_config:
+        return per_request_latency_df
+
+    overhead_config = model_config.get("first_token_overhead", model_config)
+    coeffs = overhead_config.get("coeffs")
+    features = overhead_config.get("features", ["constant", "prompt_len", "output_len"])
+    if not coeffs or len(coeffs) != len(features):
+        raise ValueError(
+            f"Invalid first-token overhead model for {model_key}: "
+            "coeffs and features must have the same non-zero length."
+        )
+
+    feature_values = {
+        "constant": np.ones(len(request_df), dtype=float),
+        "prompt_len": request_df["prefill_lens"].to_numpy(dtype=float),
+        "output_len": request_df["output_lens"].to_numpy(dtype=float),
+    }
+    overhead_ms = np.zeros(len(request_df), dtype=float)
+    for coeff, feature in zip(coeffs, features):
+        if feature not in feature_values:
+            raise ValueError(f"Unsupported FTL overhead feature: {feature}")
+        overhead_ms += float(coeff) * feature_values[feature]
+    if overhead_config.get("clamp_min_zero", True):
+        overhead_ms = np.maximum(overhead_ms, 0.0)
+
+    adjusted_df = per_request_latency_df.copy()
+    overhead_series = pd.Series(overhead_ms, index=request_df.index)
+    adjusted_df["first_token_latency"] = (
+        adjusted_df["first_token_latency"] + overhead_series
+    )
+    if "total_latency" in adjusted_df:
+        adjusted_df["total_latency"] = adjusted_df["total_latency"] + overhead_series
+    return adjusted_df
 
 
 def check_dataset_existence(x):
@@ -149,12 +242,11 @@ def load_workload(
     random.seed(seed)
     np.random.seed(seed)
 
-    # 加载数据集
-    import sys
-    import os
-    structs_path = os.path.join(os.path.dirname(__file__), '../..', 'evaluation', '2-benchmark-serving', 'structs.py')
-    sys.path.append(os.path.dirname(structs_path))
-    from structs import Dataset, TestRequest
+    # 加载数据集.  The JSONL benchmark path below only needs dict records, so
+    # keep the heavier evaluation structs import lazy; importing it also loads
+    # the DistServe native extension, which is not required for simulation.
+    Dataset = None
+    TestRequest = None
     
     
     if not do_sample:
@@ -169,8 +261,23 @@ def load_workload(
                 json_data = json.loads(line)
                 dataset.append(json_data)
 
-        sampled_test_requests = dataset
+        if N > len(dataset):
+            raise ValueError(
+                f"Number of prompts ({N}) is larger than the dataset size ({len(dataset)})."
+            )
+        sampled_test_requests = dataset[:N]
     else:
+        import sys
+        structs_path = os.path.join(
+            os.path.dirname(__file__),
+            '../..',
+            'evaluation',
+            '2-benchmark-serving',
+            'structs.py',
+        )
+        sys.path.append(os.path.dirname(structs_path))
+        from structs import Dataset, TestRequest
+
         dataset = Dataset.load(workload)
         if N > len(dataset.reqs):
             raise ValueError(
@@ -192,9 +299,9 @@ def load_workload(
             prefill_len = len(token_ids)
 
         # 获取 prompt 文本（假设 req 有 prompt 属性）
-        elif isinstance(req, TestRequest) and hasattr(req, 'prompt_len') and req.prompt_len is not None:
+        elif TestRequest is not None and isinstance(req, TestRequest) and hasattr(req, 'prompt_len') and req.prompt_len is not None:
             prefill_len = req.prompt_len
-        elif isinstance(req, TestRequest) and hasattr(req, 'prompt') and req.prompt is not None:
+        elif TestRequest is not None and isinstance(req, TestRequest) and hasattr(req, 'prompt') and req.prompt is not None:
             # 仅在数据集中缺少 prompt_len 时才重新分词，避免与真实基准的长度定义不一致。
             if tokenizer is None:
                 tokenizer = AutoTokenizer.from_pretrained(model_name, trust_remote_code=True)
@@ -328,7 +435,6 @@ def main(args, outputs=None):
             decode_max_tokens=decode_max_tokens,
             enable_chunked_prefill=False,
             engine_type=args.backend,
-            prefill_generates_first_token=True,
             handoff_delay_ms=handoff_delay_ms,
             handoff_delay_per_token_ms=handoff_delay_per_token_ms,
             handoff_capacity=args.handoff_capacity,
@@ -374,6 +480,17 @@ def main(args, outputs=None):
         request_event_df,
         request_df.output_lens,
         request_df.first_token_prefill,
+    )
+    per_request_latency_df = apply_ftl_overhead_model(
+        per_request_latency_df,
+        request_df,
+        model_type,
+        args.ftl_overhead_model_file,
+    )
+    per_request_latency_df = apply_latency_calibration(
+        per_request_latency_df,
+        model_type,
+        args.latency_calibration_file,
     )
     outputs['request_df'] = request_df
     outputs['request_event_df'] = request_event_df

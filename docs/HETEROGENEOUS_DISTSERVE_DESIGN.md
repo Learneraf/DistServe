@@ -302,9 +302,16 @@ x_aa <= H_aa
 
 ### Goodput estimation with cross-pool handoff
 
-这一节描述的是一个可选的 allocation-solver 版本，用来说明在允许跨池 handoff 时，如何把 `ncp/ncd/nap/nad` 与 `x_cc/x_ca/x_ac/x_aa` 一并写成统一优化问题。它不是当前文档的主线实现；当前主线仍然是显式枚举四类 instance 数，再在固定 counts 下求解 flow。
+当前主线算法不再显式枚举 `ncp/ncd/nap/nad`。给定一个固定的 shape tuple 后，算法直接把四类 instance 数与四个跨池 flow 变量一起放入一个小规模 MILP 中求解。
 
-如果后续希望把四重 count 枚举进一步压缩为 solver 形式，那么给定 shapes 后，可以把 `ncp/ncd/nap/nad` 作为 instance allocation solver 的决策变量。若要求 instance 数为整数，则得到一个小规模 MILP；若先放松为连续变量，则得到 LP，再做邻域整数化。
+也就是说，搜索流程保留 shape 枚举，但把 count allocation 交给优化器：
+
+```text
+枚举 p_c, d_c, p_a, d_a
+    -> 通过 MILP 优化 ncp, ncd, nap, nad 与 x_cc, x_ca, x_ac, x_aa
+```
+
+这样可以避免固定 shape tuple 下的四重 count 暴力枚举。若要求 instance 数为整数，则得到 MILP；若先放松为连续变量，则得到 LP，再做邻域整数化。V1 推荐直接使用 MILP，因为变量数量很小。
 
 完整的 MILP 形式为：
 
@@ -326,9 +333,23 @@ subject to:
     a_cp * ncp + a_cd * ncd <= B_cuda
     a_ap * nap + a_ad * nad <= B_asc
 
+    ncp + nap >= 1
+    ncd + nad >= 1
+
     ncp, ncd, nap, nad ∈ Z_{\ge 0}
     x_cc, x_ca, x_ac, x_aa >= 0
 ```
+
+其中：
+
+```text
+p_c: CUDA prefill shape
+d_c: CUDA decode shape
+p_a: Ascend prefill shape
+d_a: Ascend decode shape
+```
+
+如果某个 shape 为 `None`，则对应的 instance 数固定为 `0`，对应的 `mu` 与资源占用也视为 `0`。
 
 如果不允许跨池 handoff，可令：
 
@@ -350,7 +371,7 @@ H_ac(p_a, d_c) = +inf
 Lambda_est = min(Lambda_prefill, Lambda_decode)
 ```
 
-但即使在不允许跨池 handoff 的情况下，`ncp/ncd/nap/nad` 也仍然可以通过 allocation solver 求解，而不是暴力枚举。
+但即使在不允许跨池 handoff 的情况下，`ncp/ncd/nap/nad` 也仍然通过 allocation solver 求解，而不是暴力枚举。
 
 ## PP 语义
 
@@ -1020,6 +1041,37 @@ handoff_penalty(i, r)
   = fixed_delay_dir + delay_per_token_dir * current_context_len(r)
 ```
 
+当前实现中，`fixed_delay_dir` 与 `delay_per_token_dir` 由 `handoff` 配置传入 scheduler。配置格式如下：
+
+```json
+{
+  "handoff": {
+    "cuda_to_ascend": {
+      "handoff_goodput_upper_bound": 1.0104,
+      "fixed_delay_ms": 0.0,
+      "delay_per_token_ms": 1.7153
+    },
+    "ascend_to_cuda": {
+      "handoff_goodput_upper_bound": 1.3426,
+      "fixed_delay_ms": 0.0,
+      "delay_per_token_ms": 1.2909
+    }
+  }
+}
+```
+
+`delay_per_token_ms` 由模型 KV cache 大小和实测链路带宽计算：
+
+```text
+KV_bytes_per_token
+  = num_hidden_layers * num_key_value_heads * head_dim * 2 * dtype_bytes
+
+delay_per_token_ms_dir
+  = KV_bytes_per_token / bandwidth_bytes_per_second_dir * 1000
+```
+
+当前 `fixed_delay_ms` 默认取 `0`。若后续单独测得控制面开销、RPC 建连开销或 runtime 固定开销，可以直接写入该字段。
+
 V1 下，decode 调度器选择：
 
 ```text
@@ -1073,8 +1125,9 @@ subject to SLO attainment constraints
 
 ```text
 先枚举 shape，
-再显式枚举四类 instance 数，
-最后在固定 shape 与 counts 下估计该配置的 goodput。
+再对每个固定 shape tuple 求解一个小规模 MILP，
+由 MILP 同时决定四类 instance 数和跨池 flow，
+最后用 MILP 目标值估计该配置的 goodput。
 ```
 
 更具体地说，推荐按如下顺序实现：
@@ -1093,30 +1146,145 @@ subject to SLO attainment constraints
 ncp_max, ncd_max, nap_max, nad_max
 ```
 
-5. 显式枚举：
+5. 对固定 shape tuple 构造 instance allocation MILP，变量为：
 
 ```text
-ncp in [0, ncp_max]
-ncd in [0, ncd_max]
-nap in [0, nap_max]
-nad in [0, nad_max]
+ncp, ncd, nap, nad
+x_cc, x_ca, x_ac, x_aa
 ```
 
-6. 对每个 `(p_c, d_c, p_a, d_a, ncp, ncd, nap, nad)` 做静态合法性检查。
-7. 对通过检查的配置，计算线性容量模型下的 `lambda_est`。
-8. 选取 `TopK` 个候选，再做全系统仿真校正。
+6. 在 MILP 中加入资源约束、instance 上界约束、prefill/decode goodput 约束、`H_ca/H_ac` handoff goodput 约束，以及低亲和性下的 count-level placement 约束。
+7. 求解 MILP，得到最优 `(ncp, ncd, nap, nad)` 与 `(x_cc, x_ca, x_ac, x_aa)`。
+8. 将 MILP 目标值作为 `lambda_est`，选取 `TopK` 个候选，再做全系统仿真校正。
 
-因此，当前主线不是“先求 allocation solver 再反推出 counts”，而是：
+因此，当前主线是：
 
 ```text
-shape profiling + 显式四重 count 枚举 + 候选配置校验
+shape profiling + per-shape-tuple MILP allocation + 候选配置校验
 ```
+
+## Baseline 配置
+
+为了评估异构搜索算法的收益，需要至少比较以下两个 baseline。二者都使用相同的 shape profiling 结果与相同的设备预算，只是在 flow 和 instance allocation 上施加额外约束。
+
+### Baseline 1: No Cross-Pool Handoff
+
+该 baseline 不允许 CUDA 与 Ascend 之间发生 handoff。每个设备池只在自己内部完成 prefill 与 decode：
+
+```text
+CUDA prefill  -> CUDA decode
+Ascend prefill -> Ascend decode
+```
+
+也就是说：
+
+```text
+x_ca = 0
+x_ac = 0
+```
+
+只允许：
+
+```text
+x_cc >= 0
+x_aa >= 0
+```
+
+对应的 MILP 目标仍然是：
+
+```text
+maximize Lambda = x_cc + x_aa
+```
+
+但不再利用跨池 decode 或 prefill 资源互补。该 baseline 衡量的是：如果 CUDA 与 Ascend 两个 pool 各自独立服务请求，系统能达到的最大 goodput。
+
+在固定 shape tuple 下，其主要约束为：
+
+```text
+x_cc <= mu_cp * ncp
+x_cc <= mu_cd * ncd
+
+x_aa <= mu_ap * nap
+x_aa <= mu_ad * nad
+
+a_cp * ncp + a_cd * ncd <= B_cuda
+a_ap * nap + a_ad * nad <= B_asc
+```
+
+最终 goodput 为：
+
+```text
+Lambda_no_cross = x_cc + x_aa
+```
+
+### Baseline 2: CUDA Prefill + Ascend Decode
+
+该 baseline 使用全部 CUDA 资源做 prefill，使用全部 Ascend 资源做 decode。所有请求都走：
+
+```text
+CUDA prefill -> Ascend decode
+```
+
+也就是说：
+
+```text
+x_ca >= 0
+x_cc = 0
+x_ac = 0
+x_aa = 0
+```
+
+并且：
+
+```text
+ncd = 0
+nap = 0
+```
+
+只优化：
+
+```text
+ncp: CUDA prefill instance 数
+nad: Ascend decode instance 数
+x_ca: CUDA -> Ascend 请求流量
+```
+
+在固定 shape pair `(p_c, d_a)` 下，主要约束为：
+
+```text
+a_cp * ncp <= B_cuda
+a_ad * nad <= B_asc
+
+x_ca <= mu_cp * ncp
+x_ca <= mu_ad * nad
+x_ca <= H_ca(p_c, d_a)
+```
+
+因此该 baseline 的 goodput 可以理解为：
+
+```text
+Lambda_cuda_prefill_ascend_decode
+  = min(
+      CUDA prefill goodput,
+      Ascend decode goodput,
+      H_ca(p_c, d_a)
+    )
+```
+
+其中：
+
+```text
+CUDA prefill goodput = mu_cp * ncp
+Ascend decode goodput = mu_ad * nad
+```
+
+该 baseline 衡量的是：如果强制做异构角色分工，即 CUDA 专做 prefill、Ascend 专做 decode，系统能达到的最大 goodput。它可以反映跨池 handoff 上限 `H_ca` 是否成为主要瓶颈。
 
 ## 搜索算法
 
-当前原型采用一种两阶段启发式搜索：先对单个 prefill/decode instance 做 shape profiling，得到每种 shape 的单 instance goodput；再在固定 shape tuple 下显式枚举四类 instance 数量，用线性 goodput 模型估计整机 goodput，并选择估计最优的配置。必要时可在最后对候选配置再做全系统仿真校正。
+当前原型采用一种两阶段启发式搜索：先对单个 prefill/decode instance 做 shape profiling，得到每种 shape 的 single-instance goodput；再在固定 shape tuple 下使用 MILP 优化四类 instance 数量与跨池 flow，用线性 goodput 模型估计整机 goodput，并选择估计最优的配置。必要时可在最后对候选配置再做全系统仿真校正。
 
-这个过程与原始 DistServe 的区别在于：DistServe 更强调先搜索单个实例的并行形状，再隐式复制；而当前原型在第二阶段显式枚举：
+这个过程与原始 DistServe 的区别在于：DistServe 更强调先搜索单个实例的并行形状，再隐式复制；而当前原型在第二阶段显式优化：
 
 ```text
 cuda_prefill_instances
@@ -1125,9 +1293,11 @@ ascend_prefill_instances
 ascend_decode_instances
 ```
 
+也就是在固定 shape tuple 下由 MILP 直接决定上述四类 instance 数。
+
 下面给出论文风格的伪代码。
 
-**Algorithm 1** Current Heterogeneous DistServe Search
+**Algorithm 1** Heterogeneous DistServe Search with MILP Allocation
 
 **Input**
 
@@ -1177,59 +1347,37 @@ best_goodput
 29:                     continue
 30:                 end if
 31:
-32:                 U_cp <- get_instance_upper_bound(cuda_pool,   p_c)
-33:                 U_cd <- get_instance_upper_bound(cuda_pool,   d_c)
-34:                 U_ap <- get_instance_upper_bound(ascend_pool, p_a)
-35:                 U_ad <- get_instance_upper_bound(ascend_pool, d_a)
-36:
-37:                 for ncp in [0, U_cp] do
-38:                     for ncd in [0, U_cd] do
-39:                         for nap in [0, U_ap] do
-40:                             for nad in [0, U_ad] do
-41:                                 if not StaticCountCompatible(
-42:                                         cuda_pool, ascend_pool,
-43:                                         p_c, d_c, p_a, d_a,
-44:                                         ncp, ncd, nap, nad) then
-45:                                     continue
-46:                                 end if
-47:
-48:                                 flows, λ_est <- SolveFlowAllocation(
-49:                                                     p_c, d_c, p_a, d_a,
-50:                                                     ncp, ncd, nap, nad,
-51:                                                     μp_cuda[p_c], μd_cuda[d_c],
-52:                                                     μp_asc[p_a],  μd_asc[d_a],
-53:                                                     H_ca(p_c, d_a), H_ac(p_a, d_c))
-54:
-55:                                 if λ_est is infeasible then
-56:                                     continue
-57:                                 end if
-58:
-59:                                 cfg <- (p_c, d_c, p_a, d_a,
-60:                                         ncp, ncd, nap, nad, flows)
-61:                                 C.append((cfg, λ_est))
-62:                             end for
-63:                         end for
-64:                     end for
-65:                 end for
-66:             end for
-67:         end for
-68:     end for
-69: end for
-70:
-71: C_top <- TopKByEstimatedGoodput(C, TopK)
-72:
-73: best_config <- None
-74: best_goodput <- -∞
-75:
-76: for each (cfg, λ_est) in C_top do
-77:     λ_true <- ValidateByFullSimulation(cfg, model, workload, slo)
-78:     if λ_true > best_goodput then
-79:         best_goodput <- λ_true
-80:         best_config <- cfg
-81:     end if
-82: end for
-83:
-84: return best_config, best_goodput
+32:                 cfg, λ_est <- OptimizeInstanceAllocationMILP(
+33:                                   cuda_pool, ascend_pool,
+34:                                   p_c, d_c, p_a, d_a,
+35:                                   μp_cuda[p_c], μd_cuda[d_c],
+36:                                   μp_asc[p_a],  μd_asc[d_a],
+37:                                   H_ca(p_c, d_a), H_ac(p_a, d_c))
+38:
+39:                 if λ_est is infeasible then
+40:                     continue
+41:                 end if
+42:
+43:                 C.append((cfg, λ_est))
+44:             end for
+45:         end for
+46:     end for
+47: end for
+48:
+49: C_top <- TopKByEstimatedGoodput(C, TopK)
+50:
+51: best_config <- None
+52: best_goodput <- -∞
+53:
+54: for each (cfg, λ_est) in C_top do
+55:     λ_true <- ValidateByFullSimulation(cfg, model, workload, slo)
+56:     if λ_true > best_goodput then
+57:         best_goodput <- λ_true
+58:         best_config <- cfg
+59:     end if
+60: end for
+61:
+62: return best_config, best_goodput
 ```
 
 **Procedure 1** Single-Instance Profiling
@@ -1271,13 +1419,12 @@ model, pool, shape, workload, slo, role
 22: return low
 ```
 
-**Procedure 2** Solve Flow Allocation
+**Procedure 2** Optimize Instance Allocation MILP
 
 **Input**
 
 ```text
 p_c, d_c, p_a, d_a
-ncp, ncd, nap, nad
 mu_cp, mu_cd, mu_ap, mu_ad
 H_ca(p_c, d_a), H_ac(p_a, d_c)
 ```
@@ -1285,44 +1432,66 @@ H_ca(p_c, d_a), H_ac(p_a, d_c)
 **Output**
 
 ```text
-flows, Lambda
+config, Lambda
 ```
 
 ```text
-1:  Create an empty LP model.
+1:  Create an empty MILP model.
 2:
-3:  Add the following objective and constraints:
+3:  Add integer instance-count variables:
 4:
-5:      maximize Lambda
+5:      ncp, ncd, nap, nad ∈ Z_{\ge 0}
 6:
-7:      subject to
-8:          Lambda = x_cc + x_ca + x_ac + x_aa
-9:
-10:         x_cc + x_ca <= mu_cp * ncp
-11:         x_ac + x_aa <= mu_ap * nap
-12:
-13:         x_cc + x_ac <= mu_cd * ncd
-14:         x_ca + x_aa <= mu_ad * nad
+7:  Add continuous flow variables:
+8:
+9:      x_cc, x_ca, x_ac, x_aa >= 0
+10:
+11: If p_c = None then fix ncp = 0.
+12: If d_c = None then fix ncd = 0.
+13: If p_a = None then fix nap = 0.
+14: If d_a = None then fix nad = 0.
 15:
-16:         x_ca <= H_ca(p_c, d_a)
-17:         x_ac <= H_ac(p_a, d_c)
-18:
-19:         x_cc, x_ca, x_ac, x_aa >= 0
-20:
-21: Solve the LP model.
+16: Add the following objective and constraints:
+17:
+18:     maximize Lambda
+19:
+20:     subject to
+21:         Lambda = x_cc + x_ca + x_ac + x_aa
 22:
-23: return the optimal flows and objective value Lambda
+23:         x_cc + x_ca <= mu_cp * ncp
+24:         x_ac + x_aa <= mu_ap * nap
+25:
+26:         x_cc + x_ac <= mu_cd * ncd
+27:         x_ca + x_aa <= mu_ad * nad
+28:
+29:         x_ca <= H_ca(p_c, d_a)
+30:         x_ac <= H_ac(p_a, d_c)
+31:
+32:         a_cp * ncp + a_cd * ncd <= B_cuda
+33:         a_ap * nap + a_ad * nad <= B_asc
+34:
+35:         ncp + nap >= 1
+36:         ncd + nad >= 1
+37:
+38: Add low-affinity count-level placement constraints if needed.
+39:
+40: Solve the MILP model.
+41:
+42: If infeasible, return infeasible.
+43:
+44: Construct cfg from the optimal shapes, counts, and flows.
+45:
+46: return cfg and objective value Lambda
 ```
 
 在该算法中：
 
 1. `ProfileSingleInstance` 返回的是单个 instance 在目标 SLO 下的 single-instance goodput，而不是整机 goodput。
-2. 第二阶段显式枚举 `ncp/ncd/nap/nad`，并在固定 counts 下用 `SolveFlowAllocation` 计算该配置允许的最大总流量。
-3. `SolveFlowAllocation` 只优化 `x_cc/x_ca/x_ac/x_aa` 四个 flow 变量，因此是一个固定 counts 下的小规模 LP。
+2. 第二阶段不再显式枚举 `ncp/ncd/nap/nad`。这四个值由 `OptimizeInstanceAllocationMILP` 直接求出。
+3. `OptimizeInstanceAllocationMILP` 同时优化四个整数 instance-count 变量和四个连续 flow 变量。
 4. `ValidateByFullSimulation` 是可选 refinement step，用于纠正线性放大带来的误差。工程实现中可令 `TopK = 1` 以获得最快搜索，也可以取更大的 `TopK` 以提高稳健性。
 5. 当前 V1 明确允许 CUDA/Ascend 交叉 handoff，因此 `x_ca` 与 `x_ac` 默认参与优化。
-6. V1中应当使用优化后的整数线性规划MILP来代替算法中的四重for循环枚举每个instance可行的数目，避免算法时间复杂度太高。
-7. 统一约定：
+6. 统一约定：
 
 ```text
 mu(None) = 0
@@ -1401,11 +1570,11 @@ pp_cross_ascend,
 - prefill 和 decode 容量严重失衡
 - 单请求 latency 已经远超 SLO
 
-所以异构版推荐“分层枚举”，本质上是把“先构造局部合法块，再拼整机配置”这个过程显式化。它不是理论上必须的，而是工程上更可控。
+所以异构版推荐“分层枚举 + MILP allocation”，本质上是把“先构造局部合法 shape，再用优化器决定 instance 数和 flow”这个过程显式化。它不是理论上必须的，而是工程上更可控。
 
 ### 异构版的分层枚举
 
-虽然上一节的主算法是“显式枚举四类 instance 数”，但从理解上仍然可以把它看作一个三层过程：先枚举 shape，再理解资源预算，最后枚举 counts。这个视角更接近工程实现时的剪枝顺序。
+虽然上一节的主算法不再显式枚举四类 instance 数，但从理解上仍然可以把它看作一个三层过程：先枚举 shape，再建立资源预算与约束，最后由 MILP 选择 counts 与 flow。这个视角更接近工程实现时的剪枝顺序。
 
 先给一个整体 Mermaid 图：
 
@@ -1418,15 +1587,15 @@ flowchart TD
     B --> C3[枚举 Ascend prefill shapes]
     B --> C4[枚举 Ascend decode shapes]
 
-    C1 --> D1[对每个设备池做资源切分]
+    C1 --> D1[构造每个设备池的资源预算]
     C2 --> D1
     C3 --> D1
     C4 --> D1
 
-    D1 --> E1[CUDA: 多少卡给 prefill / decode]
-    D1 --> E2[Ascend: 多少卡给 prefill / decode]
+    D1 --> E1[CUDA 资源约束]
+    D1 --> E2[Ascend 资源约束]
 
-    E1 --> F[在预算内选择 shape 与 instance 数]
+    E1 --> F[固定 shape tuple]
     E2 --> F
 
     F --> G1[低亲和性检查:
@@ -1436,21 +1605,22 @@ flowchart TD
     + n_decode * tp_decode * pp_local_decode
     <= devices_per_node]
 
-    G2 --> H[得到单个 pool 的合法配置]
-    H --> I[合并 CUDA pool 配置与 Ascend pool 配置]
-    I --> J[全局静态约束检查]
-    J --> K[得到一个完整 hetero config]
-    K --> L[对该 config 二分 arrival rate]
-    L --> M[记录最大 goodput]
+    G2 --> H[构造 MILP:
+    优化 ncp,ncd,nap,nad
+    与 x_cc,x_ca,x_ac,x_aa]
+    H --> I[得到完整 hetero config]
+    I --> J[TopK 候选]
+    J --> K[可选全系统仿真校正]
+    K --> L[记录最大 goodput]
 ```
 
 如果想把这个图理解成一句话，可以概括为：
 
 ```text
 先枚举“一个 instance 能长成什么样”，
-再枚举“给这个 role 多少资源”，
-最后枚举“这种 shape 复制多少份”，
-再把 CUDA 和 Ascend 拼成一个完整配置。
+再建立“这个 shape tuple 下资源和 handoff 受哪些约束”，
+最后由 MILP 决定“这种 shape 复制多少份、跨池 flow 怎么走”，
+得到一个完整配置。
 ```
 
 第一层：枚举每个设备池的合法 role shape。
@@ -1486,14 +1656,14 @@ cuda_prefill_shapes = [
 ]
 ```
 
-第二层：枚举资源切分。
+第二层：建立资源预算与约束。
 
 ```text
 cuda_prefill_devices / cuda_decode_devices
 ascend_prefill_devices / ascend_decode_devices
 ```
 
-这里的意思是：先决定每个设备池里，多少资源给 prefill，多少资源给 decode。
+这里的意思是：对每个固定 shape tuple，建立 CUDA 与 Ascend 两个设备池的总资源预算。V1 不再提前枚举“多少卡给 prefill、多少卡给 decode”，而是把这个决策交给 MILP。
 
 例如：
 
@@ -1507,11 +1677,11 @@ Ascend 总共 4 张卡:
   4 张给 Ascend decode
 ```
 
-这一步还没有决定具体 `tp/pp`，只是先决定资源预算。
+这一步不再产生一个独立的 resource split 配置，而是为 MILP 提供资源约束。
 
-第三层：为每个资源切分选择 shape 与 instance 数。
+第三层：固定 shape tuple 后优化 instance 数与 flow。
 
-例如上面的资源切分下：
+例如在某个固定 shape tuple 下：
 
 ```text
 CUDA prefill 预算 4 张卡：
@@ -1527,7 +1697,7 @@ Ascend decode 预算 4 张卡：
   则可以放 4 个 instances
 ```
 
-于是得到一个完整配置：
+MILP 会直接给出一个完整配置：
 
 ```text
 cuda_prefill:
@@ -1543,7 +1713,7 @@ ascend_decode:
   shape=(1,1,1), num_instances=4
 ```
 
-然后再进入仿真，测试这个配置在不同 arrival rate 下的 goodput。
+然后可选地再进入仿真，测试这个配置在不同 arrival rate 下的真实 goodput。
 
 ### 一个更贴近 DistServe 的低亲和性例子
 
@@ -1627,14 +1797,14 @@ total_pp_decode  = 2 * 1 = 2
 
 ### instance 上界函数
 
-分层枚举伪代码里会用到：
+MILP allocation 中仍然可以使用 instance 上界来收紧变量范围：
 
 ```python
-max_prefill_instances = get_instance_upper_bound(pool, p_shape)
-max_decode_instances = get_instance_upper_bound(pool, d_shape)
+n_prefill <= get_instance_upper_bound(pool, p_shape)
+n_decode <= get_instance_upper_bound(pool, d_shape)
 ```
 
-这个函数只负责计算枚举上界。它的含义是：
+这个函数只负责计算 instance-count 变量的上界。它的含义是：
 
 ```text
 只看某一个 role-shape，并且暂时不考虑另一侧 role 竞争资源时，
@@ -1745,12 +1915,11 @@ max_instances = 4 // 2 = 2
 
 所以这个 shape 单独看最多可以放 2 个 instance。
 
-注意这个上界只是为了让下面的枚举有范围：
+注意这个上界现在主要用于收紧 MILP 变量范围：
 
-```python
-for n_prefill in range(0, max_prefill_instances + 1):
-    for n_decode in range(0, max_decode_instances + 1):
-        ...
+```text
+0 <= n_prefill <= max_prefill_instances
+0 <= n_decode <= max_decode_instances
 ```
 
 真正合法还要检查 prefill 和 decode 一起占用的 node-local 资源：
@@ -1878,7 +2047,7 @@ simdistserve/benchmarks/search_binary.py
 
 1. 当前同构 DistServe 的直接笛卡尔积枚举。
 2. 备选方案：CUDA 与 Ascend 各自按 DistServe 风格枚举，再做组合。
-3. 当前主方案：显式枚举四类 instance 数的分层搜索。
+3. 当前主方案：shape 枚举 + MILP instance allocation。
 
 ### 1. 当前同构 DistServe 的复杂度
 
@@ -1992,15 +2161,15 @@ O(M_cuda * M_asc)
 V1 异构 DistServe：两个五维笛卡尔积，再做一次组合
 ```
 
-### 3. 当前主方案：显式枚举四类 instance 数的复杂度
+### 3. 当前主方案：shape 枚举 + MILP instance allocation 的复杂度
 
-当前主方案在固定 shape tuple 后，会继续显式枚举：
+当前主方案在固定 shape tuple 后，不再显式枚举：
 
 ```text
 ncp, ncd, nap, nad
 ```
 
-并对每个固定 counts 的配置调用 `SolveFlowAllocation` 计算 `lambda_est`。
+而是对每个 shape tuple 调用一次 `OptimizeInstanceAllocationMILP`，由 MILP 直接求出最优 counts 与 flow。
 
 对单个设备池 `d`，记：
 
@@ -2047,17 +2216,38 @@ O(C_d * T_d^2 * P_d^2)
 U_prefill_d, U_decode_d
 ```
 
-则在固定单池 shape-pair 后，该池内需要显式枚举的 count 组合数上界为：
+它们现在只用于收紧 MILP 中 instance-count 变量的上下界，而不是产生显式枚举循环。
 
 ```text
-O(U_prefill_d * U_decode_d)
+0 <= n_prefill_d <= U_prefill_d
+0 <= n_decode_d  <= U_decode_d
 ```
 
-双池联合后，固定一个四元 shape tuple 的 count 组合数上界为：
+因此，固定一个四元 shape tuple 的 count 搜索成本从暴力枚举版本的：
 
 ```text
 O(U_cp * U_cd * U_ap * U_ad)
 ```
+
+变为一次小规模 MILP 的求解成本：
+
+```text
+T_milp
+```
+
+该 MILP 只有四个整数变量：
+
+```text
+ncp, ncd, nap, nad
+```
+
+以及四个连续 flow 变量：
+
+```text
+x_cc, x_ca, x_ac, x_aa
+```
+
+所以它的实际求解成本通常远小于四重 count 暴力枚举。
 
 因此双池联合搜索的复杂度可以写成：
 
@@ -2080,7 +2270,7 @@ O(
   *
   (T_asc * P_asc * C_asc)^2
   *
-  U_cp * U_cd * U_ap * U_ad
+  T_milp
 )
 ```
 
@@ -2092,7 +2282,7 @@ O(
   *
   C_asc  * T_asc^2  * P_asc^2
   *
-  U_cp * U_cd * U_ap * U_ad
+  T_milp
 )
 ```
 
@@ -2101,14 +2291,31 @@ O(
 ```text
 T_cuda, P_cuda = O(M),   C_cuda = O(N)
 T_asc,  P_asc  = O(M),   C_asc  = O(N)
-U_cp, U_cd, U_ap, U_ad = O(NM)
 ```
 
 则：
 
 ```text
-松上界为 O(N^8 M^12)
-较紧上界为 O(N^6 M^12)
+松上界为 O(N^4 M^8 * T_milp)
+较紧上界为 O(N^2 M^8 * T_milp)
+```
+
+相比显式 count 枚举版本，少掉了：
+
+```text
+O(U_cp * U_cd * U_ap * U_ad) = O((NM)^4)
+```
+
+这一因子。若采用较紧 shape-pair 上界，则原本的：
+
+```text
+O(N^6 M^12)
+```
+
+降为：
+
+```text
+O(N^2 M^8 * T_milp)
 ```
 
 需要强调的是：
@@ -2130,9 +2337,8 @@ U_cp, U_cd, U_ap, U_ad = O(NM)
 因此：
 
 ```text
-当前主方案：显式枚举四类 instance 数，逻辑最直接。
-如果后续需要进一步降复杂度，
-可再把四重 count 枚举替换为 allocation solver。
+当前主方案：枚举 shape tuple，但不显式枚举四类 instance 数。
+四类 instance 数由 MILP allocation solver 直接优化。
 ```
 
 ### 4. 完整搜索复杂度
@@ -2150,8 +2356,8 @@ T_profile:
     对每个 device-role shape 做 single-instance profiling。
 
 T_search:
-    枚举 shape tuple、显式枚举四类 instance 数，
-    并对每个固定 counts 的配置调用 SolveFlowAllocation。
+    枚举 shape tuple，
+    并对每个 shape tuple 调用 OptimizeInstanceAllocationMILP。
 
 T_validate:
     对 top-K 候选做完整系统仿真校正。
@@ -2164,8 +2370,7 @@ S_role = 所有 device-role shape 的数量级
 K_profile = single-instance profiling 中的 rate 二分次数
 T_single_sim = 单次 single-instance simulation 成本
 N_tuple = shape tuple 数量
-N_count = 每个 shape tuple 下被枚举的 count 组合数量
-T_flow = 单次 SolveFlowAllocation 成本
+T_alloc = 单次 OptimizeInstanceAllocationMILP 成本
 TopK = 保留进入完整仿真的候选数
 T_full_sim = 单次完整系统仿真成本
 ```
@@ -2174,7 +2379,7 @@ T_full_sim = 单次完整系统仿真成本
 
 ```text
 T_profile = O(S_role * K_profile * T_single_sim)
-T_search  = O(N_tuple * N_count * T_flow)
+T_search  = O(N_tuple * T_alloc)
 T_validate = O(TopK * T_full_sim)
 ```
 
@@ -2259,7 +2464,7 @@ Ascend: (pp_cross, ascend_prefill_tp, ascend_prefill_pp, ascend_decode_tp, ascen
 实现前仍需确认：
 
 1. 是否已有可复用的 KV cache transfer profile，可直接映射到 `delay_ca/delay_ac` 与 `H_ca/H_ac`。
-- 答案：目前只得到了双向的带宽B_ca和B_ac，H_ca和H_ac还需要根据此来计算，另外delay_ac和delay_ca也没有。
+- 答案：当前使用双向 iperf3 带宽、workload prompt length 和模型 KV cache 配置计算 `H_ca/H_ac`；同时使用 `KV_bytes_per_token / bandwidth_bytes_per_second` 计算 `delay_per_token_ca/delay_per_token_ac`。固定延迟 `fixed_delay_ca/fixed_delay_ac` 暂时取 0，后续可由独立 microbenchmark 补充。
 2. `prefill_tp != decode_tp` 时是否需要显式 layout transform 成本。
 - 答案：暂时不考虑。
 3. low-affinity 下是否要求 prefill/decode segments 必须严格 colocate，还是允许跨节点但加成本。

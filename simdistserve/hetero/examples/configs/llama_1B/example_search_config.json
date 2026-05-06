@@ -1,0 +1,46 @@
+{
+  "model": "llama_1B",
+  "workload": "/users/rh/DistServe/simdistserve/hetero/examples/workloads/llama-3.2-1B/profile_3000_seed0_minp32_mino32_maxp4096_maxo2048.jsonl",
+  "pools": {
+    "cuda": {
+      "num_nodes": 2,
+      "devices_per_node": 8,
+      "high_affinity": true
+    },
+    "ascend": {
+      "num_nodes": 2,
+      "devices_per_node": 8,
+      "high_affinity": true
+    }
+  },
+  "slo": {
+    "prefill_target_ms": 400,
+    "decode_target_ms": 200,
+    "prefill_attainment": 90,
+    "decode_attainment": 90
+  },
+  "handoff": {
+    "cuda_to_ascend": {
+      "handoff_goodput_upper_bound": 1062.3697968642518,
+      "fixed_delay_ms": 0.0,
+      "delay_per_token_ms": 0.00262144
+    },
+    "ascend_to_cuda": {
+      "handoff_goodput_upper_bound": 1062.3697968642518,
+      "fixed_delay_ms": 0.0,
+      "delay_per_token_ms": 0.00262144
+    }
+  },
+  "search": {
+    "single_instance_max_rate": 64.0,
+    "single_instance_epsilon": 0.1,
+    "arrival": "poisson",
+    "cv": 1.0,
+    "seed": 0,
+    "top_k": 10,
+    "profile_num_requests": 120,
+    "profile_min_profile_duration_s": 1.0,
+    "profile_max_rate_cap": 64.0,
+    "capped_mu_policy": "keep"
+  }
+}

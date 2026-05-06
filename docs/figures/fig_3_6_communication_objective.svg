@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1060" height="430" viewBox="0 0 1060 430">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#334155"/>
+    </marker>
+    <style>
+      .title { font: 700 22px Arial, sans-serif; fill: #1f2937; }
+      .label { font: 700 16px Arial, sans-serif; fill: #1f2937; }
+      .small { font: 14px Arial, sans-serif; fill: #334155; }
+      .tiny { font: 13px Arial, sans-serif; fill: #475569; }
+      .box { fill: #f8fafc; stroke: #334155; stroke-width: 1.4; rx: 8; }
+      .cuda { fill: #eef7ff; stroke: #2563eb; }
+      .ascend { fill: #fff7ed; stroke: #ea580c; }
+      .target { fill: #f0fdf4; stroke: #16a34a; }
+      .arrow { stroke: #334155; stroke-width: 1.8; fill: none; marker-end: url(#arrow); }
+      .cross { stroke: #dc2626; stroke-width: 2; fill: none; marker-end: url(#arrow); }
+      .same { stroke: #2563eb; stroke-width: 2; fill: none; marker-end: url(#arrow); }
+      .dash { stroke: #94a3b8; stroke-width: 1.4; stroke-dasharray: 6 5; fill: none; }
+    </style>
+  </defs>
+
+  <text x="34" y="40" class="title">通信约束与优化目标</text>
+
+  <rect x="70" y="82" width="220" height="94" class="box cuda"/>
+  <text x="180" y="116" text-anchor="middle" class="label">CUDA 预填充</text>
+  <text x="180" y="145" text-anchor="middle" class="small">能力 n_cp * mu_cp</text>
+
+  <rect x="70" y="252" width="220" height="94" class="box ascend"/>
+  <text x="180" y="286" text-anchor="middle" class="label">Ascend 预填充</text>
+  <text x="180" y="315" text-anchor="middle" class="small">能力 n_ap * mu_ap</text>
+
+  <rect x="760" y="82" width="220" height="94" class="box cuda"/>
+  <text x="870" y="116" text-anchor="middle" class="label">CUDA 解码</text>
+  <text x="870" y="145" text-anchor="middle" class="small">能力 n_cd * mu_cd</text>
+
+  <rect x="760" y="252" width="220" height="94" class="box ascend"/>
+  <text x="870" y="286" text-anchor="middle" class="label">Ascend 解码</text>
+  <text x="870" y="315" text-anchor="middle" class="small">能力 n_ad * mu_ad</text>
+
+  <path d="M 290 129 L 760 129" class="same"/>
+  <text x="525" y="112" text-anchor="middle" class="small">x_cc</text>
+  <text x="525" y="148" text-anchor="middle" class="tiny">同设备池</text>
+
+  <path d="M 290 299 L 760 299" class="same"/>
+  <text x="525" y="282" text-anchor="middle" class="small">x_aa</text>
+  <text x="525" y="318" text-anchor="middle" class="tiny">同设备池</text>
+
+  <path d="M 286 157 C 420 210, 560 230, 764 276" class="cross"/>
+  <text x="532" y="214" text-anchor="middle" class="small">x_ca</text>
+  <text x="532" y="235" text-anchor="middle" class="tiny">受 CUDA→Ascend 传输上限 H_ca 限制</text>
+
+  <path d="M 286 276 C 420 220, 560 196, 764 153" class="cross"/>
+  <text x="532" y="186" text-anchor="middle" class="small">x_ac</text>
+  <text x="532" y="166" text-anchor="middle" class="tiny">受 Ascend→CUDA 传输上限 H_ac 限制</text>
+
+  <rect x="365" y="362" width="330" height="45" class="box target"/>
+  <text x="530" y="391" text-anchor="middle" class="label">目标：最大化有效吞吐 Lambda</text>
+
+  <path d="M 530 346 L 530 362" class="dash"/>
+</svg>

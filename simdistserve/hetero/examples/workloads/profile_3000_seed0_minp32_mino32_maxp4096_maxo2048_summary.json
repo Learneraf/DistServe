@@ -1,0 +1,165 @@
+{
+  "raw_sharegpt": "/users/rh/DistServe/simdistserve/dataset/raw/ShareGPT_V3_unfiltered_cleaned_split.json",
+  "models": {
+    "llama_1B": {
+      "workload": {
+        "model": "llama_1B",
+        "model_path": "/users/rh/.cache/modelscope/hub/models/LLM-Research/Llama-3.2-1B/converted_bin_v2",
+        "output": "/users/rh/DistServe/simdistserve/hetero/examples/workloads/llama-3.2-1B/profile_3000_seed0_minp32_mino32_maxp4096_maxo2048.jsonl",
+        "num_requests": 3000,
+        "filters": {
+          "min_prompt_len": 32,
+          "min_output_len": 32,
+          "max_prompt_len": 4096,
+          "max_output_len": 2048
+        },
+        "prompt_len": {
+          "min": 32,
+          "mean": 359.07433333333336,
+          "max": 3787
+        },
+        "output_len": {
+          "min": 32,
+          "mean": 341.74,
+          "max": 918
+        }
+      },
+      "handoff": {
+        "cuda_to_ascend": {
+          "handoff_goodput_upper_bound": 6.494327538566674,
+          "fixed_delay_ms": 0.0,
+          "delay_per_token_ms": 0.4288263355602899,
+          "effective_payload_delay_ms": 153.98053055708738
+        },
+        "ascend_to_cuda": {
+          "handoff_goodput_upper_bound": 8.629256960274867,
+          "fixed_delay_ms": 0.0,
+          "delay_per_token_ms": 0.32273215331428906,
+          "effective_payload_delay_ms": 115.88483279655948
+        }
+      },
+      "handoff_output": "/users/rh/DistServe/simdistserve/hetero/results/handoff/profile_workloads/llama_1B/handoff_goodput.json",
+      "updated_config": "/users/rh/DistServe/simdistserve/hetero/examples/configs/llama_1B/search_4nodes_high_affinity.json"
+    },
+    "llama_3B": {
+      "workload": {
+        "model": "llama_3B",
+        "model_path": "/users/rh/.cache/modelscope/hub/models/LLM-Research/Llama-3.2-3B/converted_bin_v2",
+        "output": "/users/rh/DistServe/simdistserve/hetero/examples/workloads/llama-3.2-3B/profile_3000_seed0_minp32_mino32_maxp4096_maxo2048.jsonl",
+        "num_requests": 3000,
+        "filters": {
+          "min_prompt_len": 32,
+          "min_output_len": 32,
+          "max_prompt_len": 4096,
+          "max_output_len": 2048
+        },
+        "prompt_len": {
+          "min": 32,
+          "mean": 359.07433333333336,
+          "max": 3787
+        },
+        "output_len": {
+          "min": 32,
+          "mean": 341.74,
+          "max": 918
+        }
+      },
+      "handoff": {
+        "cuda_to_ascend": {
+          "handoff_goodput_upper_bound": 1.8555221538761928,
+          "fixed_delay_ms": 0.0,
+          "delay_per_token_ms": 1.5008921744610146,
+          "effective_payload_delay_ms": 538.9318569498059
+        },
+        "ascend_to_cuda": {
+          "handoff_goodput_upper_bound": 2.465501988649962,
+          "fixed_delay_ms": 0.0,
+          "delay_per_token_ms": 1.1295625366000115,
+          "effective_payload_delay_ms": 405.5969147879581
+        }
+      },
+      "handoff_output": "/users/rh/DistServe/simdistserve/hetero/results/handoff/profile_workloads/llama_3B/handoff_goodput.json",
+      "updated_config": "/users/rh/DistServe/simdistserve/hetero/examples/configs/llama_3B/search_4nodes_high_affinity.json"
+    },
+    "llama_7B": {
+      "workload": {
+        "model": "llama_7B",
+        "model_path": "/users/rh/.cache/modelscope/hub/models/LLM-Research/llama-2-7b/converted_bin_v2",
+        "output": "/users/rh/DistServe/simdistserve/hetero/examples/workloads/llama-2-7b/profile_3000_seed0_minp32_mino32_maxp4096_maxo2048.jsonl",
+        "num_requests": 3000,
+        "filters": {
+          "min_prompt_len": 32,
+          "min_output_len": 32,
+          "max_prompt_len": 4096,
+          "max_output_len": 2048
+        },
+        "prompt_len": {
+          "min": 32,
+          "mean": 388.40233333333333,
+          "max": 4094
+        },
+        "output_len": {
+          "min": 32,
+          "mean": 407.64566666666667,
+          "max": 1445
+        }
+      },
+      "handoff": {
+        "cuda_to_ascend": {
+          "handoff_goodput_upper_bound": 0.3752465760417145,
+          "fixed_delay_ms": 0.0,
+          "delay_per_token_ms": 6.861221368964638,
+          "effective_payload_delay_ms": 2664.914389222393
+        },
+        "ascend_to_cuda": {
+          "handoff_goodput_upper_bound": 0.4986042217454803,
+          "fixed_delay_ms": 0.0,
+          "delay_per_token_ms": 5.163714453028625,
+          "effective_payload_delay_ms": 2005.598742223375
+        }
+      },
+      "handoff_output": "/users/rh/DistServe/simdistserve/hetero/results/handoff/profile_workloads/llama_7B/handoff_goodput.json",
+      "updated_config": "/users/rh/DistServe/simdistserve/hetero/examples/configs/llama_7B/search_4nodes_high_affinity.json"
+    },
+    "llama_8B": {
+      "workload": {
+        "model": "llama_8B",
+        "model_path": "/users/rh/.cache/modelscope/hub/models/LLM-Research/Meta-Llama-3.1-8B/converted_bin_v2",
+        "output": "/users/rh/DistServe/simdistserve/hetero/examples/workloads/llama-3.1-8B/profile_3000_seed0_minp32_mino32_maxp4096_maxo2048.jsonl",
+        "num_requests": 3000,
+        "filters": {
+          "min_prompt_len": 32,
+          "min_output_len": 32,
+          "max_prompt_len": 4096,
+          "max_output_len": 2048
+        },
+        "prompt_len": {
+          "min": 32,
+          "mean": 359.07433333333336,
+          "max": 3787
+        },
+        "output_len": {
+          "min": 32,
+          "mean": 341.74,
+          "max": 918
+        }
+      },
+      "handoff": {
+        "cuda_to_ascend": {
+          "handoff_goodput_upper_bound": 1.6235818846416685,
+          "fixed_delay_ms": 0.0,
+          "delay_per_token_ms": 1.7153053422411595,
+          "effective_payload_delay_ms": 615.9221222283495
+        },
+        "ascend_to_cuda": {
+          "handoff_goodput_upper_bound": 2.157314240068717,
+          "fixed_delay_ms": 0.0,
+          "delay_per_token_ms": 1.2909286132571562,
+          "effective_payload_delay_ms": 463.5393311862379
+        }
+      },
+      "handoff_output": "/users/rh/DistServe/simdistserve/hetero/results/handoff/profile_workloads/llama_8B/handoff_goodput.json",
+      "updated_config": "/users/rh/DistServe/simdistserve/hetero/examples/configs/llama_8B/search_4nodes_high_affinity.json"
+    }
+  }
+}

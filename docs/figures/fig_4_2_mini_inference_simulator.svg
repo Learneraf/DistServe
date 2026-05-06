@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="430" viewBox="0 0 1080 430">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#334155"/>
+    </marker>
+    <style>
+      .title { font: 700 22px Arial, sans-serif; fill: #1f2937; }
+      .label { font: 700 16px Arial, sans-serif; fill: #1f2937; }
+      .small { font: 14px Arial, sans-serif; fill: #334155; }
+      .tiny { font: 13px Arial, sans-serif; fill: #475569; }
+      .box { fill: #f8fafc; stroke: #334155; stroke-width: 1.4; rx: 8; }
+      .input { fill: #eef7ff; stroke: #2563eb; }
+      .prefill { fill: #fff7ed; stroke: #ea580c; }
+      .decode { fill: #f5f3ff; stroke: #7c3aed; }
+      .result { fill: #f0fdf4; stroke: #16a34a; }
+      .arrow { stroke: #334155; stroke-width: 1.8; fill: none; marker-end: url(#arrow); }
+      .dash { stroke: #64748b; stroke-width: 1.5; stroke-dasharray: 6 5; fill: none; marker-end: url(#arrow); }
+    </style>
+  </defs>
+
+  <text x="34" y="40" class="title">小型推理仿真框架</text>
+  <text x="34" y="66" class="small">支持 continuous batching：新请求持续进入，完成请求离开，未完成请求继续参与后续解码轮次</text>
+
+  <rect x="45" y="88" width="170" height="95" class="box input"/>
+  <text x="130" y="120" text-anchor="middle" class="label">请求到达</text>
+  <text x="130" y="148" text-anchor="middle" class="small">输入长度</text>
+  <text x="130" y="170" text-anchor="middle" class="small">输出长度 / 到达时间</text>
+
+  <rect x="270" y="88" width="170" height="95" class="box prefill"/>
+  <text x="355" y="120" text-anchor="middle" class="label">预填充队列</text>
+  <text x="355" y="148" text-anchor="middle" class="small">新请求持续进入</text>
+  <text x="355" y="170" text-anchor="middle" class="small">动态组成批次</text>
+
+  <rect x="495" y="88" width="190" height="95" class="box prefill"/>
+  <text x="590" y="120" text-anchor="middle" class="label">预填充批次</text>
+  <text x="590" y="148" text-anchor="middle" class="small">调用 T_prefill</text>
+  <text x="590" y="170" text-anchor="middle" class="small">产生首词和 KV 缓存</text>
+
+  <rect x="740" y="88" width="170" height="95" class="box decode"/>
+  <text x="825" y="120" text-anchor="middle" class="label">解码队列</text>
+  <text x="825" y="148" text-anchor="middle" class="small">预填充完成后加入</text>
+  <text x="825" y="170" text-anchor="middle" class="small">等待下一轮</text>
+
+  <rect x="740" y="255" width="170" height="95" class="box decode"/>
+  <text x="825" y="287" text-anchor="middle" class="label">解码轮次</text>
+  <text x="825" y="315" text-anchor="middle" class="small">调用 T_decode</text>
+  <text x="825" y="337" text-anchor="middle" class="small">完成请求离开</text>
+
+  <rect x="495" y="255" width="190" height="95" class="box result"/>
+  <text x="590" y="287" text-anchor="middle" class="label">完成请求</text>
+  <text x="590" y="315" text-anchor="middle" class="small">达到输出长度</text>
+  <text x="590" y="337" text-anchor="middle" class="small">记录完成时间</text>
+
+  <rect x="270" y="255" width="170" height="95" class="box result"/>
+  <text x="355" y="287" text-anchor="middle" class="label">指标输出</text>
+  <text x="355" y="315" text-anchor="middle" class="small">首词延迟</text>
+  <text x="355" y="337" text-anchor="middle" class="small">TPOT / 总延迟</text>
+
+  <path d="M 215 135 L 270 135" class="arrow"/>
+  <path d="M 440 135 L 495 135" class="arrow"/>
+  <path d="M 685 135 L 740 135" class="arrow"/>
+  <path d="M 825 183 L 825 255" class="arrow"/>
+  <path d="M 740 302 L 685 302" class="arrow"/>
+  <path d="M 495 302 L 440 302" class="arrow"/>
+  <path d="M 910 302 C 985 300, 985 140, 910 135" class="dash"/>
+  <path d="M 130 183 C 135 238, 210 285, 270 302" class="dash"/>
+
+  <text x="950" y="218" text-anchor="middle" class="tiny">未完成请求</text>
+  <text x="950" y="238" text-anchor="middle" class="tiny">回到解码队列</text>
+  <text x="180" y="245" text-anchor="middle" class="tiny">后续到达的新请求</text>
+  <text x="180" y="265" text-anchor="middle" class="tiny">继续进入系统</text>
+</svg>

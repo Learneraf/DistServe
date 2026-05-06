@@ -75,45 +75,49 @@ def ensure_migration_lifecycle_events(
     return events
 
 
-def parse_openai_sse_line(raw_line: bytes) -> tuple[bool, Optional[str], Optional[str]]:
+def parse_openai_sse_line(
+    raw_line: bytes,
+) -> tuple[bool, Optional[str], Optional[str], Optional[str]]:
     line = raw_line.decode("utf-8", errors="ignore").strip()
     if not line or not line.startswith("data:"):
-        return False, None, None
+        return False, None, None, None
 
     payload = line[5:].strip()
     if payload == "[DONE]":
-        return True, None, None
+        return True, None, None, None
 
     try:
         data = json.loads(payload)
     except json.JSONDecodeError:
-        return False, None, None
+        return False, None, None, None
+
+    response_id = data.get("id")
 
     if "error" in data:
-        return False, None, json.dumps(data["error"], ensure_ascii=False)
+        return False, None, json.dumps(data["error"], ensure_ascii=False), response_id
 
     choices = data.get("choices") or []
     if not choices:
-        return False, None, None
+        return False, None, None, response_id
 
     choice = choices[0]
     delta_text = choice.get("text")
     if isinstance(delta_text, str):
-        return False, delta_text, None
+        return False, delta_text, None, response_id
 
     delta = choice.get("delta")
     if isinstance(delta, dict):
         content = delta.get("content")
         if isinstance(content, str):
-            return False, content, None
+            return False, content, None, response_id
 
     message = choice.get("message")
     if isinstance(message, dict):
         content = message.get("content")
         if isinstance(content, str):
-            return False, content, None
+            return False, content, None, response_id
 
-    return False, None, None
+    return False, None, None, response_id
 
 def sample_requests(dataset_path: str, num_prompts: int) -> List[TestRequest]:
     """
@@ -299,10 +303,15 @@ async def send_request(
             lifetime_events=lifecycle_events
         )
     elif backend == "openai":
+        client_request_id = (
+            f"bench-{request_index}" if request_index is not None else None
+        )
         headers = {
             "User-Agent": "Benchmark Client",
             "Accept": "text/event-stream",
         }
+        if client_request_id is not None:
+            headers["X-Request-Id"] = client_request_id
         payload = {
             "prompt": prompt,
             "max_tokens": output_len,
@@ -319,6 +328,7 @@ async def send_request(
         generated_text = ""
         sse_preview: list[str] = []
         sse_error: Optional[str] = None
+        server_request_id: Optional[str] = None
 
         timeout = aiohttp.ClientTimeout(total=3 * 3600)
         async with aiohttp.ClientSession(timeout=timeout) as session:
@@ -335,7 +345,14 @@ async def send_request(
                         if len(sse_preview) > 20:
                             sse_preview = sse_preview[-20:]
 
-                    is_done, delta_text, line_error = parse_openai_sse_line(raw_line)
+                    (
+                        is_done,
+                        delta_text,
+                        line_error,
+                        line_request_id,
+                    ) = parse_openai_sse_line(raw_line)
+                    if line_request_id is not None and server_request_id is None:
+                        server_request_id = line_request_id
                     if is_done:
                         break
                     if line_error is not None:
@@ -368,7 +385,7 @@ async def send_request(
             print(f"Prompt: {prompt}\n\nOutput: {generated_text}")
 
         pbar.update(1)
-        return RequestResult(
+        result = RequestResult(
             prompt_len,
             output_len,
             request_start_time,
@@ -376,6 +393,12 @@ async def send_request(
             token_timestamps=token_timestamps,
             lifetime_events=lifecycle_events
         )
+        result.client_request_id = client_request_id
+        result.server_request_id = server_request_id
+        result.vllm_internal_request_id = (
+            f"{server_request_id}-0" if server_request_id is not None else None
+        )
+        return result
     else:
         raise ValueError(f"Unknown backend: {backend}")
 
