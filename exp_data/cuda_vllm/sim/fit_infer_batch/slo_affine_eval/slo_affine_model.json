@@ -1,0 +1,387 @@
+{
+  "train_split": "fit",
+  "test_split": "val",
+  "formula": "corrected_ftl_ms = max(0, alpha * simulated_ftl_ms + beta_ms)",
+  "decode_tpot": "raw simulator output",
+  "slo_scales": [
+    0.4,
+    0.6,
+    0.8,
+    1.0,
+    1.2
+  ],
+  "params": {
+    "llama_1B": {
+      "1": {
+        "alpha": 1.0000000000000004,
+        "beta_ms": 20.0,
+        "fit_max_prefill_delta_pct": 0.8333333333333286,
+        "fit_mean_prefill_delta_pct": 0.6666666666666629,
+        "fit_prefill_deltas_pct": [
+          0.8333333333333286,
+          0.0,
+          0.8333333333333286,
+          0.8333333333333286,
+          0.8333333333333286
+        ]
+      },
+      "1.5": {
+        "alpha": 1.8500000000000014,
+        "beta_ms": -72.0,
+        "fit_max_prefill_delta_pct": 0.8333333333333286,
+        "fit_mean_prefill_delta_pct": 0.1666666666666657,
+        "fit_prefill_deltas_pct": [
+          0.0,
+          0.0,
+          0.8333333333333286,
+          0.0,
+          0.0
+        ]
+      },
+      "2": {
+        "alpha": 0.9750000000000005,
+        "beta_ms": -6.0,
+        "fit_max_prefill_delta_pct": 0.0,
+        "fit_mean_prefill_delta_pct": 0.0,
+        "fit_prefill_deltas_pct": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "2.5": {
+        "alpha": 2.1000000000000014,
+        "beta_ms": -88.0,
+        "fit_max_prefill_delta_pct": 1.6666666666666714,
+        "fit_mean_prefill_delta_pct": 0.9999999999999971,
+        "fit_prefill_deltas_pct": [
+          0.8333333333333286,
+          0.8333333333333286,
+          0.8333333333333286,
+          0.8333333333333286,
+          1.6666666666666714
+        ]
+      },
+      "3": {
+        "alpha": 0.7000000000000003,
+        "beta_ms": 28.0,
+        "fit_max_prefill_delta_pct": 0.8333333333333286,
+        "fit_mean_prefill_delta_pct": 0.1666666666666657,
+        "fit_prefill_deltas_pct": [
+          0.0,
+          0.8333333333333286,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "3.5": {
+        "alpha": 0.4,
+        "beta_ms": 48.0,
+        "fit_max_prefill_delta_pct": 0.0,
+        "fit_mean_prefill_delta_pct": 0.0,
+        "fit_prefill_deltas_pct": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "4": {
+        "alpha": 0.4,
+        "beta_ms": 46.0,
+        "fit_max_prefill_delta_pct": 0.0,
+        "fit_mean_prefill_delta_pct": 0.0,
+        "fit_prefill_deltas_pct": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "llama_3B": {
+      "1": {
+        "alpha": 2.575000000000002,
+        "beta_ms": -84.0,
+        "fit_max_prefill_delta_pct": 2.5,
+        "fit_mean_prefill_delta_pct": 0.833333333333335,
+        "fit_prefill_deltas_pct": [
+          0.8333333333333321,
+          2.5,
+          0.0,
+          0.8333333333333428,
+          0.0
+        ]
+      },
+      "1.5": {
+        "alpha": 1.0250000000000006,
+        "beta_ms": 14.0,
+        "fit_max_prefill_delta_pct": 1.6666666666666714,
+        "fit_mean_prefill_delta_pct": 1.0000000000000013,
+        "fit_prefill_deltas_pct": [
+          0.8333333333333357,
+          1.6666666666666714,
+          0.0,
+          1.6666666666666714,
+          0.8333333333333286
+        ]
+      },
+      "2": {
+        "alpha": 0.7250000000000003,
+        "beta_ms": 32.0,
+        "fit_max_prefill_delta_pct": 1.6666666666666714,
+        "fit_mean_prefill_delta_pct": 0.6666666666666685,
+        "fit_prefill_deltas_pct": [
+          0.8333333333333286,
+          0.8333333333333428,
+          1.6666666666666714,
+          0.0,
+          0.0
+        ]
+      },
+      "2.5": {
+        "alpha": 0.9250000000000005,
+        "beta_ms": 20.0,
+        "fit_max_prefill_delta_pct": 1.6666666666666643,
+        "fit_mean_prefill_delta_pct": 0.6666666666666672,
+        "fit_prefill_deltas_pct": [
+          1.6666666666666643,
+          0.8333333333333428,
+          0.8333333333333286,
+          0.0,
+          0.0
+        ]
+      },
+      "3": {
+        "alpha": 0.8250000000000004,
+        "beta_ms": 26.0,
+        "fit_max_prefill_delta_pct": 0.8333333333333357,
+        "fit_mean_prefill_delta_pct": 0.33333333333333287,
+        "fit_prefill_deltas_pct": [
+          0.8333333333333357,
+          0.0,
+          0.0,
+          0.0,
+          0.8333333333333286
+        ]
+      },
+      "3.5": {
+        "alpha": 0.8000000000000004,
+        "beta_ms": 28.0,
+        "fit_max_prefill_delta_pct": 3.3333333333333286,
+        "fit_mean_prefill_delta_pct": 1.8333333333333328,
+        "fit_prefill_deltas_pct": [
+          0.8333333333333357,
+          1.6666666666666714,
+          0.8333333333333286,
+          2.5,
+          3.3333333333333286
+        ]
+      },
+      "4": {
+        "alpha": 0.6500000000000002,
+        "beta_ms": 38.0,
+        "fit_max_prefill_delta_pct": 1.6666666666666643,
+        "fit_mean_prefill_delta_pct": 0.49999999999999856,
+        "fit_prefill_deltas_pct": [
+          1.6666666666666643,
+          0.0,
+          0.8333333333333286,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "llama_7B": {
+      "1": {
+        "alpha": 1.1500000000000008,
+        "beta_ms": 4.0,
+        "fit_max_prefill_delta_pct": 2.499999999999993,
+        "fit_mean_prefill_delta_pct": 1.1666666666666672,
+        "fit_prefill_deltas_pct": [
+          0.0,
+          0.8333333333333357,
+          0.8333333333333357,
+          2.499999999999993,
+          1.6666666666666714
+        ]
+      },
+      "1.5": {
+        "alpha": 1.1250000000000007,
+        "beta_ms": 4.0,
+        "fit_max_prefill_delta_pct": 3.3333333333333357,
+        "fit_mean_prefill_delta_pct": 1.6666666666666679,
+        "fit_prefill_deltas_pct": [
+          0.0,
+          3.333333333333332,
+          3.3333333333333357,
+          1.6666666666666714,
+          0.0
+        ]
+      },
+      "2": {
+        "alpha": 1.1750000000000007,
+        "beta_ms": -2.0,
+        "fit_max_prefill_delta_pct": 4.166666666666664,
+        "fit_mean_prefill_delta_pct": 2.166666666666667,
+        "fit_prefill_deltas_pct": [
+          0.0,
+          2.5,
+          2.5,
+          4.166666666666664,
+          1.6666666666666714
+        ]
+      },
+      "2.5": {
+        "alpha": 1.1500000000000008,
+        "beta_ms": 4.0,
+        "fit_max_prefill_delta_pct": 4.166666666666666,
+        "fit_mean_prefill_delta_pct": 2.999999999999999,
+        "fit_prefill_deltas_pct": [
+          0.0,
+          4.166666666666666,
+          3.3333333333333357,
+          4.166666666666664,
+          3.3333333333333286
+        ]
+      },
+      "3": {
+        "alpha": 1.1000000000000005,
+        "beta_ms": 20.0,
+        "fit_max_prefill_delta_pct": 4.166666666666664,
+        "fit_mean_prefill_delta_pct": 1.666666666666666,
+        "fit_prefill_deltas_pct": [
+          0.0,
+          0.8333333333333339,
+          0.8333333333333321,
+          4.166666666666664,
+          2.5
+        ]
+      },
+      "3.5": {
+        "alpha": 1.1250000000000007,
+        "beta_ms": 22.0,
+        "fit_max_prefill_delta_pct": 1.6666666666666679,
+        "fit_mean_prefill_delta_pct": 0.8333333333333336,
+        "fit_prefill_deltas_pct": [
+          0.0,
+          0.0,
+          1.6666666666666679,
+          1.6666666666666643,
+          0.8333333333333357
+        ]
+      },
+      "4": {
+        "alpha": 1.2500000000000009,
+        "beta_ms": 20.0,
+        "fit_max_prefill_delta_pct": 0.8333333333333286,
+        "fit_mean_prefill_delta_pct": 0.1666666666666657,
+        "fit_prefill_deltas_pct": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.8333333333333286
+        ]
+      }
+    },
+    "llama_8B": {
+      "1": {
+        "alpha": 2.9750000000000023,
+        "beta_ms": -94.0,
+        "fit_max_prefill_delta_pct": 20.833333333333336,
+        "fit_mean_prefill_delta_pct": 12.333333333333336,
+        "fit_prefill_deltas_pct": [
+          0.0,
+          15.0,
+          20.833333333333336,
+          14.166666666666671,
+          11.666666666666671
+        ]
+      },
+      "1.5": {
+        "alpha": 2.3250000000000015,
+        "beta_ms": -86.0,
+        "fit_max_prefill_delta_pct": 3.333333333333343,
+        "fit_mean_prefill_delta_pct": 1.6666666666666703,
+        "fit_prefill_deltas_pct": [
+          1.666666666666666,
+          0.8333333333333428,
+          3.333333333333343,
+          2.5,
+          0.0
+        ]
+      },
+      "2": {
+        "alpha": 1.8750000000000013,
+        "beta_ms": -54.0,
+        "fit_max_prefill_delta_pct": 2.5,
+        "fit_mean_prefill_delta_pct": 2.0000000000000018,
+        "fit_prefill_deltas_pct": [
+          1.666666666666666,
+          2.5,
+          2.5,
+          2.5,
+          0.8333333333333428
+        ]
+      },
+      "2.5": {
+        "alpha": 0.9500000000000005,
+        "beta_ms": 36.0,
+        "fit_max_prefill_delta_pct": 4.166666666666667,
+        "fit_mean_prefill_delta_pct": 1.3333333333333335,
+        "fit_prefill_deltas_pct": [
+          4.166666666666667,
+          0.0,
+          0.8333333333333286,
+          1.6666666666666714,
+          0.0
+        ]
+      },
+      "3": {
+        "alpha": 1.4000000000000008,
+        "beta_ms": -20.0,
+        "fit_max_prefill_delta_pct": 2.5,
+        "fit_mean_prefill_delta_pct": 1.3333333333333333,
+        "fit_prefill_deltas_pct": [
+          1.666666666666666,
+          2.5,
+          0.8333333333333286,
+          1.6666666666666714,
+          0.0
+        ]
+      },
+      "3.5": {
+        "alpha": 1.1750000000000007,
+        "beta_ms": -4.0,
+        "fit_max_prefill_delta_pct": 2.5,
+        "fit_mean_prefill_delta_pct": 1.5000000000000018,
+        "fit_prefill_deltas_pct": [
+          1.666666666666666,
+          2.5,
+          1.6666666666666714,
+          0.0,
+          1.6666666666666714
+        ]
+      },
+      "4": {
+        "alpha": 1.1750000000000007,
+        "beta_ms": -4.0,
+        "fit_max_prefill_delta_pct": 1.6666666666666714,
+        "fit_mean_prefill_delta_pct": 1.1666666666666674,
+        "fit_prefill_deltas_pct": [
+          1.666666666666666,
+          1.6666666666666572,
+          0.0,
+          0.8333333333333428,
+          1.6666666666666714
+        ]
+      }
+    }
+  }
+}

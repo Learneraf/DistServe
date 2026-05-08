@@ -1,0 +1,32 @@
+{
+  "train_split": "fit",
+  "test_split": "val",
+  "raw_simulator": "/users/rh/cuda_data/sim/3p3d_fit_model_forward",
+  "tpot": "raw simulator output",
+  "models": {
+    "llama_1B": {
+      "base_ms": 32.0,
+      "per_token_ms": 0.008,
+      "capacity": 2,
+      "fit_max_prefill_or_both_delta_pct": 4.166666666666657,
+      "fit_mean_prefill_or_both_delta_pct": 0.9642857142857139,
+      "formula": "ftl_ms = raw_3p3d_ftl_ms + queue_delay(base_ms + per_token_ms * prompt_len, capacity)"
+    },
+    "llama_3B": {
+      "base_ms": 28.0,
+      "per_token_ms": 0.024,
+      "capacity": 2,
+      "fit_max_prefill_or_both_delta_pct": 14.166666666666671,
+      "fit_mean_prefill_or_both_delta_pct": 3.869047619047618,
+      "formula": "ftl_ms = raw_3p3d_ftl_ms + queue_delay(base_ms + per_token_ms * prompt_len, capacity)"
+    },
+    "llama_8B": {
+      "base_ms": 8.0,
+      "per_token_ms": 0.028,
+      "capacity": 2,
+      "fit_max_prefill_or_both_delta_pct": 29.16666666666667,
+      "fit_mean_prefill_or_both_delta_pct": 14.08333333333334,
+      "formula": "ftl_ms = raw_3p3d_ftl_ms + queue_delay(base_ms + per_token_ms * prompt_len, capacity)"
+    }
+  }
+}

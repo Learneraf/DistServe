@@ -1,0 +1,98 @@
+{
+  "root": "/users/rh/cuda_data",
+  "legacy_path": "/users/rh/cdua_data -> /users/rh/cuda_data",
+  "splits": [
+    "fit",
+    "val"
+  ],
+  "models": [
+    "llama_1B",
+    "llama_3B",
+    "llama_7B",
+    "llama_8B"
+  ],
+  "rates": [
+    "1",
+    "1.5",
+    "2",
+    "2.5",
+    "3",
+    "3.5",
+    "4"
+  ],
+  "notes": [
+    "llama_1B, llama_3B, and llama_8B completed all fit/val rates from 1 to 4 step 0.5.",
+    "llama_7B is unstable in this vLLM P/D connector setup at higher offered load."
+  ],
+  "failures": [
+    {
+      "split": "fit",
+      "model": "llama_7B",
+      "request_rate": "2",
+      "status": "failed: P2pNcclConnector Peer Out Of Memory/Threshold"
+    },
+    {
+      "split": "fit",
+      "model": "llama_7B",
+      "request_rate": "2.5",
+      "status": "skipped after rate=2 failure"
+    },
+    {
+      "split": "fit",
+      "model": "llama_7B",
+      "request_rate": "3",
+      "status": "skipped after rate=2 failure"
+    },
+    {
+      "split": "fit",
+      "model": "llama_7B",
+      "request_rate": "3.5",
+      "status": "skipped after rate=2 failure"
+    },
+    {
+      "split": "fit",
+      "model": "llama_7B",
+      "request_rate": "4",
+      "status": "skipped after rate=2 failure"
+    },
+    {
+      "split": "val",
+      "model": "llama_7B",
+      "request_rate": "1.5",
+      "status": "failed with 0.25GB and 1GB connector pool: P2pNcclConnector Peer Out Of Memory/Threshold; decode EngineCore 500"
+    },
+    {
+      "split": "val",
+      "model": "llama_7B",
+      "request_rate": "2",
+      "status": "skipped after rate=1.5 failure"
+    },
+    {
+      "split": "val",
+      "model": "llama_7B",
+      "request_rate": "2.5",
+      "status": "skipped after rate=1.5 failure"
+    },
+    {
+      "split": "val",
+      "model": "llama_7B",
+      "request_rate": "3",
+      "status": "skipped after rate=1.5 failure"
+    },
+    {
+      "split": "val",
+      "model": "llama_7B",
+      "request_rate": "3.5",
+      "status": "skipped after rate=1.5 failure"
+    },
+    {
+      "split": "val",
+      "model": "llama_7B",
+      "request_rate": "4",
+      "status": "skipped after rate=1.5 failure"
+    }
+  ],
+  "completed_exp_count": 45,
+  "expected_exp_count": 56,
+  "summary_csv": "/users/rh/cuda_data/results_summary.csv"
+}

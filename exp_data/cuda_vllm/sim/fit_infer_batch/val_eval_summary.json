@@ -1,0 +1,112 @@
+{
+  "results_root": "/tmp/cuda_data_fit_infer_batch_view/val",
+  "profile": "/users/rh/DistServe/simdistserve/estimators/profiled_data/vllm-ascend/fit_params_cuda_data_fit_5p4d_infer_batch.json",
+  "prefill_file_count": 22,
+  "decode_file_count": 22,
+  "prefill_ignored_files": [],
+  "decode_ignored_files": [],
+  "prefill": {
+    "llama_1B": {
+      "count": 840,
+      "mean_abs_rel_error_pct": 12.20418267142857,
+      "rmse_rel_error_pct": 21.950791151813895,
+      "median_abs_rel_error_pct": 5.7809775000000005,
+      "p90_abs_rel_error_pct": 30.251118700000003,
+      "p95_abs_rel_error_pct": 42.50531069999995,
+      "max_abs_rel_error_pct": 97.594966,
+      "mean_signed_rel_error_pct": -2.849032164285715
+    },
+    "llama_3B": {
+      "count": 840,
+      "mean_abs_rel_error_pct": 13.417074596428572,
+      "rmse_rel_error_pct": 22.145956692418444,
+      "median_abs_rel_error_pct": 5.880461,
+      "p90_abs_rel_error_pct": 36.1131223,
+      "p95_abs_rel_error_pct": 52.60121669999999,
+      "max_abs_rel_error_pct": 92.645223,
+      "mean_signed_rel_error_pct": -2.132160305952381
+    },
+    "llama_7B": {
+      "count": 840,
+      "mean_abs_rel_error_pct": 21.06248785952381,
+      "rmse_rel_error_pct": 26.778432640235295,
+      "median_abs_rel_error_pct": 17.4453255,
+      "p90_abs_rel_error_pct": 46.5080492,
+      "p95_abs_rel_error_pct": 56.5551775,
+      "max_abs_rel_error_pct": 80.442705,
+      "mean_signed_rel_error_pct": -5.474207547619047
+    },
+    "llama_8B": {
+      "count": 840,
+      "mean_abs_rel_error_pct": 16.984432995238095,
+      "rmse_rel_error_pct": 25.79914345099948,
+      "median_abs_rel_error_pct": 7.166070499999999,
+      "p90_abs_rel_error_pct": 47.2075657,
+      "p95_abs_rel_error_pct": 56.74590425,
+      "max_abs_rel_error_pct": 87.351309,
+      "mean_signed_rel_error_pct": -4.908957047619048
+    },
+    "overall": {
+      "count": 3360,
+      "mean_abs_rel_error_pct": 15.917044530654762,
+      "rmse_rel_error_pct": 24.263969623115532,
+      "median_abs_rel_error_pct": 8.153137,
+      "p90_abs_rel_error_pct": 41.57664739999999,
+      "p95_abs_rel_error_pct": 53.844970349999976,
+      "max_abs_rel_error_pct": 97.594966,
+      "mean_signed_rel_error_pct": -3.8410892663690475
+    }
+  },
+  "decode": {
+    "llama_1B": {
+      "count": 17805,
+      "mean_abs_rel_error_pct": 7.499763234597023,
+      "rmse_rel_error_pct": 16.6271221525961,
+      "median_abs_rel_error_pct": 3.840053,
+      "p90_abs_rel_error_pct": 12.9329482,
+      "p95_abs_rel_error_pct": 30.467754999999997,
+      "max_abs_rel_error_pct": 99.760325,
+      "mean_signed_rel_error_pct": -2.8616987141814096
+    },
+    "llama_3B": {
+      "count": 27891,
+      "mean_abs_rel_error_pct": 5.242285625721559,
+      "rmse_rel_error_pct": 13.870482891018266,
+      "median_abs_rel_error_pct": 2.070364,
+      "p90_abs_rel_error_pct": 9.053744,
+      "p95_abs_rel_error_pct": 16.805820999999998,
+      "max_abs_rel_error_pct": 103.926733,
+      "mean_signed_rel_error_pct": -1.5256636008389806
+    },
+    "llama_7B": {
+      "count": 17545,
+      "mean_abs_rel_error_pct": 5.960674033285836,
+      "rmse_rel_error_pct": 15.958901281546217,
+      "median_abs_rel_error_pct": 2.451069,
+      "p90_abs_rel_error_pct": 8.3763498,
+      "p95_abs_rel_error_pct": 16.886039,
+      "max_abs_rel_error_pct": 144.310144,
+      "mean_signed_rel_error_pct": -2.997213038814477
+    },
+    "llama_8B": {
+      "count": 19935,
+      "mean_abs_rel_error_pct": 5.228403052420366,
+      "rmse_rel_error_pct": 15.746352261694888,
+      "median_abs_rel_error_pct": 1.473577,
+      "p90_abs_rel_error_pct": 6.736277400000007,
+      "p95_abs_rel_error_pct": 15.77459779999997,
+      "max_abs_rel_error_pct": 178.146621,
+      "mean_signed_rel_error_pct": -2.6333692650112863
+    },
+    "overall": {
+      "count": 83176,
+      "mean_abs_rel_error_pct": 5.873738981713474,
+      "rmse_rel_error_pct": 15.389706944967724,
+      "median_abs_rel_error_pct": 2.2992235,
+      "p90_abs_rel_error_pct": 8.775019,
+      "p95_abs_rel_error_pct": 20.051846,
+      "max_abs_rel_error_pct": 178.146621,
+      "mean_signed_rel_error_pct": -2.387553478900164
+    }
+  }
+}

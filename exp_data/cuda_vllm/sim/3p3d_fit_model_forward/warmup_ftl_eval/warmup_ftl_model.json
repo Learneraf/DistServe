@@ -1,0 +1,36 @@
+{
+  "train_split": "fit",
+  "test_split": "val",
+  "raw_simulator": "/users/rh/cuda_data/sim/3p3d_fit_model_forward",
+  "rate_handling": "request_rate is not a fitted feature; run order only defines global_request_index",
+  "tpot": "raw simulator output",
+  "models": {
+    "llama_1B": {
+      "alpha": 1.456374910069255,
+      "beta_ms": 24.791681660020657,
+      "warmup_amp_ms": 10.212807065186535,
+      "warmup_tau_requests": 12.0,
+      "fit_max_prefill_or_both_delta_pct": 3.333333333333343,
+      "fit_mean_prefill_or_both_delta_pct": 0.9404761904761906,
+      "formula": "ftl_ms = max(0, alpha * raw_3p3d_ftl_ms + beta_ms + warmup_amp_ms * exp(-global_request_index / warmup_tau_requests))"
+    },
+    "llama_3B": {
+      "alpha": 1.0875568298516483,
+      "beta_ms": 32.521815644331724,
+      "warmup_amp_ms": 27.274606609282692,
+      "warmup_tau_requests": 60.0,
+      "fit_max_prefill_or_both_delta_pct": 6.666666666666664,
+      "fit_mean_prefill_or_both_delta_pct": 1.5357142857142851,
+      "formula": "ftl_ms = max(0, alpha * raw_3p3d_ftl_ms + beta_ms + warmup_amp_ms * exp(-global_request_index / warmup_tau_requests))"
+    },
+    "llama_8B": {
+      "alpha": 0.5203670274939011,
+      "beta_ms": 55.44478609288197,
+      "warmup_amp_ms": 228.67345531235603,
+      "warmup_tau_requests": 32.0,
+      "fit_max_prefill_or_both_delta_pct": 9.166666666666657,
+      "fit_mean_prefill_or_both_delta_pct": 2.3452380952380953,
+      "formula": "ftl_ms = max(0, alpha * raw_3p3d_ftl_ms + beta_ms + warmup_amp_ms * exp(-global_request_index / warmup_tau_requests))"
+    }
+  }
+}

@@ -1,0 +1,129 @@
+{
+  "backend": "cuda_distserve",
+  "model": "llama_3B",
+  "rate": "4.0",
+  "compared_root": "/users/rh/DistServe/simdistserve/benchmarks/validate_simulator/result/slo/cuda_distserve/compared/llama_3B/rate_4.0",
+  "base_slos": {
+    "ttft": 0.2,
+    "tpot": 0.03,
+    "total": 1.0
+  },
+  "scales": [
+    0.8,
+    1.0,
+    1.2
+  ],
+  "points": [
+    {
+      "scale": 0.8,
+      "comparison_file": "/users/rh/DistServe/simdistserve/benchmarks/validate_simulator/result/slo/cuda_distserve/compared/llama_3B/rate_4.0/scale_0p8/comparison.txt",
+      "thresholds": {
+        "ttft": 0.16,
+        "tpot": 0.024,
+        "total": 0.8
+      },
+      "metrics": {
+        "ttft": {
+          "benchmark": 40.83,
+          "simulator": 43.33,
+          "gap": -2.5
+        },
+        "tpot": {
+          "benchmark": 0.0,
+          "simulator": 0.0,
+          "gap": 0.0
+        },
+        "total": {
+          "benchmark": 17.5,
+          "simulator": 18.33,
+          "gap": -0.8299999999999983
+        },
+        "both": {
+          "benchmark": 0.0,
+          "simulator": 0.0,
+          "gap": 0.0
+        }
+      }
+    },
+    {
+      "scale": 1.0,
+      "comparison_file": "/users/rh/DistServe/simdistserve/benchmarks/validate_simulator/result/slo/cuda_distserve/compared/llama_3B/rate_4.0/scale_1p0/comparison.txt",
+      "thresholds": {
+        "ttft": 0.2,
+        "tpot": 0.03,
+        "total": 1.0
+      },
+      "metrics": {
+        "ttft": {
+          "benchmark": 49.17,
+          "simulator": 53.33,
+          "gap": -4.159999999999997
+        },
+        "tpot": {
+          "benchmark": 10.83,
+          "simulator": 0.0,
+          "gap": 10.83
+        },
+        "total": {
+          "benchmark": 21.67,
+          "simulator": 22.5,
+          "gap": -0.8299999999999983
+        },
+        "both": {
+          "benchmark": 10.83,
+          "simulator": 0.0,
+          "gap": 10.83
+        }
+      }
+    },
+    {
+      "scale": 1.2,
+      "comparison_file": "/users/rh/DistServe/simdistserve/benchmarks/validate_simulator/result/slo/cuda_distserve/compared/llama_3B/rate_4.0/scale_1p2/comparison.txt",
+      "thresholds": {
+        "ttft": 0.24,
+        "tpot": 0.036,
+        "total": 1.2
+      },
+      "metrics": {
+        "ttft": {
+          "benchmark": 60.83,
+          "simulator": 62.5,
+          "gap": -1.6700000000000017
+        },
+        "tpot": {
+          "benchmark": 50.0,
+          "simulator": 24.17,
+          "gap": 25.83
+        },
+        "total": {
+          "benchmark": 25.0,
+          "simulator": 24.17,
+          "gap": 0.8299999999999983
+        },
+        "both": {
+          "benchmark": 26.67,
+          "simulator": 17.5,
+          "gap": 9.170000000000002
+        }
+      }
+    }
+  ],
+  "metric_summary": {
+    "ttft": {
+      "mean_abs_gap": 2.776666666666666,
+      "max_abs_gap": 4.159999999999997
+    },
+    "tpot": {
+      "mean_abs_gap": 12.219999999999999,
+      "max_abs_gap": 25.83
+    },
+    "total": {
+      "mean_abs_gap": 0.8299999999999983,
+      "max_abs_gap": 0.8299999999999983
+    },
+    "both": {
+      "mean_abs_gap": 6.666666666666667,
+      "max_abs_gap": 10.83
+    }
+  }
+}

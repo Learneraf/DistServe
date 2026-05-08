@@ -1,0 +1,46 @@
+{
+  "ttft": {
+    "cases": 140,
+    "max_abs_delta_pct": 62.5,
+    "worst": {
+      "model": "llama_8B",
+      "rate": 1.5,
+      "slo_scale": 0.4,
+      "delta_pct": 62.5
+    }
+  },
+  "tpot": {
+    "cases": 140,
+    "max_abs_delta_pct": 75.83,
+    "worst": {
+      "model": "llama_8B",
+      "rate": 1.5,
+      "slo_scale": 1.2,
+      "delta_pct": 75.83
+    }
+  },
+  "total": {
+    "cases": 140,
+    "max_abs_delta_pct": 8.33,
+    "worst": {
+      "model": "llama_1B",
+      "rate": 1.5,
+      "slo_scale": 0.6,
+      "delta_pct": 8.33
+    }
+  },
+  "both": {
+    "cases": 140,
+    "max_abs_delta_pct": 75.83,
+    "worst": {
+      "model": "llama_8B",
+      "rate": 1.5,
+      "slo_scale": 1.2,
+      "delta_pct": 75.83
+    }
+  },
+  "overall": {
+    "cases": 560,
+    "max_abs_delta_pct": 75.83
+  }
+}

@@ -1,0 +1,129 @@
+{
+  "backend": "ascend_vllm",
+  "model": "llama_1B",
+  "rate": "4.0",
+  "compared_root": "/users/rh/DistServe/simdistserve/benchmarks/validate_simulator/result/slo/ascend_vllm/compared/llama_1B/rate_4.0",
+  "base_slos": {
+    "ttft": 0.2,
+    "tpot": 0.03,
+    "total": 1.0
+  },
+  "scales": [
+    0.8,
+    1.0,
+    1.2
+  ],
+  "points": [
+    {
+      "scale": 0.8,
+      "comparison_file": "/users/rh/DistServe/simdistserve/benchmarks/validate_simulator/result/slo/ascend_vllm/compared/llama_1B/rate_4.0/scale_0p8/comparison.txt",
+      "thresholds": {
+        "ttft": 0.16,
+        "tpot": 0.024,
+        "total": 0.8
+      },
+      "metrics": {
+        "ttft": {
+          "benchmark": 100.0,
+          "simulator": 100.0,
+          "gap": 0.0
+        },
+        "tpot": {
+          "benchmark": 100.0,
+          "simulator": 80.0,
+          "gap": 20.0
+        },
+        "total": {
+          "benchmark": 44.17,
+          "simulator": 40.0,
+          "gap": 4.170000000000002
+        },
+        "both": {
+          "benchmark": 100.0,
+          "simulator": 80.0,
+          "gap": 20.0
+        }
+      }
+    },
+    {
+      "scale": 1.0,
+      "comparison_file": "/users/rh/DistServe/simdistserve/benchmarks/validate_simulator/result/slo/ascend_vllm/compared/llama_1B/rate_4.0/scale_1p0/comparison.txt",
+      "thresholds": {
+        "ttft": 0.2,
+        "tpot": 0.03,
+        "total": 1.0
+      },
+      "metrics": {
+        "ttft": {
+          "benchmark": 100.0,
+          "simulator": 100.0,
+          "gap": 0.0
+        },
+        "tpot": {
+          "benchmark": 100.0,
+          "simulator": 99.17,
+          "gap": 0.8299999999999983
+        },
+        "total": {
+          "benchmark": 46.67,
+          "simulator": 43.33,
+          "gap": 3.3400000000000034
+        },
+        "both": {
+          "benchmark": 100.0,
+          "simulator": 99.17,
+          "gap": 0.8299999999999983
+        }
+      }
+    },
+    {
+      "scale": 1.2,
+      "comparison_file": "/users/rh/DistServe/simdistserve/benchmarks/validate_simulator/result/slo/ascend_vllm/compared/llama_1B/rate_4.0/scale_1p2/comparison.txt",
+      "thresholds": {
+        "ttft": 0.24,
+        "tpot": 0.036,
+        "total": 1.2
+      },
+      "metrics": {
+        "ttft": {
+          "benchmark": 100.0,
+          "simulator": 100.0,
+          "gap": 0.0
+        },
+        "tpot": {
+          "benchmark": 100.0,
+          "simulator": 100.0,
+          "gap": 0.0
+        },
+        "total": {
+          "benchmark": 48.33,
+          "simulator": 45.0,
+          "gap": 3.3299999999999983
+        },
+        "both": {
+          "benchmark": 100.0,
+          "simulator": 100.0,
+          "gap": 0.0
+        }
+      }
+    }
+  ],
+  "metric_summary": {
+    "ttft": {
+      "mean_abs_gap": 0.0,
+      "max_abs_gap": 0.0
+    },
+    "tpot": {
+      "mean_abs_gap": 6.9433333333333325,
+      "max_abs_gap": 20.0
+    },
+    "total": {
+      "mean_abs_gap": 3.6133333333333346,
+      "max_abs_gap": 4.170000000000002
+    },
+    "both": {
+      "mean_abs_gap": 6.9433333333333325,
+      "max_abs_gap": 20.0
+    }
+  }
+}

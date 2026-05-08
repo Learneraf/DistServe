@@ -1,0 +1,48 @@
+{
+  "train_split": "fit",
+  "test_split": "val",
+  "feature_set": "blocks",
+  "raw_simulator": "/users/rh/cuda_data/sim/3p3d_fit_model_forward",
+  "tpot": "raw simulator output",
+  "models": {
+    "llama_1B": {
+      "features": [
+        "constant",
+        "prompt_blocks"
+      ],
+      "coeffs": [
+        63.939303905492125,
+        -0.9573598548588396
+      ],
+      "fit_max_prefill_or_both_delta_pct": 4.166666666666657,
+      "fit_mean_prefill_or_both_delta_pct": 0.9166666666666661,
+      "formula": "ftl_ms = raw_sim_ftl_ms + max(0, dot(features, coeffs))"
+    },
+    "llama_3B": {
+      "features": [
+        "constant",
+        "prompt_blocks"
+      ],
+      "coeffs": [
+        34.050333441044636,
+        0.15670172317880082
+      ],
+      "fit_max_prefill_or_both_delta_pct": 13.333333333333336,
+      "fit_mean_prefill_or_both_delta_pct": 2.678571428571427,
+      "formula": "ftl_ms = raw_sim_ftl_ms + max(0, dot(features, coeffs))"
+    },
+    "llama_8B": {
+      "features": [
+        "constant",
+        "prompt_blocks"
+      ],
+      "coeffs": [
+        5.995869919764427,
+        0.5012143290630684
+      ],
+      "fit_max_prefill_or_both_delta_pct": 28.333333333333343,
+      "fit_mean_prefill_or_both_delta_pct": 14.250000000000005,
+      "formula": "ftl_ms = raw_sim_ftl_ms + max(0, dot(features, coeffs))"
+    }
+  }
+}

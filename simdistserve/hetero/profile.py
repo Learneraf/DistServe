@@ -282,7 +282,7 @@ class SimulationGoodputProfiler:
         return high, high_meets_slo
 
     def _meets_slo(self, shape: RoleShape, rate: float) -> bool:
-        from simdistserve.benchmarks.simulate_dist import parse_args, run_experiment
+        from simdistserve.benchmarks.validate_simulator.simulate_dist import parse_args, run_experiment
 
         backend = ENGINE_BY_DEVICE[shape.device]
         total_pp = shape.total_pp
