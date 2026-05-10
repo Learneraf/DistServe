@@ -10,6 +10,7 @@ from utils import REPO_ROOT
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.font_manager import FontProperties
+from matplotlib import patheffects as pe
 
 
 MODE_LABELS = {
@@ -38,10 +39,10 @@ THESIS_ROLE_LABELS = {
     "ascend_decode": "Ascend解码",
 }
 ROLE_COLORS = {
-    "cuda_prefill": "#ffffff",
-    "cuda_decode": "#d9d9d9",
-    "ascend_prefill": "#969696",
-    "ascend_decode": "#525252",
+    "cuda_prefill": "#4c78a8",
+    "cuda_decode": "#72b7b2",
+    "ascend_prefill": "#f58518",
+    "ascend_decode": "#e45756",
 }
 ROLE_HATCHES = {
     "cuda_prefill": "",
@@ -63,10 +64,10 @@ THESIS_FLOW_LABELS = {
     "x_aa": "Ascend→Ascend",
 }
 FLOW_COLORS = {
-    "x_cc": "#ffffff",
-    "x_ca": "#d9d9d9",
-    "x_ac": "#969696",
-    "x_aa": "#525252",
+    "x_cc": "#4c78a8",
+    "x_ca": "#9ecae9",
+    "x_ac": "#f58518",
+    "x_aa": "#e45756",
 }
 FLOW_HATCHES = {
     "x_cc": "",
@@ -75,9 +76,9 @@ FLOW_HATCHES = {
     "x_aa": "xxx",
 }
 THESIS_MODE_COLORS = {
-    "milp": "#ffffff",
-    "no_cross": "#bdbdbd",
-    "cuda_prefill_ascend_decode": "#636363",
+    "milp": "#2f7d6d",
+    "no_cross": "#7c8a99",
+    "cuda_prefill_ascend_decode": "#d97745",
 }
 THESIS_MODE_HATCHES = {
     "milp": "",
@@ -207,9 +208,7 @@ def plot_fig_5_2_real_bandwidth_goodput(
             width,
             label=THESIS_MODE_LABELS[mode],
             color=THESIS_MODE_COLORS[mode],
-            hatch=THESIS_MODE_HATCHES[mode],
-            edgecolor="#202020",
-            linewidth=0.9,
+            hatch=THESIS_MODE_HATCHES[mode]
         )
         ax.bar_label(bars, fmt="%.1f", padding=3, fontsize=8)
 
@@ -315,23 +314,24 @@ def plot_fig_5_3_real_bandwidth_allocation(
             bottom=bottoms,
             color=ROLE_COLORS[role],
             hatch=ROLE_HATCHES[role],
-            edgecolor="#202020",
-            linewidth=0.8,
             label=THESIS_ROLE_LABELS[role],
             width=0.62,
         )
         for i, value in enumerate(values):
             if value > 0:
-                ax.text(
+                txt = ax.text(
                     x[i],
                     bottoms[i] + value / 2,
                     f"{int(value)}",
                     ha="center",
                     va="center",
                     fontsize=10,
-                    color="white" if role == "ascend_decode" and value >= 2 else "#202020",
+                    color="white",
                     fontproperties=font,
                 )
+                txt.set_path_effects([
+                    pe.withStroke(linewidth=2, foreground='black')
+                ])
         bottoms += values
 
     ax.set_title("本文方法的资源分配图", fontproperties=font, fontsize=15, pad=10)
@@ -433,23 +433,24 @@ def plot_fig_5_4_real_bandwidth_flow(
             bottom=bottoms,
             color=FLOW_COLORS[flow],
             hatch=FLOW_HATCHES[flow],
-            edgecolor="#202020",
-            linewidth=0.8,
             label=THESIS_FLOW_LABELS[flow],
             width=0.62,
         )
         for i, value in enumerate(values):
-            if value >= max(1.0, 0.08 * max(1.0, max_value)):
-                ax.text(
+            if value > 0:
+                txt = ax.text(
                     x[i],
                     bottoms[i] + value / 2,
                     f"{value:.1f}",
                     ha="center",
                     va="center",
                     fontsize=9,
-                    color="white" if flow == "x_aa" else "#202020",
+                    color="white",
                     fontproperties=font,
                 )
+                txt.set_path_effects([
+                    pe.withStroke(linewidth=2, foreground='black')
+                ])
         bottoms += values
 
     y_max = np.max(bottoms)

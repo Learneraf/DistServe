@@ -20,16 +20,15 @@ METRIC_LABELS = {
     "both": "整体",
 }
 METRIC_COLORS = {
-    "ttft": "#ffffff",
-    "tpot": "#bdbdbd",
-    "both": "#636363",
+    "ttft": "#4c78a8",
+    "tpot": "#f58518",
+    "both": "#2f7d6d",
 }
 METRIC_HATCHES = {
     "ttft": "",
     "tpot": "///",
     "both": "...",
 }
-
 
 def load_mean_abs_delta(csv_path: Path) -> dict[str, dict[str, float]]:
     rows: list[dict[str, str]] = []
@@ -69,9 +68,7 @@ def plot_backend(
             width,
             label=METRIC_LABELS[metric],
             color=METRIC_COLORS[metric],
-            hatch=METRIC_HATCHES[metric],
-            edgecolor="#202020",
-            linewidth=0.9,
+            hatch=METRIC_HATCHES[metric]
         )
         ax.bar_label(bars, fmt="%.1f", padding=3, fontsize=8)
 
@@ -112,11 +109,6 @@ def main() -> None:
             args.slo_root / "cuda_distserve" / "plots" / "heatmaps" / "slo_delta_rows.csv",
             args.output_dir / "fig_5_1a_distserve_slo_mean_delta.png",
         ),
-        # (
-        #     "vLLM",
-        #     args.slo_root / "ascend_vllm" / "plots" / "heatmaps" / "slo_delta_rows.csv",
-        #     args.output_dir / "fig_5_1b_vllm_slo_mean_delta.png",
-        # ),
         (
             "vLLM",
             args.slo_root / "cuda_vllm" / "plots" / "heatmaps" / "slo_delta_rows.csv",
