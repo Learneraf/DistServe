@@ -24,12 +24,12 @@ CONFIG_NAME="${CONFIG_NAME:-example_search_config_distserve.json}" \
 OUTPUT_ROOT="${OUTPUT_ROOT:-${REPO_ROOT}/simdistserve/benchmarks/hetero_search/result/search/example_configs_distserve}" \
 CUDA_PROFILE="${REPO_ROOT}/simdistserve/estimators/profiled_data/distserve-cuda/fit_params_live_5p4d.json" \
 ASCEND_PROFILE="${REPO_ROOT}/simdistserve/estimators/profiled_data/vllm-ascend/fit_params_live_5p4d_filtered.json" \
-MU_CACHE_PATH="${REPO_ROOT}/simdistserve/benchmarks/hetero_search/result/cache/distserve.json" \
+MU_CACHE_PATH="${REPO_ROOT}/simdistserve/benchmarks/hetero_search/result/cache/distserve_0509.json" \
 bash "${SCRIPT_DIR}/1-search_hetero_run.sh"
 
 CONFIG_NAME="${CONFIG_NAME:-example_search_config_vllm.json}" \
 OUTPUT_ROOT="${OUTPUT_ROOT:-${REPO_ROOT}/simdistserve/benchmarks/hetero_search/result/search/example_configs_vllm}" \
 CUDA_PROFILE="${REPO_ROOT}/simdistserve/estimators/profiled_data/distserve-cuda/fit_params_cuda_data_fit_5p4d_infer_batch.json" \
 ASCEND_PROFILE="${REPO_ROOT}/simdistserve/estimators/profiled_data/vllm-ascend/fit_params_live_5p4d_filtered.json" \
-MU_CACHE_PATH="${REPO_ROOT}/simdistserve/benchmarks/hetero_search/result/cache/vllm.json" \
+MU_CACHE_PATH="${REPO_ROOT}/simdistserve/benchmarks/hetero_search/result/cache/vllm_0509.json" \
 bash "${SCRIPT_DIR}/1-search_hetero_run.sh"

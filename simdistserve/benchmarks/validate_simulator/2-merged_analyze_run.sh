@@ -13,7 +13,7 @@ MODELS_STR="${MODELS:-llama_1B llama_3B llama_7B llama_8B}"
 RATES_STR="${RATES:-1.0 1.5 2.0 2.5 3.0 3.5 4.0}"
 SLO_SCALES_STR="${SLO_SCALES:-0.8 1.0 1.2}"
 TTFT_TARGET="${TTFT_TARGET:-0.2}"
-TPOT_TARGET="${TPOT_TARGET:-0.03}"
+TPOT_TARGET="${TPOT_TARGET:-0.05}"
 TOTAL_TARGET="${TOTAL_TARGET:-1}"
 
 read -r -a MODELS <<< "$MODELS_STR"
@@ -38,6 +38,9 @@ case "$TYPE" in
     ascend_vllm)
         EXP_BASE="${EXP_BASE:-/users/rh/DistServe/exp_data/ascend_vllm/${MODE}}"
         ;;
+    cuda_vllm)
+        EXP_BASE="${EXP_BASE:-/users/rh/DistServe/exp_data/cuda_vllm/${MODE}}"
+        ;;
     *)
         echo "Error: Unsupported TYPE '$TYPE'. Use cuda_distserve or ascend_vllm."
         exit 1
@@ -58,6 +61,8 @@ for model in "${MODELS[@]}"; do
             EXP_FILE="$EXP_BASE/$model/ascend-vllm-120-$rate.exp"
         elif [[ "$TYPE" == "cuda_distserve" ]]; then
             EXP_FILE="$EXP_BASE/$model/distserve-120-$rate.exp"
+        elif [[ "$TYPE" == "cuda_vllm" ]]; then
+            EXP_FILE="$EXP_BASE/$model/vllm-pd-120-$rate.exp"
         else
             echo "Error: invalid TYPE" >&2
             exit 1

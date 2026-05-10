@@ -24,6 +24,7 @@ class WorkerConfig(TypedDict):
     decode_max_batch_size: int  # Maximum number of decode request in a batch (default = 10**7)
     prefill_max_tokens: int  # Max tokens in prefill iteration (default = 10**7)
     decode_max_tokens: int  # Max tokens in a iteration forward (default = 10**7)
+    decode_max_scheduled_tokens: int  # Max scheduled decode tokens in an iteration (default = 10**7)
     enable_chunked_prefill: Optional[bool]  # Enable memory pressure simulation (default = False)
     decode_back_pressure: float  # Decode queue watermark that blocks more prefills (default = 0.9)
     engine_type: Literal["distserve", "vllm", "vllm_ascend"]  # Engine type for prefill/decode time calculation (default = "distserve")
@@ -35,6 +36,8 @@ class WorkerConfig(TypedDict):
     ingress_delays: dict  # Directional scheduler ingress delays.
     scheduler_type: str  # Scheduler implementation selected by cluster.
     prefill_first_token_visible_immediately: bool  # Whether prefill-generated first token is user-visible before handoff.
+    decode_kv_capacity_tokens: Optional[int]  # Resident decode KV token capacity. Disabled when unset/non-positive.
+    decode_kv_reserve_output_tokens: bool  # Count full prompt+output length for decode KV admission.
     device_type: Optional[Literal["cuda", "ascend"]]
     role: Optional[Literal["prefill", "decode"]]
     instance_id: Optional[int]
@@ -61,9 +64,12 @@ class Worker:
         enable_chunked_prefill=False,
         prefill_max_tokens=10 ** 7,
         decode_max_tokens=10 ** 7,
+        decode_max_scheduled_tokens=10 ** 7,
         decode_back_pressure: float = 0.9,
         engine_type: Literal["distserve", "vllm", "vllm_ascend"] = "distserve",
         prefill_generates_first_token: bool = True,
+        decode_kv_capacity_tokens: Optional[int] = None,
+        decode_kv_reserve_output_tokens: bool = False,
         device_type: Optional[Literal["cuda", "ascend"]] = None,
         role: Optional[Literal["prefill", "decode"]] = None,
         instance_id: Optional[int] = None,
@@ -103,10 +109,19 @@ class Worker:
         # Maximum number of tokens for a prefill request to batch.
         self.prefill_max_tokens: int = prefill_max_tokens if prefill_max_tokens > 0 else 10 ** 7
         self.decode_max_tokens: int = decode_max_tokens if decode_max_tokens > 0 else 10 ** 7
+        self.decode_max_scheduled_tokens: int = (
+            decode_max_scheduled_tokens if decode_max_scheduled_tokens > 0 else 10 ** 7
+        )
         # Enable chunked prefill (if True) or prioritization scheduling (if False)
         self.enable_chunked_prefill: bool = enable_chunked_prefill
         # Decode worker stop accepting incoming request when this is full.
         self.decode_back_pressure = decode_back_pressure
+        self.decode_kv_capacity_tokens = (
+            int(decode_kv_capacity_tokens)
+            if decode_kv_capacity_tokens is not None and int(decode_kv_capacity_tokens) > 0
+            else None
+        )
+        self.decode_kv_reserve_output_tokens = bool(decode_kv_reserve_output_tokens)
         # All supported disaggregated backends generate the first token during
         # prefill. Keep the constructor argument for compatibility, but do not
         # let backend-specific configuration change this behavior.
@@ -117,9 +132,11 @@ class Worker:
 
         self.prefill_queue: 'deque[Request]' = deque()
         self.decode_queue: 'deque[Request]' = deque()
+        self.decode_pending_queue: 'deque[Request]' = deque()
         self._prefill_ips: int = 0  # Elements in progress for prefill
         self._decode_ips: int = 0  # Elements in progress for decode
         self._executing_decode_tokens: int = 0
+        self._executing_decode_reqs: 'List[Request]' = []
         self.avg_prefill_time: float = 1.0
         self.avg_tpot: float = 1.0
         self._ema_alpha: float = 0.1
@@ -138,7 +155,58 @@ class Worker:
     @property
     def has_back_pressure(self) -> bool:
         threshold = int(self.decode_max_batch_size * self.decode_back_pressure)
-        return sum(r.current_context_len for r in self.decode_queue) > threshold
+        return (
+            len(self.decode_queue)
+            + len(self.decode_pending_queue)
+            + self._decode_ips
+        ) > threshold
+
+    def _decode_resident_tokens(self) -> int:
+        return sum(self._decode_kv_tokens(r) for r in self.decode_queue) + sum(
+            self._decode_kv_tokens(r) for r in self._executing_decode_reqs
+        )
+
+    def _decode_kv_tokens(self, req: 'Request') -> int:
+        if self.decode_kv_reserve_output_tokens:
+            return max(1, req.prefill_lens + req.output_lens)
+        return max(1, req.current_context_len)
+
+    def _can_admit_decode(self, req: 'Request', resident_tokens: int = None) -> bool:
+        if self.decode_kv_capacity_tokens is None:
+            return True
+        resident_tokens = self._decode_resident_tokens() if resident_tokens is None else resident_tokens
+        return resident_tokens + self._decode_kv_tokens(req) <= self.decode_kv_capacity_tokens
+
+    def _try_admit_decode_pending(self):
+        if not self.decode_pending_queue:
+            return
+
+        resident_tokens = self._decode_resident_tokens()
+        admitted = False
+        while self.decode_pending_queue:
+            req = self.decode_pending_queue[0]
+            required = self._decode_kv_tokens(req)
+            if (
+                self.decode_kv_capacity_tokens is not None
+                and resident_tokens + required > self.decode_kv_capacity_tokens
+            ):
+                if resident_tokens > 0:
+                    break
+            self.decode_pending_queue.popleft()
+            self.decode_queue.append(req)
+            resident_tokens += required
+            admitted = True
+
+        if admitted:
+            self.wakeup()
+
+    def enqueue_decode(self, req: 'Request'):
+        if self._can_admit_decode(req):
+            self.decode_queue.append(req)
+            self.wakeup()
+            return
+        self.decode_pending_queue.append(req)
+        return
 
     def __repr__(self):
         return f"Worker {self.wid}"
@@ -156,6 +224,7 @@ class Worker:
 
     def run(self):
         while True:
+            self._try_admit_decode_pending()
             if not (self.prefill_queue or self.decode_queue):
                 yield self._wakeup_event
 
@@ -200,8 +269,8 @@ class Worker:
             items = [items]
 
         if not to_scheduler:
-            self.next_worker.decode_queue.extend(items)
-            self.next_worker.wakeup()
+            for item in items:
+                self.next_worker.enqueue_decode(item)
             return
 
         for item in items:
@@ -209,14 +278,18 @@ class Worker:
         return
 
     def _enter_decodes(self, remaining_tok_in_batch: int) -> 'List[Request]':
-        # decode_max_tokens
-
-        # Acceptable decode requests is capped by the remaining allowed tokens in this batch.
-        # TODO: Hack: Must revert this to use the max token given
-        # watermark = 0.9
-        # decode_max_tokens = self.decode_max_tokens * watermark
-        decode_max_tokens = 50000
-        _decode_len = min(remaining_tok_in_batch, len(self.decode_queue))
+        # Token budget for this decode iteration. In a plain decode step this
+        # is self.decode_max_tokens; in chunked-prefill it is the remaining
+        # budget after scheduled prefill chunks. This budget is kept as the
+        # existing context-token budget. The scheduled-token/request cap below
+        # models vLLM-style decode admission where each decode request schedules
+        # one token in the current iteration.
+        decode_max_tokens = remaining_tok_in_batch
+        _decode_len = min(
+            self.decode_max_batch_size,
+            self.decode_max_scheduled_tokens,
+            len(self.decode_queue),
+        )
         decode_reqs = []
         for i in range(_decode_len):
             req = self.decode_queue[0]
@@ -333,6 +406,7 @@ class Worker:
             )
         next_decode_batch = tuple(r for r in decode_reqs if not r.should_finish())
         self.forward_decode(next_decode_batch)
+        self._try_admit_decode_pending()
         return
 
     def do_prefill(self):
@@ -412,12 +486,14 @@ class Worker:
             delay += self.add_ray_overhead(num_tokens)
         self._decode_ips = batch_size
         self._executing_decode_tokens = sum(max(req.output_lens - max(req.counter, 0), 0) for req in decode_reqs)
+        self._executing_decode_reqs = list(decode_reqs)
         yield self.env.timeout(delay)
         if batch_size > 0:
             observed_tpot = delay / batch_size
             self.avg_tpot = (1 - self._ema_alpha) * self.avg_tpot + self._ema_alpha * observed_tpot
         self._decode_ips = 0
         self._executing_decode_tokens = 0
+        self._executing_decode_reqs = []
         self._exit_decode(decode_reqs)
         return
 

@@ -113,9 +113,8 @@ def calculate_per_request_latency(
         f'output_lens must be a pd.Series, got {type(output_lens)}'
     assert isinstance(first_token_prefill, pd.Series) or first_token_prefill is None, \
         f'first_token_prefill must be a pd.Series, got {type(first_token_prefill)}'
-    # First token latency: time between request init and the first decode round finishing.
-    # Decoding latency: time between the first and the last decode rounds finishing,
-    # matching the benchmark's TPOT convention.
+    # TTFT is reported as time to prefill completion. TPOT still uses the
+    # first user-visible token as its start point.
     first_event = df[df.event_type == 'init'].groupby('req_id').start_time.min()
     first_decode_end = df[df.event_type == 'do_decode'].groupby('req_id').end_time.min()
     last_decode_end = df[df.event_type == 'do_decode'].groupby('req_id').end_time.max()
@@ -134,7 +133,8 @@ def calculate_per_request_latency(
         first_token_ready = first_token_ready.where(~use_prefill_finish, prefill_first_ready)
 
     # Then, calculate the first token latency and decoding latency for each req_id
-    first_token_latency = (first_token_ready - first_event).fillna(0)
+    prefill_done_time = finish_prefill_time.reindex(first_event.index).combine_first(first_token_ready)
+    first_token_latency = (prefill_done_time - first_event).fillna(0)
     decoding_latency = (last_decode_end - first_token_ready).fillna(0)
     total_latency = last_event - first_event
 

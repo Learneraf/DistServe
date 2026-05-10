@@ -19,14 +19,14 @@
       "comparison_file": "/users/rh/DistServe/simdistserve/benchmarks/validate_simulator/result/slo/cuda_distserve/compared/llama_8B/rate_2.5/scale_0p8/comparison.txt",
       "thresholds": {
         "ttft": 0.16,
-        "tpot": 0.024,
+        "tpot": 0.04,
         "total": 0.8
       },
       "metrics": {
         "ttft": {
-          "benchmark": 39.17,
+          "benchmark": 40.0,
           "simulator": 39.17,
-          "gap": 0.0
+          "gap": 0.8299999999999983
         },
         "tpot": {
           "benchmark": 0.0,
@@ -50,19 +50,19 @@
       "comparison_file": "/users/rh/DistServe/simdistserve/benchmarks/validate_simulator/result/slo/cuda_distserve/compared/llama_8B/rate_2.5/scale_1p0/comparison.txt",
       "thresholds": {
         "ttft": 0.2,
-        "tpot": 0.03,
+        "tpot": 0.05,
         "total": 1.0
       },
       "metrics": {
         "ttft": {
-          "benchmark": 44.17,
+          "benchmark": 45.0,
           "simulator": 43.33,
-          "gap": 0.8400000000000034
+          "gap": 1.6700000000000017
         },
         "tpot": {
-          "benchmark": 0.0,
-          "simulator": 0.0,
-          "gap": 0.0
+          "benchmark": 40.83,
+          "simulator": 40.0,
+          "gap": 0.8299999999999983
         },
         "total": {
           "benchmark": 17.5,
@@ -70,9 +70,9 @@
           "gap": 0.0
         },
         "both": {
-          "benchmark": 0.0,
-          "simulator": 0.0,
-          "gap": 0.0
+          "benchmark": 19.17,
+          "simulator": 20.83,
+          "gap": -1.6599999999999966
         }
       }
     },
@@ -81,19 +81,19 @@
       "comparison_file": "/users/rh/DistServe/simdistserve/benchmarks/validate_simulator/result/slo/cuda_distserve/compared/llama_8B/rate_2.5/scale_1p2/comparison.txt",
       "thresholds": {
         "ttft": 0.24,
-        "tpot": 0.036,
+        "tpot": 0.06,
         "total": 1.2
       },
       "metrics": {
         "ttft": {
-          "benchmark": 54.17,
+          "benchmark": 55.83,
           "simulator": 54.17,
-          "gap": 0.0
+          "gap": 1.6599999999999966
         },
         "tpot": {
-          "benchmark": 0.0,
-          "simulator": 0.0,
-          "gap": 0.0
+          "benchmark": 75.83,
+          "simulator": 85.83,
+          "gap": -10.0
         },
         "total": {
           "benchmark": 20.0,
@@ -101,29 +101,29 @@
           "gap": 0.0
         },
         "both": {
-          "benchmark": 0.0,
-          "simulator": 0.0,
-          "gap": 0.0
+          "benchmark": 39.17,
+          "simulator": 44.17,
+          "gap": -5.0
         }
       }
     }
   ],
   "metric_summary": {
     "ttft": {
-      "mean_abs_gap": 0.28000000000000114,
-      "max_abs_gap": 0.8400000000000034
+      "mean_abs_gap": 1.3866666666666656,
+      "max_abs_gap": 1.6700000000000017
     },
     "tpot": {
-      "mean_abs_gap": 0.0,
-      "max_abs_gap": 0.0
+      "mean_abs_gap": 3.6099999999999994,
+      "max_abs_gap": 10.0
     },
     "total": {
       "mean_abs_gap": 0.5533333333333333,
       "max_abs_gap": 1.6600000000000001
     },
     "both": {
-      "mean_abs_gap": 0.0,
-      "max_abs_gap": 0.0
+      "mean_abs_gap": 2.219999999999999,
+      "max_abs_gap": 5.0
     }
   }
 }

@@ -7,7 +7,6 @@ cd "$SCRIPT_DIR"
 TYPE="${TYPE:-ascend_vllm}" 
 MODE="${MODE:-val}"
 MODELS="${MODELS:-llama_1B llama_3B llama_7B llama_8B}"
-SLO_SCALES="${SLO_SCALES:-0.4 0.6 0.8 1.0 1.2}"
 NUM_REQUESTS="120"
 SEED="0"
 ARRIVAL="poisson"
@@ -19,7 +18,6 @@ PREFILL_FIRST_TOKEN_VISIBLE_IMMEDIATELY="${PREFILL_FIRST_TOKEN_VISIBLE_IMMEDIATE
 
 read -r -a RATES <<< "$RATES"
 read -r -a MODELS <<< "$MODELS"
-SLO_SCALES_PY="[${SLO_SCALES// /, }]"
 
 EXTRA_SIM_ARGS=()
 
@@ -60,8 +58,13 @@ case "$TYPE" in
         PROFILE_ENV="SIMDISTSERVE_VLLM_ASCEND_PROFILE"
         PROFILE_PATH="${PROFILE_PATH:-/users/rh/DistServe/simdistserve/estimators/profiled_data/vllm-ascend/fit_params_live_5p4d_filtered.json}"
         ;;
+    cuda_vllm)
+        BACKEND="vllm_ascend"
+        PROFILE_ENV="SIMDISTSERVE_VLLM_ASCEND_PROFILE"
+        PROFILE_PATH="${PROFILE_PATH:-/users/rh/DistServe/exp_data/cuda_vllm/sim/debug_fit_cuda_vllm/fit_params_cuda_vllm_5p4d_model_forward_prefill_min10.json}"
+        ;;
     *)
-        echo "Error: Unsupported TYPE '$TYPE'. Use distserve_cuda or vllm_ascend."
+        echo "Error: Unsupported TYPE '$TYPE'."
         exit 1
         ;;
 esac
@@ -94,7 +97,6 @@ for MODEL in "${MODELS[@]}"; do
             --output "$OUTPUT_DIR/sharegpt.json.sim.csv" \
             --name "${MODEL}/rate_${RATE}" \
             --output-request-latency "$OUTPUT_DIR/request_latency.csv" \
-            --slo-scales "$SLO_SCALES_PY" \
             --output-request-event "$OUTPUT_DIR/request_event.csv" \
             --output-request-info "$OUTPUT_DIR/request_info.csv" \
             "${EXTRA_SIM_ARGS[@]}"

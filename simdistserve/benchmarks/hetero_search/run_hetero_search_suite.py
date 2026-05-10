@@ -12,6 +12,7 @@ from simdistserve.benchmarks.hetero_search.search_hetero import (
     _config_profile_status,
     _load_handoff,
     _load_pool,
+    _load_slo_config,
     _model_object,
     _normalize_model,
 )
@@ -29,15 +30,15 @@ def run_suite(config_path: Path, output_root: Path, mu_cache_path: Path | None =
     model = _normalize_model(model_label)
     model_obj = _model_object(model)
     search = payload.get("search", {})
-    slo = payload.get("slo", {})
+    slo = _load_slo_config(payload)
 
     profiler = SimulationGoodputProfiler(
         model=model,
         workload=str(payload["workload"]),
-        prefill_target_ms=float(slo.get("prefill_target_ms", payload.get("prefill_slo_ms", 1000.0))),
-        decode_target_ms=float(slo.get("decode_target_ms", payload.get("decode_slo_ms", 1000.0))),
-        prefill_attainment=int(slo.get("prefill_attainment", payload.get("prefill_attainment", 90))),
-        decode_attainment=int(slo.get("decode_attainment", payload.get("decode_attainment", 90))),
+        prefill_target_ms=float(slo["ttft_target_ms"]),
+        decode_target_ms=float(slo["tpot_target_ms"]),
+        prefill_attainment=int(slo["ttft_attainment"]),
+        decode_attainment=int(slo["tpot_attainment"]),
         max_rate=float(search.get("single_instance_max_rate", search.get("max_rate", 8.0))),
         epsilon=float(search.get("single_instance_epsilon", search.get("rate_epsilon", 0.25))),
         profile_num_requests=int(search.get("profile_num_requests", 120)),

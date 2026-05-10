@@ -38,10 +38,16 @@ THESIS_ROLE_LABELS = {
     "ascend_decode": "Ascend解码",
 }
 ROLE_COLORS = {
-    "cuda_prefill": "#4c78a8",
-    "cuda_decode": "#72b7b2",
-    "ascend_prefill": "#f58518",
-    "ascend_decode": "#e45756",
+    "cuda_prefill": "#ffffff",
+    "cuda_decode": "#d9d9d9",
+    "ascend_prefill": "#969696",
+    "ascend_decode": "#525252",
+}
+ROLE_HATCHES = {
+    "cuda_prefill": "",
+    "cuda_decode": "///",
+    "ascend_prefill": "...",
+    "ascend_decode": "xxx",
 }
 FLOW_KEYS = ("x_cc", "x_ca", "x_ac", "x_aa")
 FLOW_LABELS = {
@@ -57,15 +63,26 @@ THESIS_FLOW_LABELS = {
     "x_aa": "Ascend→Ascend",
 }
 FLOW_COLORS = {
-    "x_cc": "#4c78a8",
-    "x_ca": "#9ecae9",
-    "x_ac": "#f58518",
-    "x_aa": "#e45756",
+    "x_cc": "#ffffff",
+    "x_ca": "#d9d9d9",
+    "x_ac": "#969696",
+    "x_aa": "#525252",
+}
+FLOW_HATCHES = {
+    "x_cc": "",
+    "x_ca": "///",
+    "x_ac": "...",
+    "x_aa": "xxx",
 }
 THESIS_MODE_COLORS = {
-    "milp": "#2f7d6d",
-    "no_cross": "#7c8a99",
-    "cuda_prefill_ascend_decode": "#d97745",
+    "milp": "#ffffff",
+    "no_cross": "#bdbdbd",
+    "cuda_prefill_ascend_decode": "#636363",
+}
+THESIS_MODE_HATCHES = {
+    "milp": "",
+    "no_cross": "///",
+    "cuda_prefill_ascend_decode": "...",
 }
 
 
@@ -190,16 +207,24 @@ def plot_fig_5_2_real_bandwidth_goodput(
             width,
             label=THESIS_MODE_LABELS[mode],
             color=THESIS_MODE_COLORS[mode],
+            hatch=THESIS_MODE_HATCHES[mode],
+            edgecolor="#202020",
+            linewidth=0.9,
         )
         ax.bar_label(bars, fmt="%.1f", padding=3, fontsize=8)
 
-    ax.set_title("有效吞吐对比", fontproperties=font, fontsize=14)
-    ax.set_ylabel("有效吞吐(req/s)", fontproperties=font)
+    ax.set_title("有效吞吐量对比图", fontproperties=font, fontsize=14)
+    ax.set_ylabel("有效吞吐量(req/s)", fontproperties=font)
     ax.set_xlabel("模型", fontproperties=font)
+    
+    y_max = max(value for mode in THESIS_MODE_ORDER for value in values[mode])
+    ax.set_ylim(0, y_max * 1.2)
+
     ax.set_xticks(x)
     ax.set_xticklabels(models, fontproperties=font)
     ax.grid(axis="y", linestyle="--", alpha=0.35)
-    ax.legend(prop=font, frameon=False, ncol=3, loc="upper center", bbox_to_anchor=(0.5, 1.16))
+    # ax.legend(prop=font, frameon=False, ncol=3, loc="upper center", bbox_to_anchor=(0.5, 1.16))
+    ax.legend(prop=font, frameon=False, ncol=3, loc="upper center")
     fig.tight_layout()
     fig.savefig(output_png, dpi=180)
     fig.savefig(output_png.with_suffix(".pdf"))
@@ -234,6 +259,9 @@ def plot_instance_allocation(rows: list[dict], models: list[str], output_png: Pa
             values,
             bottom=bottoms,
             color=ROLE_COLORS[role],
+            hatch=ROLE_HATCHES[role],
+            edgecolor="#202020",
+            linewidth=0.8,
             label=ROLE_LABELS[role],
             width=0.72,
         )
@@ -286,6 +314,9 @@ def plot_fig_5_3_real_bandwidth_allocation(
             values,
             bottom=bottoms,
             color=ROLE_COLORS[role],
+            hatch=ROLE_HATCHES[role],
+            edgecolor="#202020",
+            linewidth=0.8,
             label=THESIS_ROLE_LABELS[role],
             width=0.62,
         )
@@ -298,18 +329,22 @@ def plot_fig_5_3_real_bandwidth_allocation(
                     ha="center",
                     va="center",
                     fontsize=10,
-                    color="white" if value >= 2 else "#202020",
+                    color="white" if role == "ascend_decode" and value >= 2 else "#202020",
                     fontproperties=font,
                 )
         bottoms += values
 
-    ax.set_title("本文方法的资源分配", fontproperties=font, fontsize=15, pad=10)
+    ax.set_title("本文方法的资源分配图", fontproperties=font, fontsize=15, pad=10)
     ax.set_ylabel("实例数量", fontproperties=font)
     ax.set_xlabel("模型", fontproperties=font)
     ax.set_xticks(x)
     ax.set_xticklabels(models, fontproperties=font)
     ax.grid(axis="y", linestyle="--", alpha=0.35)
-    ax.legend(prop=font, frameon=False, ncol=4, loc="upper center", bbox_to_anchor=(0.5, 1.16))
+
+    y_max = np.max(bottoms)
+    ax.set_ylim(0, y_max * 1.2)
+
+    ax.legend(prop=font, frameon=False, ncol=4, loc="upper center")
     fig.tight_layout()
     fig.savefig(output_png, dpi=180)
     fig.savefig(output_png.with_suffix(".pdf"))
@@ -334,6 +369,9 @@ def plot_flow_stacked(rows: list[dict], models: list[str], output_png: Path) -> 
             values,
             bottom=bottoms,
             color=FLOW_COLORS[flow],
+            hatch=FLOW_HATCHES[flow],
+            edgecolor="#202020",
+            linewidth=0.8,
             label=FLOW_LABELS[flow],
             width=0.72,
         )
@@ -394,6 +432,9 @@ def plot_fig_5_4_real_bandwidth_flow(
             values,
             bottom=bottoms,
             color=FLOW_COLORS[flow],
+            hatch=FLOW_HATCHES[flow],
+            edgecolor="#202020",
+            linewidth=0.8,
             label=THESIS_FLOW_LABELS[flow],
             width=0.62,
         )
@@ -406,18 +447,21 @@ def plot_fig_5_4_real_bandwidth_flow(
                     ha="center",
                     va="center",
                     fontsize=9,
-                    color="white",
+                    color="white" if flow == "x_aa" else "#202020",
                     fontproperties=font,
                 )
         bottoms += values
 
-    ax.set_title("本文方法的请求流向", fontproperties=font, fontsize=15, pad=10)
-    ax.set_ylabel("流量有效吞吐(req/s)", fontproperties=font)
+    y_max = np.max(bottoms)
+    ax.set_ylim(0, y_max * 1.2)
+
+    ax.set_title("本文方法的请求流向图", fontproperties=font, fontsize=15, pad=10)
+    ax.set_ylabel("有效吞吐量(req/s)", fontproperties=font)
     ax.set_xlabel("模型", fontproperties=font)
     ax.set_xticks(x)
     ax.set_xticklabels(models, fontproperties=font)
     ax.grid(axis="y", linestyle="--", alpha=0.35)
-    ax.legend(prop=font, frameon=False, ncol=4, loc="upper center", bbox_to_anchor=(0.5, 1.16))
+    ax.legend(prop=font, frameon=False, ncol=4, loc="upper center")
     fig.tight_layout()
     fig.savefig(output_png, dpi=180)
     fig.savefig(output_png.with_suffix(".pdf"))
@@ -451,7 +495,7 @@ def plot_flow_matrix(rows: list[dict], models: list[str], output_png: Path) -> N
                 ],
                 dtype=float,
             )
-            im = ax.imshow(matrix, cmap="YlGnBu", vmin=0.0, vmax=max_flow)
+            im = ax.imshow(matrix, cmap="Greys", vmin=0.0, vmax=max_flow)
             for i in range(2):
                 for j in range(2):
                     value = matrix[i, j]
@@ -525,12 +569,20 @@ def main() -> None:
     plot_fig_5_2_real_bandwidth_goodput(rows, args.models, fig_5_2_png, args.font_path)
     plot_fig_5_3_real_bandwidth_allocation(rows, args.models, fig_5_3_png, args.font_path)
     plot_fig_5_4_real_bandwidth_flow(rows, args.models, fig_5_4_png, args.font_path)
+    fig_5_2_100g_png = args.thesis_figures_dir / "fig_5_2_100gbps_goodput.png"
+    fig_5_3_100g_png = args.thesis_figures_dir / "fig_5_3_100gbps_allocation.png"
+    fig_5_4_100g_png = args.thesis_figures_dir / "fig_5_4_100gbps_flow.png"
+    plot_fig_5_2_real_bandwidth_goodput(rows, args.models, fig_5_2_100g_png, args.font_path)
+    plot_fig_5_3_real_bandwidth_allocation(rows, args.models, fig_5_3_100g_png, args.font_path)
+    plot_fig_5_4_real_bandwidth_flow(rows, args.models, fig_5_4_100g_png, args.font_path)
     allocation_png = args.output_dir / "hetero_search_instance_allocation.png"
     flow_stacked_png = args.output_dir / "hetero_search_flow_stacked.png"
     flow_matrix_png = args.output_dir / "hetero_search_flow_matrix.png"
     plot_instance_allocation(rows, args.models, allocation_png)
     plot_flow_stacked(rows, args.models, flow_stacked_png)
     plot_flow_matrix(rows, args.models, flow_matrix_png)
+    fig_5_5_100g_png = args.thesis_figures_dir / "fig_5_5_100gbps_flow_matrix.png"
+    plot_flow_matrix(rows, args.models, fig_5_5_100g_png)
     print(
         json.dumps(
             {
@@ -543,6 +595,14 @@ def main() -> None:
                 "fig_5_3_pdf": str(fig_5_3_png.with_suffix(".pdf")),
                 "fig_5_4_png": str(fig_5_4_png),
                 "fig_5_4_pdf": str(fig_5_4_png.with_suffix(".pdf")),
+                "fig_5_2_100gbps_png": str(fig_5_2_100g_png),
+                "fig_5_2_100gbps_pdf": str(fig_5_2_100g_png.with_suffix(".pdf")),
+                "fig_5_3_100gbps_png": str(fig_5_3_100g_png),
+                "fig_5_3_100gbps_pdf": str(fig_5_3_100g_png.with_suffix(".pdf")),
+                "fig_5_4_100gbps_png": str(fig_5_4_100g_png),
+                "fig_5_4_100gbps_pdf": str(fig_5_4_100g_png.with_suffix(".pdf")),
+                "fig_5_5_100gbps_png": str(fig_5_5_100g_png),
+                "fig_5_5_100gbps_pdf": str(fig_5_5_100g_png.with_suffix(".pdf")),
                 "allocation_png": str(allocation_png),
                 "allocation_pdf": str(allocation_png.with_suffix(".pdf")),
                 "flow_stacked_png": str(flow_stacked_png),

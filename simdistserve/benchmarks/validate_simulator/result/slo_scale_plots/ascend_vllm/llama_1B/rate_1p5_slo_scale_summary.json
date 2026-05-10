@@ -18,8 +18,8 @@
       "scale": 0.8,
       "comparison_file": "/users/rh/DistServe/simdistserve/benchmarks/validate_simulator/result/slo/ascend_vllm/compared/llama_1B/rate_1.5/scale_0p8/comparison.txt",
       "thresholds": {
-        "ttft": 0.16,
-        "tpot": 0.024,
+        "ttft": 0.4,
+        "tpot": 0.048,
         "total": 0.8
       },
       "metrics": {
@@ -49,8 +49,8 @@
       "scale": 1.0,
       "comparison_file": "/users/rh/DistServe/simdistserve/benchmarks/validate_simulator/result/slo/ascend_vllm/compared/llama_1B/rate_1.5/scale_1p0/comparison.txt",
       "thresholds": {
-        "ttft": 0.2,
-        "tpot": 0.03,
+        "ttft": 0.5,
+        "tpot": 0.06,
         "total": 1.0
       },
       "metrics": {
@@ -80,8 +80,8 @@
       "scale": 1.2,
       "comparison_file": "/users/rh/DistServe/simdistserve/benchmarks/validate_simulator/result/slo/ascend_vllm/compared/llama_1B/rate_1.5/scale_1p2/comparison.txt",
       "thresholds": {
-        "ttft": 0.24,
-        "tpot": 0.036,
+        "ttft": 0.6,
+        "tpot": 0.072,
         "total": 1.2
       },
       "metrics": {
@@ -97,8 +97,8 @@
         },
         "total": {
           "benchmark": 48.33,
-          "simulator": 47.5,
-          "gap": 0.8299999999999983
+          "simulator": 46.67,
+          "gap": 1.6599999999999966
         },
         "both": {
           "benchmark": 100.0,
@@ -118,7 +118,7 @@
       "max_abs_gap": 0.0
     },
     "total": {
-      "mean_abs_gap": 1.6666666666666667,
+      "mean_abs_gap": 1.9433333333333327,
       "max_abs_gap": 2.5
     },
     "both": {

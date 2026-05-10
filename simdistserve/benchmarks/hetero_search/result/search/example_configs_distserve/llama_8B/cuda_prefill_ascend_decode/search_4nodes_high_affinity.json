@@ -16,139 +16,9 @@
   "profiled_shapes": 36,
   "profile_summary": {
     "num_profiled_shapes": 36,
-    "num_capped_shapes": 16,
+    "num_capped_shapes": 6,
     "has_capped_shapes": true,
     "capped_shapes": [
-      {
-        "shape": {
-          "device": "cuda",
-          "role": "decode",
-          "tp": 1,
-          "pp_local": 2,
-          "pp_cross": 1,
-          "total_pp": 2
-        },
-        "goodput": 64.0,
-        "effective_cap": 64.0,
-        "num_requests": 120
-      },
-      {
-        "shape": {
-          "device": "cuda",
-          "role": "decode",
-          "tp": 1,
-          "pp_local": 4,
-          "pp_cross": 1,
-          "total_pp": 4
-        },
-        "goodput": 64.0,
-        "effective_cap": 64.0,
-        "num_requests": 120
-      },
-      {
-        "shape": {
-          "device": "cuda",
-          "role": "decode",
-          "tp": 1,
-          "pp_local": 8,
-          "pp_cross": 1,
-          "total_pp": 8
-        },
-        "goodput": 64.0,
-        "effective_cap": 64.0,
-        "num_requests": 120
-      },
-      {
-        "shape": {
-          "device": "cuda",
-          "role": "decode",
-          "tp": 1,
-          "pp_local": 16,
-          "pp_cross": 1,
-          "total_pp": 16
-        },
-        "goodput": 64.0,
-        "effective_cap": 64.0,
-        "num_requests": 120
-      },
-      {
-        "shape": {
-          "device": "cuda",
-          "role": "decode",
-          "tp": 2,
-          "pp_local": 2,
-          "pp_cross": 1,
-          "total_pp": 2
-        },
-        "goodput": 64.0,
-        "effective_cap": 64.0,
-        "num_requests": 120
-      },
-      {
-        "shape": {
-          "device": "cuda",
-          "role": "decode",
-          "tp": 2,
-          "pp_local": 4,
-          "pp_cross": 1,
-          "total_pp": 4
-        },
-        "goodput": 64.0,
-        "effective_cap": 64.0,
-        "num_requests": 120
-      },
-      {
-        "shape": {
-          "device": "cuda",
-          "role": "decode",
-          "tp": 2,
-          "pp_local": 8,
-          "pp_cross": 1,
-          "total_pp": 8
-        },
-        "goodput": 64.0,
-        "effective_cap": 64.0,
-        "num_requests": 120
-      },
-      {
-        "shape": {
-          "device": "ascend",
-          "role": "decode",
-          "tp": 1,
-          "pp_local": 1,
-          "pp_cross": 1,
-          "total_pp": 1
-        },
-        "goodput": 64.0,
-        "effective_cap": 64.0,
-        "num_requests": 120
-      },
-      {
-        "shape": {
-          "device": "ascend",
-          "role": "decode",
-          "tp": 1,
-          "pp_local": 2,
-          "pp_cross": 1,
-          "total_pp": 2
-        },
-        "goodput": 64.0,
-        "effective_cap": 64.0,
-        "num_requests": 120
-      },
-      {
-        "shape": {
-          "device": "ascend",
-          "role": "decode",
-          "tp": 1,
-          "pp_local": 4,
-          "pp_cross": 1,
-          "total_pp": 4
-        },
-        "goodput": 64.0,
-        "effective_cap": 64.0,
-        "num_requests": 120
-      },
       {
         "shape": {
           "device": "ascend",
@@ -233,13 +103,13 @@
     "timed_out_shapes": []
   },
   "timing": {
-    "enumerate_shapes_seconds": 0.00017873902106657624,
-    "profile_seconds": 3.93550144508481e-05,
-    "precompute_mu_seconds": 3.93550144508481e-05,
-    "allocation_milp_seconds": 0.0006174719310365617,
-    "search_loop_seconds": 0.0012348949676379561,
-    "sort_seconds": 1.926033291965723e-06,
-    "total_search_seconds": 0.0014178170240484178
+    "enumerate_shapes_seconds": 0.00016962195513769984,
+    "profile_seconds": 3.595888847485185e-05,
+    "precompute_mu_seconds": 3.595888847485185e-05,
+    "allocation_milp_seconds": 0.000611867057159543,
+    "search_loop_seconds": 0.0011354959569871426,
+    "sort_seconds": 1.4090328477323055e-06,
+    "total_search_seconds": 0.001307890983298421
   },
-  "elapsed_seconds": 0.0014749849797226489
+  "elapsed_seconds": 0.0013429829850792885
 }

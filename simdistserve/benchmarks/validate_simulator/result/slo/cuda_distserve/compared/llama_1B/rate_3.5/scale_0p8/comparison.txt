@@ -1,12 +1,12 @@
 ======================================================================
 COMPARISON REPORT: SLO Satisfaction Rates
 ======================================================================
-Unified SLO thresholds: TTFT=0.16s, TPOT=0.024s, Total=0.8s
+Unified SLO thresholds: TTFT=0.16s, TPOT=0.04s, Total=0.8s
 
 Metric                         EXP (DistServe)           CSV (simdistserve)        Difference (Exp - CSV)
 ----------------------------------------------------------------------------------------------------
-TTFT SLO met rate              104/120 (86.67%)          104/120 (86.67%)          +0.00%              
-TPOT SLO met rate              117/120 (97.50%)          119/120 (99.17%)          -1.67%              
+TTFT SLO met rate              106/120 (88.33%)          104/120 (86.67%)          +1.67%              
+TPOT SLO met rate              119/120 (99.17%)          120/120 (100.00%)         -0.83%              
 Total SLO met rate             53/120 (44.17%)           51/120 (42.50%)           +1.67%              
-Both (TTFT+TPOT) SLO met rate  101/120 (84.17%)          103/120 (85.83%)          -1.67%              
+Both (TTFT+TPOT) SLO met rate  105/120 (87.50%)          104/120 (86.67%)          +0.83%              
 ======================================================================

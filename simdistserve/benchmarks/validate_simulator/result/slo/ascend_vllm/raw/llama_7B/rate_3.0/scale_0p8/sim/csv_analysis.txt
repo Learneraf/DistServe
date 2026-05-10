@@ -1,729 +1,729 @@
 Request 1:
-  TTFT: 0.2424s (SLO: 0.16s) ✗
-  TPOT: 0.0440s (SLO: 0.024s) ✗
-  Total latency: 20.7377s (SLO: 0.8s) ✗
-  Both TTFT and TPOT SLO met: ✗
+  TTFT: 0.2424s (SLO: 0.4s) ✓
+  TPOT: 0.0438s (SLO: 0.048s) ✓
+  Total latency: 20.6590s (SLO: 0.8s) ✗
+  Both TTFT and TPOT SLO met: ✓
 
 Request 2:
-  TTFT: 0.2536s (SLO: 0.16s) ✗
-  TPOT: 0.0486s (SLO: 0.024s) ✗
-  Total latency: 32.3020s (SLO: 0.8s) ✗
+  TTFT: 0.2536s (SLO: 0.4s) ✓
+  TPOT: 0.0484s (SLO: 0.048s) ✗
+  Total latency: 32.2053s (SLO: 0.8s) ✗
   Both TTFT and TPOT SLO met: ✗
 
 Request 3:
-  TTFT: 0.2622s (SLO: 0.16s) ✗
-  TPOT: 0.0443s (SLO: 0.024s) ✗
-  Total latency: 19.2346s (SLO: 0.8s) ✗
-  Both TTFT and TPOT SLO met: ✗
+  TTFT: 0.2622s (SLO: 0.4s) ✓
+  TPOT: 0.0442s (SLO: 0.048s) ✓
+  Total latency: 19.1829s (SLO: 0.8s) ✗
+  Both TTFT and TPOT SLO met: ✓
 
 Request 4:
-  TTFT: 0.2422s (SLO: 0.16s) ✗
-  TPOT: 0.0437s (SLO: 0.024s) ✗
-  Total latency: 16.6254s (SLO: 0.8s) ✗
-  Both TTFT and TPOT SLO met: ✗
+  TTFT: 0.2422s (SLO: 0.4s) ✓
+  TPOT: 0.0436s (SLO: 0.048s) ✓
+  Total latency: 16.6011s (SLO: 0.8s) ✗
+  Both TTFT and TPOT SLO met: ✓
 
 Request 5:
-  TTFT: 0.2349s (SLO: 0.16s) ✗
-  TPOT: 0.0493s (SLO: 0.024s) ✗
-  Total latency: 31.1559s (SLO: 0.8s) ✗
+  TTFT: 0.2349s (SLO: 0.4s) ✓
+  TPOT: 0.0492s (SLO: 0.048s) ✗
+  Total latency: 31.0570s (SLO: 0.8s) ✗
   Both TTFT and TPOT SLO met: ✗
 
 Request 6:
-  TTFT: 0.2346s (SLO: 0.16s) ✗
-  TPOT: 0.0485s (SLO: 0.024s) ✗
-  Total latency: 27.1644s (SLO: 0.8s) ✗
+  TTFT: 0.2858s (SLO: 0.4s) ✓
+  TPOT: 0.0483s (SLO: 0.048s) ✗
+  Total latency: 27.0863s (SLO: 0.8s) ✗
   Both TTFT and TPOT SLO met: ✗
 
 Request 7:
-  TTFT: 0.2410s (SLO: 0.16s) ✗
-  TPOT: 0.0456s (SLO: 0.024s) ✗
-  Total latency: 19.3476s (SLO: 0.8s) ✗
-  Both TTFT and TPOT SLO met: ✗
+  TTFT: 0.2410s (SLO: 0.4s) ✓
+  TPOT: 0.0454s (SLO: 0.048s) ✓
+  Total latency: 19.2519s (SLO: 0.8s) ✗
+  Both TTFT and TPOT SLO met: ✓
 
 Request 8:
-  TTFT: 0.2905s (SLO: 0.16s) ✗
-  TPOT: 0.0436s (SLO: 0.024s) ✗
-  Total latency: 5.9534s (SLO: 0.8s) ✗
-  Both TTFT and TPOT SLO met: ✗
+  TTFT: 0.3396s (SLO: 0.4s) ✓
+  TPOT: 0.0437s (SLO: 0.048s) ✓
+  Total latency: 6.0157s (SLO: 0.8s) ✗
+  Both TTFT and TPOT SLO met: ✓
 
 Request 9:
-  TTFT: 0.2507s (SLO: 0.16s) ✗
-  TPOT: 0.0445s (SLO: 0.024s) ✗
-  Total latency: 7.1435s (SLO: 0.8s) ✗
-  Both TTFT and TPOT SLO met: ✗
+  TTFT: 0.2507s (SLO: 0.4s) ✓
+  TPOT: 0.0447s (SLO: 0.048s) ✓
+  Total latency: 7.1803s (SLO: 0.8s) ✗
+  Both TTFT and TPOT SLO met: ✓
 
 Request 10:
-  TTFT: 0.2946s (SLO: 0.16s) ✗
-  TPOT: 0.0456s (SLO: 0.024s) ✗
-  Total latency: 3.3046s (SLO: 0.8s) ✗
-  Both TTFT and TPOT SLO met: ✗
+  TTFT: 0.2946s (SLO: 0.4s) ✓
+  TPOT: 0.0457s (SLO: 0.048s) ✓
+  Total latency: 3.3125s (SLO: 0.8s) ✗
+  Both TTFT and TPOT SLO met: ✓
 
 Request 11:
-  TTFT: 0.2569s (SLO: 0.16s) ✗
-  TPOT: 0.0454s (SLO: 0.024s) ✗
-  Total latency: 8.6186s (SLO: 0.8s) ✗
-  Both TTFT and TPOT SLO met: ✗
+  TTFT: 0.3903s (SLO: 0.4s) ✓
+  TPOT: 0.0456s (SLO: 0.048s) ✓
+  Total latency: 8.7809s (SLO: 0.8s) ✗
+  Both TTFT and TPOT SLO met: ✓
 
 Request 12:
-  TTFT: 0.2596s (SLO: 0.16s) ✗
-  TPOT: 0.0463s (SLO: 0.024s) ✗
-  Total latency: 5.3981s (SLO: 0.8s) ✗
-  Both TTFT and TPOT SLO met: ✗
+  TTFT: 0.2596s (SLO: 0.4s) ✓
+  TPOT: 0.0462s (SLO: 0.048s) ✓
+  Total latency: 5.3911s (SLO: 0.8s) ✗
+  Both TTFT and TPOT SLO met: ✓
 
 Request 13:
-  TTFT: 0.2867s (SLO: 0.16s) ✗
-  TPOT: 0.0452s (SLO: 0.024s) ✗
-  Total latency: 11.3194s (SLO: 0.8s) ✗
-  Both TTFT and TPOT SLO met: ✗
+  TTFT: 0.2955s (SLO: 0.4s) ✓
+  TPOT: 0.0453s (SLO: 0.048s) ✓
+  Total latency: 11.3518s (SLO: 0.8s) ✗
+  Both TTFT and TPOT SLO met: ✓
 
 Request 14:
-  TTFT: 0.2493s (SLO: 0.16s) ✗
-  TPOT: 0.0460s (SLO: 0.024s) ✗
-  Total latency: 7.3403s (SLO: 0.8s) ✗
-  Both TTFT and TPOT SLO met: ✗
+  TTFT: 0.2649s (SLO: 0.4s) ✓
+  TPOT: 0.0459s (SLO: 0.048s) ✓
+  Total latency: 7.3320s (SLO: 0.8s) ✗
+  Both TTFT and TPOT SLO met: ✓
 
 Request 15:
-  TTFT: 0.2458s (SLO: 0.16s) ✗
-  TPOT: 0.0636s (SLO: 0.024s) ✗
-  Total latency: 0.4367s (SLO: 0.8s) ✓
+  TTFT: 0.2458s (SLO: 0.4s) ✓
+  TPOT: 0.0575s (SLO: 0.048s) ✗
+  Total latency: 0.4183s (SLO: 0.8s) ✓
   Both TTFT and TPOT SLO met: ✗
 
 Request 16:
-  TTFT: 0.2852s (SLO: 0.16s) ✗
-  TPOT: 0.0504s (SLO: 0.024s) ✗
-  Total latency: 1.3428s (SLO: 0.8s) ✗
+  TTFT: 0.5065s (SLO: 0.4s) ✗
+  TPOT: 0.0494s (SLO: 0.048s) ✗
+  Total latency: 1.5429s (SLO: 0.8s) ✗
   Both TTFT and TPOT SLO met: ✗
 
 Request 17:
-  TTFT: 0.2385s (SLO: 0.16s) ✗
-  TPOT: 0.0542s (SLO: 0.024s) ✗
-  Total latency: 0.7267s (SLO: 0.8s) ✓
+  TTFT: 0.7146s (SLO: 0.4s) ✗
+  TPOT: 0.0513s (SLO: 0.048s) ✗
+  Total latency: 1.1766s (SLO: 0.8s) ✗
   Both TTFT and TPOT SLO met: ✗
 
 Request 18:
-  TTFT: 0.2581s (SLO: 0.16s) ✗
-  TPOT: 0.0477s (SLO: 0.024s) ✗
-  Total latency: 2.7411s (SLO: 0.8s) ✗
+  TTFT: 0.9659s (SLO: 0.4s) ✗
+  TPOT: 0.0467s (SLO: 0.048s) ✓
+  Total latency: 3.3945s (SLO: 0.8s) ✗
   Both TTFT and TPOT SLO met: ✗
 
 Request 19:
-  TTFT: 0.2775s (SLO: 0.16s) ✗
-  TPOT: 0.0550s (SLO: 0.024s) ✗
-  Total latency: 0.6626s (SLO: 0.8s) ✓
+  TTFT: 0.6476s (SLO: 0.4s) ✗
+  TPOT: 0.0511s (SLO: 0.048s) ✗
+  Total latency: 1.0054s (SLO: 0.8s) ✗
   Both TTFT and TPOT SLO met: ✗
 
 Request 20:
-  TTFT: 0.2940s (SLO: 0.16s) ✗
-  TPOT: 0.0477s (SLO: 0.024s) ✗
-  Total latency: 0.8668s (SLO: 0.8s) ✗
+  TTFT: 0.4396s (SLO: 0.4s) ✗
+  TPOT: 0.0485s (SLO: 0.048s) ✗
+  Total latency: 1.0222s (SLO: 0.8s) ✗
   Both TTFT and TPOT SLO met: ✗
 
 Request 21:
-  TTFT: 0.2844s (SLO: 0.16s) ✗
-  TPOT: 0.0477s (SLO: 0.024s) ✗
-  Total latency: 1.1429s (SLO: 0.8s) ✗
-  Both TTFT and TPOT SLO met: ✗
+  TTFT: 0.2844s (SLO: 0.4s) ✓
+  TPOT: 0.0466s (SLO: 0.048s) ✓
+  Total latency: 1.1229s (SLO: 0.8s) ✗
+  Both TTFT and TPOT SLO met: ✓
 
 Request 22:
-  TTFT: 0.2561s (SLO: 0.16s) ✗
-  TPOT: 0.0466s (SLO: 0.024s) ✗
-  Total latency: 2.3057s (SLO: 0.8s) ✗
-  Both TTFT and TPOT SLO met: ✗
+  TTFT: 0.2561s (SLO: 0.4s) ✓
+  TPOT: 0.0460s (SLO: 0.048s) ✓
+  Total latency: 2.2788s (SLO: 0.8s) ✗
+  Both TTFT and TPOT SLO met: ✓
 
 Request 23:
-  TTFT: 0.3018s (SLO: 0.16s) ✗
-  TPOT: 0.0479s (SLO: 0.024s) ✗
-  Total latency: 1.2592s (SLO: 0.8s) ✗
-  Both TTFT and TPOT SLO met: ✗
+  TTFT: 0.3018s (SLO: 0.4s) ✓
+  TPOT: 0.0471s (SLO: 0.048s) ✓
+  Total latency: 1.2442s (SLO: 0.8s) ✗
+  Both TTFT and TPOT SLO met: ✓
 
 Request 24:
-  TTFT: 0.2752s (SLO: 0.16s) ✗
-  TPOT: 0.0482s (SLO: 0.024s) ✗
-  Total latency: 1.2400s (SLO: 0.8s) ✗
-  Both TTFT and TPOT SLO met: ✗
+  TTFT: 0.3707s (SLO: 0.4s) ✓
+  TPOT: 0.0471s (SLO: 0.048s) ✓
+  Total latency: 1.3130s (SLO: 0.8s) ✗
+  Both TTFT and TPOT SLO met: ✓
 
 Request 25:
-  TTFT: 0.2951s (SLO: 0.16s) ✗
-  TPOT: 0.0488s (SLO: 0.024s) ✗
-  Total latency: 0.7345s (SLO: 0.8s) ✓
-  Both TTFT and TPOT SLO met: ✗
+  TTFT: 0.2951s (SLO: 0.4s) ✓
+  TPOT: 0.0469s (SLO: 0.048s) ✓
+  Total latency: 0.7172s (SLO: 0.8s) ✓
+  Both TTFT and TPOT SLO met: ✓
 
 Request 26:
-  TTFT: 0.2649s (SLO: 0.16s) ✗
-  TPOT: 0.0461s (SLO: 0.024s) ✗
-  Total latency: 1.4167s (SLO: 0.8s) ✗
+  TTFT: 0.5181s (SLO: 0.4s) ✗
+  TPOT: 0.0456s (SLO: 0.048s) ✓
+  Total latency: 1.6572s (SLO: 0.8s) ✗
   Both TTFT and TPOT SLO met: ✗
 
 Request 27:
-  TTFT: 0.2695s (SLO: 0.16s) ✗
-  TPOT: 0.0497s (SLO: 0.024s) ✗
-  Total latency: 0.7670s (SLO: 0.8s) ✓
+  TTFT: 0.4471s (SLO: 0.4s) ✗
+  TPOT: 0.0472s (SLO: 0.048s) ✓
+  Total latency: 0.9188s (SLO: 0.8s) ✗
   Both TTFT and TPOT SLO met: ✗
 
 Request 28:
-  TTFT: 0.2775s (SLO: 0.16s) ✗
-  TPOT: 0.0463s (SLO: 0.024s) ✗
-  Total latency: 1.1109s (SLO: 0.8s) ✗
+  TTFT: 0.6730s (SLO: 0.4s) ✗
+  TPOT: 0.0452s (SLO: 0.048s) ✓
+  Total latency: 1.4873s (SLO: 0.8s) ✗
   Both TTFT and TPOT SLO met: ✗
 
 Request 29:
-  TTFT: 0.2882s (SLO: 0.16s) ✗
-  TPOT: 0.0447s (SLO: 0.024s) ✗
-  Total latency: 1.8971s (SLO: 0.8s) ✗
-  Both TTFT and TPOT SLO met: ✗
+  TTFT: 0.2882s (SLO: 0.4s) ✓
+  TPOT: 0.0441s (SLO: 0.048s) ✓
+  Total latency: 1.8757s (SLO: 0.8s) ✗
+  Both TTFT and TPOT SLO met: ✓
 
 Request 30:
-  TTFT: 0.2621s (SLO: 0.16s) ✗
-  TPOT: 0.0466s (SLO: 0.024s) ✗
-  Total latency: 0.7750s (SLO: 0.8s) ✓
-  Both TTFT and TPOT SLO met: ✗
+  TTFT: 0.3043s (SLO: 0.4s) ✓
+  TPOT: 0.0455s (SLO: 0.048s) ✓
+  Total latency: 0.8048s (SLO: 0.8s) ✗
+  Both TTFT and TPOT SLO met: ✓
 
 Request 31:
-  TTFT: 0.2658s (SLO: 0.16s) ✗
-  TPOT: 0.0472s (SLO: 0.024s) ✗
-  Total latency: 0.5965s (SLO: 0.8s) ✓
-  Both TTFT and TPOT SLO met: ✗
+  TTFT: 0.3916s (SLO: 0.4s) ✓
+  TPOT: 0.0457s (SLO: 0.048s) ✓
+  Total latency: 0.7118s (SLO: 0.8s) ✓
+  Both TTFT and TPOT SLO met: ✓
 
 Request 32:
-  TTFT: 0.2921s (SLO: 0.16s) ✗
-  TPOT: 0.0445s (SLO: 0.024s) ✗
-  Total latency: 2.0280s (SLO: 0.8s) ✗
+  TTFT: 0.5813s (SLO: 0.4s) ✗
+  TPOT: 0.0445s (SLO: 0.048s) ✓
+  Total latency: 2.3177s (SLO: 0.8s) ✗
   Both TTFT and TPOT SLO met: ✗
 
 Request 33:
-  TTFT: 0.2763s (SLO: 0.16s) ✗
-  TPOT: 0.0458s (SLO: 0.024s) ✗
-  Total latency: 0.9627s (SLO: 0.8s) ✗
-  Both TTFT and TPOT SLO met: ✗
+  TTFT: 0.3615s (SLO: 0.4s) ✓
+  TPOT: 0.0445s (SLO: 0.048s) ✓
+  Total latency: 1.0289s (SLO: 0.8s) ✗
+  Both TTFT and TPOT SLO met: ✓
 
 Request 34:
-  TTFT: 0.2254s (SLO: 0.16s) ✗
-  TPOT: 0.0471s (SLO: 0.024s) ✗
-  Total latency: 42.4232s (SLO: 0.8s) ✗
-  Both TTFT and TPOT SLO met: ✗
+  TTFT: 0.3839s (SLO: 0.4s) ✓
+  TPOT: 0.0471s (SLO: 0.048s) ✓
+  Total latency: 42.5386s (SLO: 0.8s) ✗
+  Both TTFT and TPOT SLO met: ✓
 
 Request 35:
-  TTFT: 0.1824s (SLO: 0.16s) ✗
-  TPOT: 0.0531s (SLO: 0.024s) ✗
-  Total latency: 22.9131s (SLO: 0.8s) ✗
+  TTFT: 0.2862s (SLO: 0.4s) ✓
+  TPOT: 0.0531s (SLO: 0.048s) ✗
+  Total latency: 23.0028s (SLO: 0.8s) ✗
   Both TTFT and TPOT SLO met: ✗
 
 Request 36:
-  TTFT: 0.1701s (SLO: 0.16s) ✗
-  TPOT: 0.0519s (SLO: 0.024s) ✗
-  Total latency: 29.3068s (SLO: 0.8s) ✗
+  TTFT: 0.4500s (SLO: 0.4s) ✗
+  TPOT: 0.0518s (SLO: 0.048s) ✗
+  Total latency: 29.5200s (SLO: 0.8s) ✗
   Both TTFT and TPOT SLO met: ✗
 
 Request 37:
-  TTFT: 0.1639s (SLO: 0.16s) ✗
-  TPOT: 0.0486s (SLO: 0.024s) ✗
-  Total latency: 38.1169s (SLO: 0.8s) ✗
+  TTFT: 0.2934s (SLO: 0.4s) ✓
+  TPOT: 0.0485s (SLO: 0.048s) ✗
+  Total latency: 38.1964s (SLO: 0.8s) ✗
   Both TTFT and TPOT SLO met: ✗
 
 Request 38:
-  TTFT: 0.1686s (SLO: 0.16s) ✗
-  TPOT: 0.0541s (SLO: 0.024s) ✗
-  Total latency: 17.5235s (SLO: 0.8s) ✗
+  TTFT: 0.1686s (SLO: 0.4s) ✓
+  TPOT: 0.0539s (SLO: 0.048s) ✗
+  Total latency: 17.4816s (SLO: 0.8s) ✗
   Both TTFT and TPOT SLO met: ✗
 
 Request 39:
-  TTFT: 0.1888s (SLO: 0.16s) ✗
-  TPOT: 0.0508s (SLO: 0.024s) ✗
-  Total latency: 32.6673s (SLO: 0.8s) ✗
+  TTFT: 0.1888s (SLO: 0.4s) ✓
+  TPOT: 0.0508s (SLO: 0.048s) ✗
+  Total latency: 32.6316s (SLO: 0.8s) ✗
   Both TTFT and TPOT SLO met: ✗
 
 Request 40:
-  TTFT: 0.2190s (SLO: 0.16s) ✗
-  TPOT: 0.0553s (SLO: 0.024s) ✗
-  Total latency: 17.3124s (SLO: 0.8s) ✗
+  TTFT: 0.2190s (SLO: 0.4s) ✓
+  TPOT: 0.0550s (SLO: 0.048s) ✗
+  Total latency: 17.2135s (SLO: 0.8s) ✗
   Both TTFT and TPOT SLO met: ✗
 
 Request 41:
-  TTFT: 0.1710s (SLO: 0.16s) ✗
-  TPOT: 0.0535s (SLO: 0.024s) ✗
-  Total latency: 24.2262s (SLO: 0.8s) ✗
+  TTFT: 0.1710s (SLO: 0.4s) ✓
+  TPOT: 0.0533s (SLO: 0.048s) ✗
+  Total latency: 24.1651s (SLO: 0.8s) ✗
   Both TTFT and TPOT SLO met: ✗
 
 Request 42:
-  TTFT: 0.1631s (SLO: 0.16s) ✗
-  TPOT: 0.0540s (SLO: 0.024s) ✗
-  Total latency: 22.0938s (SLO: 0.8s) ✗
+  TTFT: 0.1857s (SLO: 0.4s) ✓
+  TPOT: 0.0539s (SLO: 0.048s) ✗
+  Total latency: 22.0829s (SLO: 0.8s) ✗
   Both TTFT and TPOT SLO met: ✗
 
 Request 43:
-  TTFT: 0.1666s (SLO: 0.16s) ✗
-  TPOT: 0.0508s (SLO: 0.024s) ✗
-  Total latency: 32.0887s (SLO: 0.8s) ✗
+  TTFT: 0.1666s (SLO: 0.4s) ✓
+  TPOT: 0.0507s (SLO: 0.048s) ✗
+  Total latency: 32.0570s (SLO: 0.8s) ✗
   Both TTFT and TPOT SLO met: ✗
 
 Request 44:
-  TTFT: 0.1752s (SLO: 0.16s) ✗
-  TPOT: 0.0531s (SLO: 0.024s) ✗
-  Total latency: 26.1348s (SLO: 0.8s) ✗
+  TTFT: 0.1752s (SLO: 0.4s) ✓
+  TPOT: 0.0530s (SLO: 0.048s) ✗
+  Total latency: 26.0755s (SLO: 0.8s) ✗
   Both TTFT and TPOT SLO met: ✗
 
 Request 45:
-  TTFT: 0.2160s (SLO: 0.16s) ✗
-  TPOT: 0.0512s (SLO: 0.024s) ✗
-  Total latency: 30.9676s (SLO: 0.8s) ✗
+  TTFT: 0.3705s (SLO: 0.4s) ✓
+  TPOT: 0.0511s (SLO: 0.048s) ✗
+  Total latency: 31.0919s (SLO: 0.8s) ✗
   Both TTFT and TPOT SLO met: ✗
 
 Request 46:
-  TTFT: 0.2226s (SLO: 0.16s) ✗
-  TPOT: 0.0565s (SLO: 0.024s) ✗
-  Total latency: 15.7499s (SLO: 0.8s) ✗
+  TTFT: 0.2268s (SLO: 0.4s) ✓
+  TPOT: 0.0561s (SLO: 0.048s) ✗
+  Total latency: 15.6506s (SLO: 0.8s) ✗
   Both TTFT and TPOT SLO met: ✗
 
 Request 47:
-  TTFT: 0.2125s (SLO: 0.16s) ✗
-  TPOT: 0.0548s (SLO: 0.024s) ✗
-  Total latency: 20.5028s (SLO: 0.8s) ✗
+  TTFT: 0.2125s (SLO: 0.4s) ✓
+  TPOT: 0.0547s (SLO: 0.048s) ✗
+  Total latency: 20.4434s (SLO: 0.8s) ✗
   Both TTFT and TPOT SLO met: ✗
 
 Request 48:
-  TTFT: 0.2176s (SLO: 0.16s) ✗
-  TPOT: 0.0536s (SLO: 0.024s) ✗
-  Total latency: 24.4666s (SLO: 0.8s) ✗
+  TTFT: 0.3513s (SLO: 0.4s) ✓
+  TPOT: 0.0535s (SLO: 0.048s) ✗
+  Total latency: 24.5471s (SLO: 0.8s) ✗
   Both TTFT and TPOT SLO met: ✗
 
 Request 49:
-  TTFT: 0.1975s (SLO: 0.16s) ✗
-  TPOT: 0.0557s (SLO: 0.024s) ✗
-  Total latency: 17.7539s (SLO: 0.8s) ✗
+  TTFT: 0.5028s (SLO: 0.4s) ✗
+  TPOT: 0.0557s (SLO: 0.048s) ✗
+  Total latency: 18.0386s (SLO: 0.8s) ✗
   Both TTFT and TPOT SLO met: ✗
 
 Request 50:
-  TTFT: 0.1771s (SLO: 0.16s) ✗
-  TPOT: 0.0518s (SLO: 0.024s) ✗
-  Total latency: 28.9223s (SLO: 0.8s) ✗
+  TTFT: 0.5536s (SLO: 0.4s) ✗
+  TPOT: 0.0516s (SLO: 0.048s) ✗
+  Total latency: 29.2154s (SLO: 0.8s) ✗
   Both TTFT and TPOT SLO met: ✗
 
 Request 51:
-  TTFT: 0.1920s (SLO: 0.16s) ✗
-  TPOT: 0.0526s (SLO: 0.024s) ✗
-  Total latency: 26.9812s (SLO: 0.8s) ✗
+  TTFT: 0.5950s (SLO: 0.4s) ✗
+  TPOT: 0.0524s (SLO: 0.048s) ✗
+  Total latency: 27.2822s (SLO: 0.8s) ✗
   Both TTFT and TPOT SLO met: ✗
 
 Request 52:
-  TTFT: 0.1982s (SLO: 0.16s) ✗
-  TPOT: 0.0452s (SLO: 0.024s) ✗
-  Total latency: 41.8433s (SLO: 0.8s) ✗
+  TTFT: 0.5117s (SLO: 0.4s) ✗
+  TPOT: 0.0451s (SLO: 0.048s) ✓
+  Total latency: 42.0549s (SLO: 0.8s) ✗
   Both TTFT and TPOT SLO met: ✗
 
 Request 53:
-  TTFT: 0.1949s (SLO: 0.16s) ✗
-  TPOT: 0.0464s (SLO: 0.024s) ✗
-  Total latency: 39.3170s (SLO: 0.8s) ✗
+  TTFT: 0.5142s (SLO: 0.4s) ✗
+  TPOT: 0.0463s (SLO: 0.048s) ✓
+  Total latency: 39.5286s (SLO: 0.8s) ✗
   Both TTFT and TPOT SLO met: ✗
 
 Request 54:
-  TTFT: 0.2013s (SLO: 0.16s) ✗
-  TPOT: 0.0498s (SLO: 0.024s) ✗
-  Total latency: 30.5441s (SLO: 0.8s) ✗
+  TTFT: 0.2013s (SLO: 0.4s) ✓
+  TPOT: 0.0498s (SLO: 0.048s) ✗
+  Total latency: 30.5501s (SLO: 0.8s) ✗
   Both TTFT and TPOT SLO met: ✗
 
 Request 55:
-  TTFT: 0.2084s (SLO: 0.16s) ✗
-  TPOT: 0.0473s (SLO: 0.024s) ✗
-  Total latency: 35.7002s (SLO: 0.8s) ✗
-  Both TTFT and TPOT SLO met: ✗
+  TTFT: 0.3739s (SLO: 0.4s) ✓
+  TPOT: 0.0473s (SLO: 0.048s) ✓
+  Total latency: 35.8157s (SLO: 0.8s) ✗
+  Both TTFT and TPOT SLO met: ✓
 
 Request 56:
-  TTFT: 0.1823s (SLO: 0.16s) ✗
-  TPOT: 0.0586s (SLO: 0.024s) ✗
-  Total latency: 8.0954s (SLO: 0.8s) ✗
+  TTFT: 0.4781s (SLO: 0.4s) ✗
+  TPOT: 0.0584s (SLO: 0.048s) ✗
+  Total latency: 8.3628s (SLO: 0.8s) ✗
   Both TTFT and TPOT SLO met: ✗
 
 Request 57:
-  TTFT: 0.2149s (SLO: 0.16s) ✗
-  TPOT: 0.0576s (SLO: 0.024s) ✗
-  Total latency: 13.8118s (SLO: 0.8s) ✗
+  TTFT: 0.6344s (SLO: 0.4s) ✗
+  TPOT: 0.0574s (SLO: 0.048s) ✗
+  Total latency: 14.1797s (SLO: 0.8s) ✗
   Both TTFT and TPOT SLO met: ✗
 
 Request 58:
-  TTFT: 0.2191s (SLO: 0.16s) ✗
-  TPOT: 0.0584s (SLO: 0.024s) ✗
-  Total latency: 12.6542s (SLO: 0.8s) ✗
+  TTFT: 0.5005s (SLO: 0.4s) ✗
+  TPOT: 0.0581s (SLO: 0.048s) ✗
+  Total latency: 12.8678s (SLO: 0.8s) ✗
   Both TTFT and TPOT SLO met: ✗
 
 Request 59:
-  TTFT: 0.1909s (SLO: 0.16s) ✗
-  TPOT: 0.0586s (SLO: 0.024s) ✗
-  Total latency: 5.6374s (SLO: 0.8s) ✗
+  TTFT: 0.5941s (SLO: 0.4s) ✗
+  TPOT: 0.0586s (SLO: 0.048s) ✗
+  Total latency: 6.0411s (SLO: 0.8s) ✗
   Both TTFT and TPOT SLO met: ✗
 
 Request 60:
-  TTFT: 0.1936s (SLO: 0.16s) ✗
-  TPOT: 0.0589s (SLO: 0.024s) ✗
-  Total latency: 5.9628s (SLO: 0.8s) ✗
+  TTFT: 0.5784s (SLO: 0.4s) ✗
+  TPOT: 0.0585s (SLO: 0.048s) ✗
+  Total latency: 6.3132s (SLO: 0.8s) ✗
   Both TTFT and TPOT SLO met: ✗
 
 Request 61:
-  TTFT: 0.1519s (SLO: 0.16s) ✓
-  TPOT: 0.0585s (SLO: 0.024s) ✗
-  Total latency: 12.0936s (SLO: 0.8s) ✗
+  TTFT: 0.6369s (SLO: 0.4s) ✗
+  TPOT: 0.0582s (SLO: 0.048s) ✗
+  Total latency: 12.5185s (SLO: 0.8s) ✗
   Both TTFT and TPOT SLO met: ✗
 
 Request 62:
-  TTFT: 0.1734s (SLO: 0.16s) ✗
-  TPOT: 0.0578s (SLO: 0.024s) ✗
-  Total latency: 12.9512s (SLO: 0.8s) ✗
+  TTFT: 0.7526s (SLO: 0.4s) ✗
+  TPOT: 0.0575s (SLO: 0.048s) ✗
+  Total latency: 13.4691s (SLO: 0.8s) ✗
   Both TTFT and TPOT SLO met: ✗
 
 Request 63:
-  TTFT: 0.2078s (SLO: 0.16s) ✗
-  TPOT: 0.0588s (SLO: 0.024s) ✗
-  Total latency: 9.8503s (SLO: 0.8s) ✗
+  TTFT: 0.9214s (SLO: 0.4s) ✗
+  TPOT: 0.0590s (SLO: 0.048s) ✗
+  Total latency: 10.6014s (SLO: 0.8s) ✗
   Both TTFT and TPOT SLO met: ✗
 
 Request 64:
-  TTFT: 0.2149s (SLO: 0.16s) ✗
-  TPOT: 0.0591s (SLO: 0.024s) ✗
-  Total latency: 4.5264s (SLO: 0.8s) ✗
+  TTFT: 0.7802s (SLO: 0.4s) ✗
+  TPOT: 0.0593s (SLO: 0.048s) ✗
+  Total latency: 5.1065s (SLO: 0.8s) ✗
   Both TTFT and TPOT SLO met: ✗
 
 Request 65:
-  TTFT: 0.1592s (SLO: 0.16s) ✓
-  TPOT: 0.0591s (SLO: 0.024s) ✗
-  Total latency: 9.4447s (SLO: 0.8s) ✗
+  TTFT: 0.8899s (SLO: 0.4s) ✗
+  TPOT: 0.0593s (SLO: 0.048s) ✗
+  Total latency: 10.1958s (SLO: 0.8s) ✗
   Both TTFT and TPOT SLO met: ✗
 
 Request 66:
-  TTFT: 0.1576s (SLO: 0.16s) ✓
-  TPOT: 0.0591s (SLO: 0.024s) ✗
-  Total latency: 8.9118s (SLO: 0.8s) ✗
+  TTFT: 0.9746s (SLO: 0.4s) ✗
+  TPOT: 0.0595s (SLO: 0.048s) ✗
+  Total latency: 9.7755s (SLO: 0.8s) ✗
   Both TTFT and TPOT SLO met: ✗
 
 Request 67:
-  TTFT: 0.1743s (SLO: 0.16s) ✗
-  TPOT: 0.0572s (SLO: 0.024s) ✗
-  Total latency: 13.2710s (SLO: 0.8s) ✗
+  TTFT: 0.9955s (SLO: 0.4s) ✗
+  TPOT: 0.0570s (SLO: 0.048s) ✗
+  Total latency: 14.0485s (SLO: 0.8s) ✗
   Both TTFT and TPOT SLO met: ✗
 
 Request 68:
-  TTFT: 0.1829s (SLO: 0.16s) ✗
-  TPOT: 0.0588s (SLO: 0.024s) ✗
-  Total latency: 0.8294s (SLO: 0.8s) ✗
+  TTFT: 0.6049s (SLO: 0.4s) ✗
+  TPOT: 0.0608s (SLO: 0.048s) ✗
+  Total latency: 1.2742s (SLO: 0.8s) ✗
   Both TTFT and TPOT SLO met: ✗
 
 Request 69:
-  TTFT: 0.1832s (SLO: 0.16s) ✗
-  TPOT: 0.0627s (SLO: 0.024s) ✗
-  Total latency: 0.6222s (SLO: 0.8s) ✓
+  TTFT: 0.7541s (SLO: 0.4s) ✗
+  TPOT: 0.0610s (SLO: 0.048s) ✗
+  Total latency: 1.1811s (SLO: 0.8s) ✗
   Both TTFT and TPOT SLO met: ✗
 
 Request 70:
-  TTFT: 0.1692s (SLO: 0.16s) ✗
-  TPOT: 0.0600s (SLO: 0.024s) ✗
-  Total latency: 0.9493s (SLO: 0.8s) ✗
+  TTFT: 0.3167s (SLO: 0.4s) ✓
+  TPOT: 0.0604s (SLO: 0.048s) ✗
+  Total latency: 1.1025s (SLO: 0.8s) ✗
   Both TTFT and TPOT SLO met: ✗
 
 Request 71:
-  TTFT: 0.2084s (SLO: 0.16s) ✗
-  TPOT: 0.0595s (SLO: 0.024s) ✗
-  Total latency: 3.1219s (SLO: 0.8s) ✗
+  TTFT: 0.4915s (SLO: 0.4s) ✗
+  TPOT: 0.0606s (SLO: 0.048s) ✗
+  Total latency: 3.4624s (SLO: 0.8s) ✗
   Both TTFT and TPOT SLO met: ✗
 
 Request 72:
-  TTFT: 0.2180s (SLO: 0.16s) ✗
-  TPOT: 0.0618s (SLO: 0.024s) ✗
-  Total latency: 1.3930s (SLO: 0.8s) ✗
+  TTFT: 0.2180s (SLO: 0.4s) ✓
+  TPOT: 0.0606s (SLO: 0.048s) ✗
+  Total latency: 1.3688s (SLO: 0.8s) ✗
   Both TTFT and TPOT SLO met: ✗
 
 Request 73:
-  TTFT: 0.2177s (SLO: 0.16s) ✗
-  TPOT: 0.0617s (SLO: 0.024s) ✗
-  Total latency: 3.1775s (SLO: 0.8s) ✗
+  TTFT: 0.2249s (SLO: 0.4s) ✓
+  TPOT: 0.0609s (SLO: 0.048s) ✗
+  Total latency: 3.1469s (SLO: 0.8s) ✗
   Both TTFT and TPOT SLO met: ✗
 
 Request 74:
-  TTFT: 0.1519s (SLO: 0.16s) ✓
-  TPOT: 0.0610s (SLO: 0.024s) ✗
-  Total latency: 2.5930s (SLO: 0.8s) ✗
+  TTFT: 0.1519s (SLO: 0.4s) ✓
+  TPOT: 0.0617s (SLO: 0.048s) ✗
+  Total latency: 2.6187s (SLO: 0.8s) ✗
   Both TTFT and TPOT SLO met: ✗
 
 Request 75:
-  TTFT: 0.1617s (SLO: 0.16s) ✗
-  TPOT: 0.0627s (SLO: 0.024s) ✗
-  Total latency: 1.9805s (SLO: 0.8s) ✗
+  TTFT: 0.1617s (SLO: 0.4s) ✓
+  TPOT: 0.0616s (SLO: 0.048s) ✗
+  Total latency: 1.9472s (SLO: 0.8s) ✗
   Both TTFT and TPOT SLO met: ✗
 
 Request 76:
-  TTFT: 0.2159s (SLO: 0.16s) ✗
-  TPOT: 0.0619s (SLO: 0.024s) ✗
-  Total latency: 2.1348s (SLO: 0.8s) ✗
+  TTFT: 0.2159s (SLO: 0.4s) ✓
+  TPOT: 0.0609s (SLO: 0.048s) ✗
+  Total latency: 2.1028s (SLO: 0.8s) ✗
   Both TTFT and TPOT SLO met: ✗
 
 Request 77:
-  TTFT: 0.1608s (SLO: 0.16s) ✗
-  TPOT: 0.0617s (SLO: 0.024s) ✗
-  Total latency: 0.4077s (SLO: 0.8s) ✓
+  TTFT: 0.3634s (SLO: 0.4s) ✓
+  TPOT: 0.0684s (SLO: 0.048s) ✗
+  Total latency: 0.6371s (SLO: 0.8s) ✓
   Both TTFT and TPOT SLO met: ✗
 
 Request 78:
-  TTFT: 0.2012s (SLO: 0.16s) ✗
-  TPOT: 0.0649s (SLO: 0.024s) ✗
-  Total latency: 0.9797s (SLO: 0.8s) ✗
+  TTFT: 0.4538s (SLO: 0.4s) ✗
+  TPOT: 0.0617s (SLO: 0.048s) ✗
+  Total latency: 1.1940s (SLO: 0.8s) ✗
   Both TTFT and TPOT SLO met: ✗
 
 Request 79:
-  TTFT: 0.1607s (SLO: 0.16s) ✗
-  TPOT: 0.0643s (SLO: 0.024s) ✗
-  Total latency: 1.0606s (SLO: 0.8s) ✗
+  TTFT: 0.5718s (SLO: 0.4s) ✗
+  TPOT: 0.0629s (SLO: 0.048s) ✗
+  Total latency: 1.4530s (SLO: 0.8s) ✗
   Both TTFT and TPOT SLO met: ✗
 
 Request 80:
-  TTFT: 0.2023s (SLO: 0.16s) ✗
-  TPOT: 0.0703s (SLO: 0.024s) ✗
-  Total latency: 0.6943s (SLO: 0.8s) ✓
+  TTFT: 0.6571s (SLO: 0.4s) ✗
+  TPOT: 0.0625s (SLO: 0.048s) ✗
+  Total latency: 1.0946s (SLO: 0.8s) ✗
   Both TTFT and TPOT SLO met: ✗
 
 Request 81:
-  TTFT: 0.1924s (SLO: 0.16s) ✗
-  TPOT: 0.0636s (SLO: 0.024s) ✗
-  Total latency: 1.1460s (SLO: 0.8s) ✗
+  TTFT: 0.8073s (SLO: 0.4s) ✗
+  TPOT: 0.0606s (SLO: 0.048s) ✗
+  Total latency: 1.7166s (SLO: 0.8s) ✗
   Both TTFT and TPOT SLO met: ✗
 
 Request 82:
-  TTFT: 0.1983s (SLO: 0.16s) ✗
-  TPOT: 0.0625s (SLO: 0.024s) ✗
-  Total latency: 1.2612s (SLO: 0.8s) ✗
+  TTFT: 0.8781s (SLO: 0.4s) ✗
+  TPOT: 0.0627s (SLO: 0.048s) ✗
+  Total latency: 1.9446s (SLO: 0.8s) ✗
   Both TTFT and TPOT SLO met: ✗
 
 Request 83:
-  TTFT: 0.1664s (SLO: 0.16s) ✗
-  TPOT: 0.0634s (SLO: 0.024s) ✗
-  Total latency: 1.5614s (SLO: 0.8s) ✗
+  TTFT: 0.8662s (SLO: 0.4s) ✗
+  TPOT: 0.0598s (SLO: 0.048s) ✗
+  Total latency: 2.1825s (SLO: 0.8s) ✗
   Both TTFT and TPOT SLO met: ✗
 
 Request 84:
-  TTFT: 0.1920s (SLO: 0.16s) ✗
-  TPOT: 0.0616s (SLO: 0.024s) ✗
-  Total latency: 1.3012s (SLO: 0.8s) ✗
+  TTFT: 1.0362s (SLO: 0.4s) ✗
+  TPOT: 0.0625s (SLO: 0.048s) ✗
+  Total latency: 2.1604s (SLO: 0.8s) ✗
   Both TTFT and TPOT SLO met: ✗
 
 Request 85:
-  TTFT: 0.1783s (SLO: 0.16s) ✗
-  TPOT: 0.0636s (SLO: 0.024s) ✗
-  Total latency: 0.2419s (SLO: 0.8s) ✓
+  TTFT: 0.8214s (SLO: 0.4s) ✗
+  TPOT: 0.1138s (SLO: 0.048s) ✗
+  Total latency: 0.9352s (SLO: 0.8s) ✗
   Both TTFT and TPOT SLO met: ✗
 
 Request 86:
-  TTFT: 0.1645s (SLO: 0.16s) ✗
-  TPOT: 0.0594s (SLO: 0.024s) ✗
-  Total latency: 2.5989s (SLO: 0.8s) ✗
+  TTFT: 0.7072s (SLO: 0.4s) ✗
+  TPOT: 0.0586s (SLO: 0.048s) ✗
+  Total latency: 3.1080s (SLO: 0.8s) ✗
   Both TTFT and TPOT SLO met: ✗
 
 Request 87:
-  TTFT: 0.1566s (SLO: 0.16s) ✓
-  TPOT: 0.0594s (SLO: 0.024s) ✗
-  Total latency: 1.4639s (SLO: 0.8s) ✗
+  TTFT: 0.7610s (SLO: 0.4s) ✗
+  TPOT: 0.0599s (SLO: 0.048s) ✗
+  Total latency: 2.0777s (SLO: 0.8s) ✗
   Both TTFT and TPOT SLO met: ✗
 
 Request 88:
-  TTFT: 0.2068s (SLO: 0.16s) ✗
-  TPOT: 0.0631s (SLO: 0.024s) ✗
-  Total latency: 0.4593s (SLO: 0.8s) ✓
+  TTFT: 0.7209s (SLO: 0.4s) ✗
+  TPOT: 0.0600s (SLO: 0.048s) ✗
+  Total latency: 0.9607s (SLO: 0.8s) ✗
   Both TTFT and TPOT SLO met: ✗
 
 Request 89:
-  TTFT: 0.1625s (SLO: 0.16s) ✗
-  TPOT: 0.0591s (SLO: 0.024s) ✗
-  Total latency: 1.7571s (SLO: 0.8s) ✗
+  TTFT: 0.8505s (SLO: 0.4s) ✗
+  TPOT: 0.0587s (SLO: 0.048s) ✗
+  Total latency: 2.4346s (SLO: 0.8s) ✗
   Both TTFT and TPOT SLO met: ✗
 
 Request 90:
-  TTFT: 0.1709s (SLO: 0.16s) ✗
-  TPOT: 0.0655s (SLO: 0.024s) ✗
-  Total latency: 0.4329s (SLO: 0.8s) ✓
+  TTFT: 0.7355s (SLO: 0.4s) ✗
+  TPOT: 0.0642s (SLO: 0.048s) ✗
+  Total latency: 0.9922s (SLO: 0.8s) ✗
   Both TTFT and TPOT SLO met: ✗
 
 Request 91:
-  TTFT: 0.1744s (SLO: 0.16s) ✗
-  TPOT: 0.0589s (SLO: 0.024s) ✗
-  Total latency: 0.6456s (SLO: 0.8s) ✓
+  TTFT: 0.1744s (SLO: 0.4s) ✓
+  TPOT: 0.0641s (SLO: 0.048s) ✗
+  Total latency: 0.6868s (SLO: 0.8s) ✓
   Both TTFT and TPOT SLO met: ✗
 
 Request 92:
-  TTFT: 0.2026s (SLO: 0.16s) ✗
-  TPOT: 0.0614s (SLO: 0.024s) ✗
-  Total latency: 0.6323s (SLO: 0.8s) ✓
+  TTFT: 0.2491s (SLO: 0.4s) ✓
+  TPOT: 0.0608s (SLO: 0.048s) ✗
+  Total latency: 0.6747s (SLO: 0.8s) ✓
   Both TTFT and TPOT SLO met: ✗
 
 Request 93:
-  TTFT: 0.1545s (SLO: 0.16s) ✓
-  TPOT: 0.0632s (SLO: 0.024s) ✗
-  Total latency: 0.7235s (SLO: 0.8s) ✓
+  TTFT: 0.1545s (SLO: 0.4s) ✓
+  TPOT: 0.0620s (SLO: 0.048s) ✗
+  Total latency: 0.7127s (SLO: 0.8s) ✓
   Both TTFT and TPOT SLO met: ✗
 
 Request 94:
-  TTFT: 0.1853s (SLO: 0.16s) ✗
-  TPOT: 0.0567s (SLO: 0.024s) ✗
-  Total latency: 3.5891s (SLO: 0.8s) ✗
+  TTFT: 0.2928s (SLO: 0.4s) ✓
+  TPOT: 0.0568s (SLO: 0.048s) ✗
+  Total latency: 3.7014s (SLO: 0.8s) ✗
   Both TTFT and TPOT SLO met: ✗
 
 Request 95:
-  TTFT: 0.1716s (SLO: 0.16s) ✗
-  TPOT: 0.0579s (SLO: 0.024s) ✗
-  Total latency: 1.7930s (SLO: 0.8s) ✗
+  TTFT: 0.1716s (SLO: 0.4s) ✓
+  TPOT: 0.0584s (SLO: 0.048s) ✗
+  Total latency: 1.8075s (SLO: 0.8s) ✗
   Both TTFT and TPOT SLO met: ✗
 
 Request 96:
-  TTFT: 0.1674s (SLO: 0.16s) ✗
-  TPOT: 0.0606s (SLO: 0.024s) ✗
-  Total latency: 0.7733s (SLO: 0.8s) ✓
+  TTFT: 0.2252s (SLO: 0.4s) ✓
+  TPOT: 0.0607s (SLO: 0.048s) ✗
+  Total latency: 0.8324s (SLO: 0.8s) ✗
   Both TTFT and TPOT SLO met: ✗
 
 Request 97:
-  TTFT: 0.1818s (SLO: 0.16s) ✗
-  TPOT: 0.0578s (SLO: 0.024s) ✗
-  Total latency: 0.8756s (SLO: 0.8s) ✗
+  TTFT: 0.3395s (SLO: 0.4s) ✓
+  TPOT: 0.0597s (SLO: 0.048s) ✗
+  Total latency: 1.0557s (SLO: 0.8s) ✗
   Both TTFT and TPOT SLO met: ✗
 
 Request 98:
-  TTFT: 0.1124s (SLO: 0.16s) ✓
-  TPOT: 0.0433s (SLO: 0.024s) ✗
-  Total latency: 26.0639s (SLO: 0.8s) ✗
-  Both TTFT and TPOT SLO met: ✗
+  TTFT: 0.1576s (SLO: 0.4s) ✓
+  TPOT: 0.0434s (SLO: 0.048s) ✓
+  Total latency: 26.1447s (SLO: 0.8s) ✗
+  Both TTFT and TPOT SLO met: ✓
 
 Request 99:
-  TTFT: 0.1283s (SLO: 0.16s) ✓
-  TPOT: 0.0496s (SLO: 0.024s) ✗
-  Total latency: 13.5299s (SLO: 0.8s) ✗
+  TTFT: 0.2792s (SLO: 0.4s) ✓
+  TPOT: 0.0495s (SLO: 0.048s) ✗
+  Total latency: 13.6535s (SLO: 0.8s) ✗
   Both TTFT and TPOT SLO met: ✗
 
 Request 100:
-  TTFT: 0.1317s (SLO: 0.16s) ✓
-  TPOT: 0.0488s (SLO: 0.024s) ✗
-  Total latency: 14.1278s (SLO: 0.8s) ✗
+  TTFT: 0.1317s (SLO: 0.4s) ✓
+  TPOT: 0.0489s (SLO: 0.048s) ✗
+  Total latency: 14.1685s (SLO: 0.8s) ✗
   Both TTFT and TPOT SLO met: ✗
 
 Request 101:
-  TTFT: 0.1116s (SLO: 0.16s) ✓
-  TPOT: 0.0483s (SLO: 0.024s) ✗
-  Total latency: 15.2314s (SLO: 0.8s) ✗
+  TTFT: 0.2418s (SLO: 0.4s) ✓
+  TPOT: 0.0483s (SLO: 0.048s) ✗
+  Total latency: 15.3569s (SLO: 0.8s) ✗
   Both TTFT and TPOT SLO met: ✗
 
 Request 102:
-  TTFT: 0.1124s (SLO: 0.16s) ✓
-  TPOT: 0.0467s (SLO: 0.024s) ✗
-  Total latency: 17.2141s (SLO: 0.8s) ✗
-  Both TTFT and TPOT SLO met: ✗
+  TTFT: 0.1124s (SLO: 0.4s) ✓
+  TPOT: 0.0468s (SLO: 0.048s) ✓
+  Total latency: 17.2585s (SLO: 0.8s) ✗
+  Both TTFT and TPOT SLO met: ✓
 
 Request 103:
-  TTFT: 0.1130s (SLO: 0.16s) ✓
-  TPOT: 0.0478s (SLO: 0.024s) ✗
-  Total latency: 15.1272s (SLO: 0.8s) ✗
-  Both TTFT and TPOT SLO met: ✗
+  TTFT: 0.1205s (SLO: 0.4s) ✓
+  TPOT: 0.0479s (SLO: 0.048s) ✓
+  Total latency: 15.1701s (SLO: 0.8s) ✗
+  Both TTFT and TPOT SLO met: ✓
 
 Request 104:
-  TTFT: 0.1113s (SLO: 0.16s) ✓
-  TPOT: 0.0484s (SLO: 0.024s) ✗
-  Total latency: 13.0283s (SLO: 0.8s) ✗
+  TTFT: 0.1113s (SLO: 0.4s) ✓
+  TPOT: 0.0485s (SLO: 0.048s) ✗
+  Total latency: 13.0681s (SLO: 0.8s) ✗
   Both TTFT and TPOT SLO met: ✗
 
 Request 105:
-  TTFT: 0.1204s (SLO: 0.16s) ✓
-  TPOT: 0.0425s (SLO: 0.024s) ✗
-  Total latency: 22.9509s (SLO: 0.8s) ✗
-  Both TTFT and TPOT SLO met: ✗
+  TTFT: 0.1204s (SLO: 0.4s) ✓
+  TPOT: 0.0426s (SLO: 0.048s) ✓
+  Total latency: 22.9986s (SLO: 0.8s) ✗
+  Both TTFT and TPOT SLO met: ✓
 
 Request 106:
-  TTFT: 0.1132s (SLO: 0.16s) ✓
-  TPOT: 0.0477s (SLO: 0.024s) ✗
-  Total latency: 12.1846s (SLO: 0.8s) ✗
-  Both TTFT and TPOT SLO met: ✗
+  TTFT: 0.1383s (SLO: 0.4s) ✓
+  TPOT: 0.0478s (SLO: 0.048s) ✓
+  Total latency: 12.2252s (SLO: 0.8s) ✗
+  Both TTFT and TPOT SLO met: ✓
 
 Request 107:
-  TTFT: 0.1139s (SLO: 0.16s) ✓
-  TPOT: 0.0490s (SLO: 0.024s) ✗
-  Total latency: 8.6863s (SLO: 0.8s) ✗
+  TTFT: 0.1139s (SLO: 0.4s) ✓
+  TPOT: 0.0492s (SLO: 0.048s) ✗
+  Total latency: 8.7198s (SLO: 0.8s) ✗
   Both TTFT and TPOT SLO met: ✗
 
 Request 108:
-  TTFT: 0.1148s (SLO: 0.16s) ✓
-  TPOT: 0.0495s (SLO: 0.024s) ✗
-  Total latency: 5.8048s (SLO: 0.8s) ✗
+  TTFT: 0.1148s (SLO: 0.4s) ✓
+  TPOT: 0.0494s (SLO: 0.048s) ✗
+  Total latency: 5.7927s (SLO: 0.8s) ✗
   Both TTFT and TPOT SLO met: ✗
 
 Request 109:
-  TTFT: 0.1131s (SLO: 0.16s) ✓
-  TPOT: 0.0491s (SLO: 0.024s) ✗
-  Total latency: 8.0117s (SLO: 0.8s) ✗
+  TTFT: 0.1131s (SLO: 0.4s) ✓
+  TPOT: 0.0490s (SLO: 0.048s) ✗
+  Total latency: 7.9989s (SLO: 0.8s) ✗
   Both TTFT and TPOT SLO met: ✗
 
 Request 110:
-  TTFT: 0.1146s (SLO: 0.16s) ✓
-  TPOT: 0.0482s (SLO: 0.024s) ✗
-  Total latency: 9.6524s (SLO: 0.8s) ✗
+  TTFT: 0.1435s (SLO: 0.4s) ✓
+  TPOT: 0.0482s (SLO: 0.048s) ✗
+  Total latency: 9.6869s (SLO: 0.8s) ✗
   Both TTFT and TPOT SLO met: ✗
 
 Request 111:
-  TTFT: 0.1276s (SLO: 0.16s) ✓
-  TPOT: 0.0488s (SLO: 0.024s) ✗
-  Total latency: 6.7216s (SLO: 0.8s) ✗
+  TTFT: 0.1276s (SLO: 0.4s) ✓
+  TPOT: 0.0487s (SLO: 0.048s) ✗
+  Total latency: 6.7068s (SLO: 0.8s) ✗
   Both TTFT and TPOT SLO met: ✗
 
 Request 112:
-  TTFT: 0.1120s (SLO: 0.16s) ✓
-  TPOT: 0.0492s (SLO: 0.024s) ✗
-  Total latency: 5.3774s (SLO: 0.8s) ✗
+  TTFT: 0.1120s (SLO: 0.4s) ✓
+  TPOT: 0.0491s (SLO: 0.048s) ✗
+  Total latency: 5.3636s (SLO: 0.8s) ✗
   Both TTFT and TPOT SLO met: ✗
 
 Request 113:
-  TTFT: 0.1140s (SLO: 0.16s) ✓
-  TPOT: 0.0501s (SLO: 0.024s) ✗
-  Total latency: 0.4144s (SLO: 0.8s) ✓
+  TTFT: 0.1140s (SLO: 0.4s) ✓
+  TPOT: 0.0566s (SLO: 0.048s) ✗
+  Total latency: 0.4538s (SLO: 0.8s) ✓
   Both TTFT and TPOT SLO met: ✗
 
 Request 114:
-  TTFT: 0.1440s (SLO: 0.16s) ✓
-  TPOT: 0.0512s (SLO: 0.024s) ✗
-  Total latency: 0.7073s (SLO: 0.8s) ✓
+  TTFT: 0.1440s (SLO: 0.4s) ✓
+  TPOT: 0.0504s (SLO: 0.048s) ✗
+  Total latency: 0.6980s (SLO: 0.8s) ✓
   Both TTFT and TPOT SLO met: ✗
 
 Request 115:
-  TTFT: 0.1297s (SLO: 0.16s) ✓
-  TPOT: 0.0508s (SLO: 0.024s) ✗
-  Total latency: 0.6884s (SLO: 0.8s) ✓
+  TTFT: 0.1559s (SLO: 0.4s) ✓
+  TPOT: 0.0520s (SLO: 0.048s) ✗
+  Total latency: 0.7283s (SLO: 0.8s) ✓
   Both TTFT and TPOT SLO met: ✗
 
 Request 116:
-  TTFT: 0.1290s (SLO: 0.16s) ✓
-  TPOT: 0.0526s (SLO: 0.024s) ✗
-  Total latency: 0.9711s (SLO: 0.8s) ✗
+  TTFT: 0.1290s (SLO: 0.4s) ✓
+  TPOT: 0.0520s (SLO: 0.048s) ✗
+  Total latency: 0.9603s (SLO: 0.8s) ✗
   Both TTFT and TPOT SLO met: ✗
 
 Request 117:
-  TTFT: 0.1388s (SLO: 0.16s) ✓
-  TPOT: 0.0522s (SLO: 0.024s) ✗
-  Total latency: 0.5562s (SLO: 0.8s) ✓
+  TTFT: 0.1388s (SLO: 0.4s) ✓
+  TPOT: 0.0510s (SLO: 0.048s) ✗
+  Total latency: 0.5466s (SLO: 0.8s) ✓
   Both TTFT and TPOT SLO met: ✗
 
 Request 118:
-  TTFT: 0.1289s (SLO: 0.16s) ✓
-  TPOT: 0.0493s (SLO: 0.024s) ✗
-  Total latency: 0.8191s (SLO: 0.8s) ✗
+  TTFT: 0.1289s (SLO: 0.4s) ✓
+  TPOT: 0.0485s (SLO: 0.048s) ✗
+  Total latency: 0.8077s (SLO: 0.8s) ✗
   Both TTFT and TPOT SLO met: ✗
 
 Request 119:
-  TTFT: 0.1243s (SLO: 0.16s) ✓
-  TPOT: 0.0509s (SLO: 0.024s) ✗
-  Total latency: 0.4806s (SLO: 0.8s) ✓
+  TTFT: 0.1243s (SLO: 0.4s) ✓
+  TPOT: 0.0493s (SLO: 0.048s) ✗
+  Total latency: 0.4693s (SLO: 0.8s) ✓
   Both TTFT and TPOT SLO met: ✗
 
 Request 120:
-  TTFT: 0.1163s (SLO: 0.16s) ✓
-  TPOT: 0.0498s (SLO: 0.024s) ✗
-  Total latency: 1.4124s (SLO: 0.8s) ✗
+  TTFT: 0.1163s (SLO: 0.4s) ✓
+  TPOT: 0.0493s (SLO: 0.048s) ✗
+  Total latency: 1.3989s (SLO: 0.8s) ✗
   Both TTFT and TPOT SLO met: ✗
 
 ============================================================
 SLO Analysis Results
 ============================================================
 Total requests: 120
-TTFT SLO met: 29/120 (24.17%)
-TPOT SLO met: 0/120 (0.00%)
-Total SLO met: 22/120 (18.33%)
-Both TTFT and TPOT SLO met: 0/120 (0.00%)
+TTFT SLO met: 77/120 (64.17%)
+TPOT SLO met: 34/120 (28.33%)
+Total SLO met: 12/120 (10.00%)
+Both TTFT and TPOT SLO met: 27/120 (22.50%)
 ============================================================

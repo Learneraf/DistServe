@@ -40,6 +40,32 @@ import argparse
 import os
 
 
+def calculate_ttft_from_request_trace(request):
+    """Return request-level TTFT in seconds, measured at prefill completion."""
+    lifecycle_events = request.get('lifecycle_events') or []
+    lifecycle = {}
+    for event in lifecycle_events:
+        event_type = event.get('event_type')
+        if event_type is not None and event.get('timestamp') is not None:
+            lifecycle[event_type] = float(event['timestamp'])
+
+    context_end = lifecycle.get('context_end')
+    if context_end is not None:
+        start_event = lifecycle.get('issued', lifecycle.get('context_begin'))
+        if start_event is not None:
+            return max(context_end - start_event, 0.0)
+
+        # Some traces use the same clock for lifecycle timestamps and
+        # request-level start_time; keep this as a fallback only.
+        if request.get('start_time') is not None:
+            candidate = context_end - float(request['start_time'])
+            if 0.0 <= candidate <= float(request.get('latency', candidate)):
+                return candidate
+
+
+    return float(request.get('ftl', 0))
+
+
 def calculate_tpot_from_request_trace(request):
     """Return request-level TPOT in seconds from benchmark trace fields."""
     if request.get('tpot') is not None:
@@ -83,7 +109,7 @@ def analyze_request_trace_payload(data, ttft_slo, tpot_slo, total_slo):
     lines = []
 
     for i, request in enumerate(data):
-        ttft_time = float(request.get('ftl', 0))
+        ttft_time = calculate_ttft_from_request_trace(request)
         total_time = float(request['latency'])
         tpot_time = calculate_tpot_from_request_trace(request)
 

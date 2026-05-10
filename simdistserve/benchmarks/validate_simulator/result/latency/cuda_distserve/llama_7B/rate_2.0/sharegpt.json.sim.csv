@@ -1,4 +1,7 @@
 backend,model_type,pd,rate,target,attainment,tp_prefill,pp_prefill,tp_decode,pp_decode
+distserve,LLAMA-2-7B,prefill,2.0,200.0,97.5,1,1,1,1
+distserve,LLAMA-2-7B,decode,2.0,100.0,100.0,1,1,1,1
+distserve,LLAMA-2-7B,both,2.0,"(200.0, 100.0)",97.5,1,1,1,1
 distserve,LLAMA-2-7B,prefill,2.0,80.0,67.5,1,1,1,1
 distserve,LLAMA-2-7B,decode,2.0,40.0,100.0,1,1,1,1
 distserve,LLAMA-2-7B,both,2.0,"(80.0, 40.0)",67.5,1,1,1,1
@@ -8,9 +11,6 @@ distserve,LLAMA-2-7B,both,2.0,"(120.0, 60.0)",88.33333333333333,1,1,1,1
 distserve,LLAMA-2-7B,prefill,2.0,160.0,96.66666666666667,1,1,1,1
 distserve,LLAMA-2-7B,decode,2.0,80.0,100.0,1,1,1,1
 distserve,LLAMA-2-7B,both,2.0,"(160.0, 80.0)",96.66666666666667,1,1,1,1
-distserve,LLAMA-2-7B,prefill,2.0,200.0,97.5,1,1,1,1
-distserve,LLAMA-2-7B,decode,2.0,100.0,100.0,1,1,1,1
-distserve,LLAMA-2-7B,both,2.0,"(200.0, 100.0)",97.5,1,1,1,1
 distserve,LLAMA-2-7B,prefill,2.0,240.0,97.5,1,1,1,1
 distserve,LLAMA-2-7B,decode,2.0,120.0,100.0,1,1,1,1
 distserve,LLAMA-2-7B,both,2.0,"(240.0, 120.0)",97.5,1,1,1,1

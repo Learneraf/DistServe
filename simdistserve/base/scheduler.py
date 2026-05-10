@@ -64,11 +64,23 @@ class Scheduler:
         # Peak the queue to find the least loaded worker.
         # Assume round-robin
         # Add the pending tasks in prefill
-        worker, queue = min(zip(workers, queues), key=lambda x: x[0]._prefill_ips + len(x[1]))
+        def load(item):
+            worker, queue = item
+            return (
+                worker._prefill_ips
+                + len(queue)
+                + len(getattr(worker, "decode_pending_queue", ()))
+                + getattr(worker, "_decode_ips", 0)
+            )
+
+        worker, queue = min(zip(workers, queues), key=load)
         return worker, queue
 
     @staticmethod
     def _sched_request(req, worker, queue):
+        if queue is getattr(worker, "decode_queue", None) and hasattr(worker, "enqueue_decode"):
+            worker.enqueue_decode(req)
+            return
         queue.append(req)
         worker.wakeup()
         return
@@ -144,6 +156,7 @@ class HeteroGreedyScheduler(Scheduler):
         )
         token_backlog = (
             self._queued_decode_tokens(queue)
+            + self._queued_decode_tokens(getattr(worker, "decode_pending_queue", ()))
             + getattr(worker, "_executing_decode_tokens", 0)
             + self._remaining_tokens(req)
         )

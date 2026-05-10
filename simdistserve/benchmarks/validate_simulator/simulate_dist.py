@@ -77,17 +77,25 @@ def parse_args(args_=None):
     parser.add_argument('--output-worker', type=str, default=None,
                         help='Output per-worker per-iteration time (csv)')
     parser.add_argument('--prefill-containment', type=int, default=None,
-                        help='Containment target for prefill')
+                        help='Containment percentile for TTFT (legacy alias)')
+    parser.add_argument('--ttft-containment', dest='prefill_containment', type=int,
+                        help='Containment percentile for TTFT')
     parser.add_argument('--prefill-target', type=int, default=200,
-                        help='Target latency for prefill')
+                        help='TTFT target latency in ms (legacy alias)')
+    parser.add_argument('--ttft-target', dest='prefill_target', type=int,
+                        help='TTFT target latency in ms')
     parser.add_argument('--decode-containment', type=int, default=None,
-                        help='Containment target for decode')
+                        help='Containment percentile for TPOT (legacy alias)')
+    parser.add_argument('--tpot-containment', dest='decode_containment', type=int,
+                        help='Containment percentile for TPOT')
     parser.add_argument('--slas', type=str, default='[85, 90, 95, 98, 99]',
                         help='Fix attainment and get the target.'),
     parser.add_argument('--slo-scales', type=str, default='[1.0, 0.4, 0.6, 0.8, 1.2]',
                         help='SLO scales in a python list.'),
     parser.add_argument('--decode-target', type=int, default=100,
-                        help='Target latency for decode')
+                        help='TPOT target latency in ms (legacy alias)')
+    parser.add_argument('--tpot-target', dest='decode_target', type=int,
+                        help='TPOT target latency in ms')
     parser.add_argument('--verbose', action='store_true', default=False,
                         help='Print verbose output')
     parser.add_argument(
@@ -117,6 +125,40 @@ def parse_args(args_=None):
         help=('Whether a first token generated during prefill is immediately visible '
               'to the user before the handoff completes. Defaults to false for '
               'vllm_ascend and true otherwise.'),
+    )
+    parser.add_argument(
+        '--decode-kv-capacity-tokens',
+        type=int,
+        default=None,
+        help=(
+            'Optional resident KV token capacity for decode admission. '
+            'When set, requests that finished prefill wait before entering '
+            'decode until enough decode-side KV capacity is available.'
+        ),
+    )
+    parser.add_argument(
+        '--decode-kv-reserve-output-tokens',
+        action='store_true',
+        default=False,
+        help=(
+            'When decode KV admission is enabled, reserve prompt+full output '
+            'tokens instead of prompt+generated tokens.'
+        ),
+    )
+    parser.add_argument(
+        '--decode-max-batch-size',
+        type=int,
+        default=None,
+        help='Optional cap on the number of requests in one decode iteration.',
+    )
+    parser.add_argument(
+        '--decode-max-scheduled-tokens',
+        type=int,
+        default=None,
+        help=(
+            'Optional cap on scheduled decode tokens in one decode iteration. '
+            'For normal decode, this is equivalent to a request-count cap.'
+        ),
     )
     parser.add_argument(
         '--latency-calibration-file',
@@ -407,6 +449,16 @@ def main(args, outputs=None):
     prefill_first_token_visible_immediately = args.prefill_first_token_visible_immediately
     if prefill_first_token_visible_immediately is None:
         prefill_first_token_visible_immediately = args.backend != 'vllm_ascend'
+    decode_max_batch_size = (
+        args.decode_max_batch_size
+        if args.decode_max_batch_size is not None and args.decode_max_batch_size > 0
+        else 10 ** 7
+    )
+    decode_max_scheduled_tokens = (
+        args.decode_max_scheduled_tokens
+        if args.decode_max_scheduled_tokens is not None and args.decode_max_scheduled_tokens > 0
+        else 10 ** 7
+    )
 
     # Run simulation
     env = simpy.Environment()
@@ -415,9 +467,10 @@ def main(args, outputs=None):
             model_type=model_type,
             TP=TP_Prefill, TP_Prefill=TP_Prefill, TP_Decode=TP_Prefill,
             prefill_max_batch_size=10 ** 7,
-            decode_max_batch_size=10 ** 7,  # inf
+            decode_max_batch_size=decode_max_batch_size,
             prefill_max_tokens=prefill_max_tokens,
             decode_max_tokens=prefill_max_tokens,
+            decode_max_scheduled_tokens=decode_max_scheduled_tokens,
             enable_chunked_prefill=False,
             engine_type=args.backend,
         )
@@ -430,15 +483,18 @@ def main(args, outputs=None):
             model_type=model_type,
             TP=TP_Prefill, TP_Prefill=TP_Prefill, TP_Decode=TP_Decode,
             prefill_max_batch_size=1,
-            decode_max_batch_size=10 ** 7,  # inf
+            decode_max_batch_size=decode_max_batch_size,
             prefill_max_tokens=prefill_max_tokens,
             decode_max_tokens=decode_max_tokens,
+            decode_max_scheduled_tokens=decode_max_scheduled_tokens,
             enable_chunked_prefill=False,
             engine_type=args.backend,
             handoff_delay_ms=handoff_delay_ms,
             handoff_delay_per_token_ms=handoff_delay_per_token_ms,
             handoff_capacity=args.handoff_capacity,
             prefill_first_token_visible_immediately=prefill_first_token_visible_immediately,
+            decode_kv_capacity_tokens=args.decode_kv_capacity_tokens,
+            decode_kv_reserve_output_tokens=args.decode_kv_reserve_output_tokens,
         )
 
         cluster = DisaggCluster(
@@ -451,15 +507,18 @@ def main(args, outputs=None):
             model_type=model_type,
             TP=TP_Prefill, TP_Prefill=TP_Prefill, TP_Decode=TP_Decode,
             prefill_max_batch_size=10 ** 7,
-            decode_max_batch_size=10 ** 7,  # inf
+            decode_max_batch_size=decode_max_batch_size,
             prefill_max_tokens=prefill_max_tokens,
             decode_max_tokens=decode_max_tokens,
+            decode_max_scheduled_tokens=decode_max_scheduled_tokens,
             enable_chunked_prefill=False,
             engine_type=args.backend,
             handoff_delay_ms=handoff_delay_ms,
             handoff_delay_per_token_ms=handoff_delay_per_token_ms,
             handoff_capacity=args.handoff_capacity,
             prefill_first_token_visible_immediately=prefill_first_token_visible_immediately,
+            decode_kv_capacity_tokens=args.decode_kv_capacity_tokens,
+            decode_kv_reserve_output_tokens=args.decode_kv_reserve_output_tokens,
         )
 
         cluster = DisaggCluster(

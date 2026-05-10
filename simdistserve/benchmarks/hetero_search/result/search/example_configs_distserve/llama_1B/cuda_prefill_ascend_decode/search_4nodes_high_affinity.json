@@ -270,7 +270,7 @@
           "pp_local": 1,
           "pp_cross": 1
         },
-        "num_instances": 1
+        "num_instances": 2
       },
       "flows": {
         "x_cc": 0.0,
@@ -526,22 +526,9 @@
       "timed_out_roles": []
     },
     {
-      "uses_capped_profile": true,
+      "uses_capped_profile": false,
       "uses_timed_out_profile": false,
-      "capped_roles": [
-        {
-          "role": "ascend_decode",
-          "shape": {
-            "device": "ascend",
-            "role": "decode",
-            "tp": 2,
-            "pp_local": 1,
-            "pp_cross": 1
-          },
-          "goodput": 64.0,
-          "effective_cap": 64.0
-        }
-      ],
+      "capped_roles": [],
       "timed_out_roles": []
     },
     {
@@ -627,7 +614,7 @@
   "profiled_shapes": 36,
   "profile_summary": {
     "num_profiled_shapes": 36,
-    "num_capped_shapes": 18,
+    "num_capped_shapes": 17,
     "has_capped_shapes": true,
     "capped_shapes": [
       {
@@ -817,19 +804,6 @@
           "device": "ascend",
           "role": "decode",
           "tp": 2,
-          "pp_local": 1,
-          "pp_cross": 1,
-          "total_pp": 1
-        },
-        "goodput": 64.0,
-        "effective_cap": 64.0,
-        "num_requests": 120
-      },
-      {
-        "shape": {
-          "device": "ascend",
-          "role": "decode",
-          "tp": 2,
           "pp_local": 2,
           "pp_cross": 1,
           "total_pp": 2
@@ -870,13 +844,13 @@
     "timed_out_shapes": []
   },
   "timing": {
-    "enumerate_shapes_seconds": 0.0001695409882813692,
-    "profile_seconds": 3.851496148854494e-05,
-    "precompute_mu_seconds": 3.851496148854494e-05,
-    "allocation_milp_seconds": 0.001780009944923222,
-    "search_loop_seconds": 0.0026517579681240022,
-    "sort_seconds": 3.6990386433899403e-06,
-    "total_search_seconds": 0.0028270030161365867
+    "enumerate_shapes_seconds": 0.00015661196084693074,
+    "profile_seconds": 3.766582813113928e-05,
+    "precompute_mu_seconds": 3.766582813113928e-05,
+    "allocation_milp_seconds": 0.0017327888635918498,
+    "search_loop_seconds": 0.0024501849547959864,
+    "sort_seconds": 3.6289566196501255e-06,
+    "total_search_seconds": 0.0026121370028704405
   },
-  "elapsed_seconds": 0.0034313960350118577
+  "elapsed_seconds": 0.0031853389809839427
 }

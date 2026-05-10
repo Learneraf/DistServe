@@ -18,8 +18,8 @@
       "scale": 0.8,
       "comparison_file": "/users/rh/DistServe/simdistserve/benchmarks/validate_simulator/result/slo/ascend_vllm/compared/llama_1B/rate_4.0/scale_0p8/comparison.txt",
       "thresholds": {
-        "ttft": 0.16,
-        "tpot": 0.024,
+        "ttft": 0.4,
+        "tpot": 0.048,
         "total": 0.8
       },
       "metrics": {
@@ -30,8 +30,8 @@
         },
         "tpot": {
           "benchmark": 100.0,
-          "simulator": 80.0,
-          "gap": 20.0
+          "simulator": 100.0,
+          "gap": 0.0
         },
         "total": {
           "benchmark": 44.17,
@@ -40,8 +40,8 @@
         },
         "both": {
           "benchmark": 100.0,
-          "simulator": 80.0,
-          "gap": 20.0
+          "simulator": 100.0,
+          "gap": 0.0
         }
       }
     },
@@ -49,8 +49,8 @@
       "scale": 1.0,
       "comparison_file": "/users/rh/DistServe/simdistserve/benchmarks/validate_simulator/result/slo/ascend_vllm/compared/llama_1B/rate_4.0/scale_1p0/comparison.txt",
       "thresholds": {
-        "ttft": 0.2,
-        "tpot": 0.03,
+        "ttft": 0.5,
+        "tpot": 0.06,
         "total": 1.0
       },
       "metrics": {
@@ -61,8 +61,8 @@
         },
         "tpot": {
           "benchmark": 100.0,
-          "simulator": 99.17,
-          "gap": 0.8299999999999983
+          "simulator": 100.0,
+          "gap": 0.0
         },
         "total": {
           "benchmark": 46.67,
@@ -71,8 +71,8 @@
         },
         "both": {
           "benchmark": 100.0,
-          "simulator": 99.17,
-          "gap": 0.8299999999999983
+          "simulator": 100.0,
+          "gap": 0.0
         }
       }
     },
@@ -80,8 +80,8 @@
       "scale": 1.2,
       "comparison_file": "/users/rh/DistServe/simdistserve/benchmarks/validate_simulator/result/slo/ascend_vllm/compared/llama_1B/rate_4.0/scale_1p2/comparison.txt",
       "thresholds": {
-        "ttft": 0.24,
-        "tpot": 0.036,
+        "ttft": 0.6,
+        "tpot": 0.072,
         "total": 1.2
       },
       "metrics": {
@@ -97,8 +97,8 @@
         },
         "total": {
           "benchmark": 48.33,
-          "simulator": 45.0,
-          "gap": 3.3299999999999983
+          "simulator": 44.17,
+          "gap": 4.159999999999997
         },
         "both": {
           "benchmark": 100.0,
@@ -114,16 +114,16 @@
       "max_abs_gap": 0.0
     },
     "tpot": {
-      "mean_abs_gap": 6.9433333333333325,
-      "max_abs_gap": 20.0
+      "mean_abs_gap": 0.0,
+      "max_abs_gap": 0.0
     },
     "total": {
-      "mean_abs_gap": 3.6133333333333346,
+      "mean_abs_gap": 3.8900000000000006,
       "max_abs_gap": 4.170000000000002
     },
     "both": {
-      "mean_abs_gap": 6.9433333333333325,
-      "max_abs_gap": 20.0
+      "mean_abs_gap": 0.0,
+      "max_abs_gap": 0.0
     }
   }
 }

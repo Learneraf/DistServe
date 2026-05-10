@@ -14,10 +14,10 @@
     }
   },
   "slo": {
-    "prefill_target_ms": 500,
-    "decode_target_ms": 200,
-    "prefill_attainment": 90,
-    "decode_attainment": 90
+    "ttft_target_ms": 500,
+    "tpot_target_ms": 200,
+    "ttft_attainment": 90,
+    "tpot_attainment": 90
   },
   "handoff": {
     "cuda_to_ascend": {

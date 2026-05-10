@@ -8,3 +8,7 @@ python ./plot_all_rate.py \
 python ./plot_all_rate.py \
     --input_dir "./result/slo/cuda_distserve/compared/" \
     --output_dir "./result/slo/cuda_distserve/plots/"
+
+python ./plot_all_rate.py \
+    --input_dir "./result/slo/cuda_vllm/compared/" \
+    --output_dir "./result/slo/cuda_vllm/plots/"

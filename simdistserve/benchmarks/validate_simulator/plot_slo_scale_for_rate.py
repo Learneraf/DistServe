@@ -356,7 +356,7 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Plot SLO-scale curves directly from saved comparison.txt files."
     )
-    parser.add_argument("--backend", choices=["cuda_distserve", "ascend_vllm"], required=True)
+    parser.add_argument("--backend", choices=["cuda_distserve", "ascend_vllm", "cuda_vllm"], required=True)
     parser.add_argument("--model", required=True, help="Model alias such as llama_1B, llama_3B, llama_7B, llama_8B")
     parser.add_argument("--rate", required=True, help="Specific rate to evaluate, for example 1 or 2.5")
     parser.add_argument(

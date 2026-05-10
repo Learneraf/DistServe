@@ -18,30 +18,30 @@
       "scale": 0.8,
       "comparison_file": "/users/rh/DistServe/simdistserve/benchmarks/validate_simulator/result/slo/ascend_vllm/compared/llama_7B/rate_4.0/scale_0p8/comparison.txt",
       "thresholds": {
-        "ttft": 0.16,
-        "tpot": 0.024,
+        "ttft": 0.4,
+        "tpot": 0.048,
         "total": 0.8
       },
       "metrics": {
         "ttft": {
-          "benchmark": 0.0,
-          "simulator": 24.17,
-          "gap": -24.17
+          "benchmark": 86.67,
+          "simulator": 37.5,
+          "gap": 49.17
         },
         "tpot": {
-          "benchmark": 0.0,
-          "simulator": 0.0,
-          "gap": 0.0
+          "benchmark": 7.5,
+          "simulator": 13.33,
+          "gap": -5.83
         },
         "total": {
           "benchmark": 10.0,
-          "simulator": 15.83,
-          "gap": -5.83
+          "simulator": 4.17,
+          "gap": 5.83
         },
         "both": {
-          "benchmark": 0.0,
-          "simulator": 0.0,
-          "gap": 0.0
+          "benchmark": 6.67,
+          "simulator": 4.17,
+          "gap": 2.5
         }
       }
     },
@@ -49,30 +49,30 @@
       "scale": 1.0,
       "comparison_file": "/users/rh/DistServe/simdistserve/benchmarks/validate_simulator/result/slo/ascend_vllm/compared/llama_7B/rate_4.0/scale_1p0/comparison.txt",
       "thresholds": {
-        "ttft": 0.2,
-        "tpot": 0.03,
+        "ttft": 0.5,
+        "tpot": 0.06,
         "total": 1.0
       },
       "metrics": {
         "ttft": {
-          "benchmark": 11.67,
-          "simulator": 55.83,
-          "gap": -44.16
+          "benchmark": 96.67,
+          "simulator": 45.0,
+          "gap": 51.67
         },
         "tpot": {
-          "benchmark": 0.0,
-          "simulator": 0.0,
-          "gap": 0.0
+          "benchmark": 53.33,
+          "simulator": 59.17,
+          "gap": -5.840000000000003
         },
         "total": {
           "benchmark": 17.5,
-          "simulator": 20.83,
-          "gap": -3.3299999999999983
+          "simulator": 7.5,
+          "gap": 10.0
         },
         "both": {
-          "benchmark": 0.0,
-          "simulator": 0.0,
-          "gap": 0.0
+          "benchmark": 52.5,
+          "simulator": 33.33,
+          "gap": 19.17
         }
       }
     },
@@ -80,50 +80,50 @@
       "scale": 1.2,
       "comparison_file": "/users/rh/DistServe/simdistserve/benchmarks/validate_simulator/result/slo/ascend_vllm/compared/llama_7B/rate_4.0/scale_1p2/comparison.txt",
       "thresholds": {
-        "ttft": 0.24,
-        "tpot": 0.036,
+        "ttft": 0.6,
+        "tpot": 0.072,
         "total": 1.2
       },
       "metrics": {
         "ttft": {
-          "benchmark": 28.33,
-          "simulator": 75.0,
-          "gap": -46.67
+          "benchmark": 98.33,
+          "simulator": 53.33,
+          "gap": 45.0
         },
         "tpot": {
-          "benchmark": 0.0,
-          "simulator": 0.0,
-          "gap": 0.0
+          "benchmark": 90.83,
+          "simulator": 95.83,
+          "gap": -5.0
         },
         "total": {
           "benchmark": 24.17,
-          "simulator": 27.5,
-          "gap": -3.3299999999999983
+          "simulator": 13.33,
+          "gap": 10.840000000000002
         },
         "both": {
-          "benchmark": 0.0,
-          "simulator": 0.0,
-          "gap": 0.0
+          "benchmark": 89.17,
+          "simulator": 52.5,
+          "gap": 36.67
         }
       }
     }
   ],
   "metric_summary": {
     "ttft": {
-      "mean_abs_gap": 38.333333333333336,
-      "max_abs_gap": 46.67
+      "mean_abs_gap": 48.61333333333334,
+      "max_abs_gap": 51.67
     },
     "tpot": {
-      "mean_abs_gap": 0.0,
-      "max_abs_gap": 0.0
+      "mean_abs_gap": 5.5566666666666675,
+      "max_abs_gap": 5.840000000000003
     },
     "total": {
-      "mean_abs_gap": 4.163333333333332,
-      "max_abs_gap": 5.83
+      "mean_abs_gap": 8.89,
+      "max_abs_gap": 10.840000000000002
     },
     "both": {
-      "mean_abs_gap": 0.0,
-      "max_abs_gap": 0.0
+      "mean_abs_gap": 19.44666666666667,
+      "max_abs_gap": 36.67
     }
   }
 }
